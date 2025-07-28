@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose from "mongoose";
 const foodSchema = new Schema(
   {
@@ -29,6 +28,6 @@ const foodSchema = new Schema(
       enum: ["starter", "main course", "dessert", "beverage"],
     },
   },
-  { timestamp: true },
+  { timestamps: true }
 );
-export const foodItem = mongoose.model("foodItem", foodSchema);
+export const FoodItem = mongoose.model("foodItem", foodSchema);

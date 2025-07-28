@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
-import { foodItem } from "./foodItem.model";
-import { mainModule } from "node:process";
+import mongoose, { Schema } from "mongoose";
+
 const orderSchema = new Schema(
   {
     user: {
@@ -26,6 +25,6 @@ const orderSchema = new Schema(
       enum: ["pending", "completed", "cancelled"],
     },
   },
-  { timestamp: true },
+  { timestamps: true }
 );
 export const Order = mongoose.model("Order", orderSchema);

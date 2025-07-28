@@ -3,7 +3,7 @@ import ApiError from "../utlis/ApiError.js";
 import ApiResponse from "../utlis/ApiResponse.js";
 import uploadOnCloudinary from "../utlis/cloudinary.js";
 import { User } from "../models/user.model.js";
-import { use } from "react";
+import jwt from "jsonwebtoken";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -50,12 +50,6 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User registered successfully"));
 });
 const login = asyncHandler(async (req, res) => {
-  //email,password
-  //if this is enpty or not
-  //if this exist or not
-  //if user exist then check the password
-  //then generate access and refresh token
-  //send response
   const { username, email, password } = req.body;
   if (!(username && email)) {
     throw new ApiError(400, "email or username is missing");
@@ -149,7 +143,46 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new Response(200, "Password changed successfully"));
 });
-const refreshAccessToken = asyncHandler(async (req, res) => {});
+const refreshAccessToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken =
+    req.cookies?.refreshToken || req.user?.refreshToken;
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "unauthorized access");
+  }
+
+  try {
+    const decoedToken = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+    const user = await User.findById(decoedToken?._id);
+    if (!user) {
+      throw new ApiError(401, "Invalid refresh token");
+    }
+    if (incomingRefreshToken !== user.refreshToken) {
+      throw new ApiError(401, "Invalid refresh token or refresh token expiry");
+    }
+    const { accessToken, newRefreshToken } =
+      await generateAccessAndRefreshToken(user._id);
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { accessToken, refreshToken: newRefreshToken },
+          "access token  generated successfully"
+        )
+      );
+  } catch (error) {
+    throw new ApiError(401, error?.messgae || "Invalid refresh token");
+  }
+});
 export {
   registerUser,
   login,
