@@ -40,6 +40,9 @@ const userSchema = new Schema(
         "Phone number must start with 9 and be exactly 10 digits",
       ],
     },
+    refreshToken: {
+      type: String,
+    },
     order: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
