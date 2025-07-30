@@ -43,5 +43,49 @@ const getSingleOrder = asyncHandler(async (req, res) => {
 });
 const userPurchaseHistory = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
+  const user = await User.findById(userId).populate({
+    path: "purchaseHistory",
+    populate: {
+      path: "foodItems",
+      model: "foodItem",
+    },
+  });
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        user.purchaseHistory,
+        "Purchase History fetched successfully"
+      )
+    );
 });
-export { createOrder, getSingleOrder, userPurchaseHistory };
+const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { orderId } = req.params;
+  const { status } = req.body;
+
+  const validateStatus = ["pending", "completed", "cancelled"];
+
+  if (!validateStatus.includes(status)) {
+    throw new ApiError(400, "Invalid status");
+  }
+  const updateOrder = await Order.findByIdAndUpdate(
+    orderId,
+    status,
+    {
+      new: true,
+    }.populate("foodItems")
+  );
+  if (!updateOrder) {
+    throw new ApiError(404, "fooditem not found");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, updateOrder, "Order status updated successfully")
+    );
+});
+export { createOrder, getSingleOrder, userPurchaseHistory, updateOrderStatus };

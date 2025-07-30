@@ -1,7 +1,6 @@
 import asyncHandler from "../utlis/asyncHandler.js";
 import ApiError from "../utlis/ApiError.js";
 import ApiResponse from "../utlis/ApiResponse.js";
-import uploadOnCloudinary from "../utlis/cloudinary.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
