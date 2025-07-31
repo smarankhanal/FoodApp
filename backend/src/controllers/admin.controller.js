@@ -1,9 +1,11 @@
 import asyncHandler from "../utlis/asyncHandler";
 import ApiError from "../utlis/ApiError";
 import ApiResponse from "../utlis/ApiResponse";
+import uploadOnCloudinary from "../utlis/cloudinary";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
 import { Order } from "../models/orderItem.model";
+import { FoodItem } from "../models/foodItem.model";
 
 const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -56,4 +58,79 @@ const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
     .status(200)
     .json(200, order, "Order status successfully changed by admin");
 });
-export { adminLogin, updateorderStatusByAdmin };
+const allTheUser = asyncHandler(async (req, res) => {
+  const users = await User.find({}).select("-password");
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, users, "All the Users are fetched successfullly")
+    );
+});
+const getUserHistory = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const orders = await Order.find({ user: userId })
+    .populate("foodItems")
+    .sort({ createdAt: -1 });
+  if (!orders || orders.length === 0) {
+    throw new ApiError(404, "No orders for this user");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, orders, "User history fetched successfully"));
+});
+const uploadFoodItem = asyncHandler(async (req, res) => {
+  const { foodName, description, price, type, subCategory } = req.body;
+  if (
+    [foodName, description, price, type, subCategory].some(
+      (field) => typeof field !== "string" || field.trim() === ""
+    ) ||
+    price === undefined ||
+    price === null ||
+    isNaN(price)
+  ) {
+    throw new ApiError(400, "Fooditems information is missing");
+  }
+  const existFoodItem = await FoodItem.findOne({ $or: [{ foodName }] });
+  if (!existFoodItem) {
+    throw new ApiError(409, "FoodItem already exists");
+  }
+  const foodItemImagePath = req.files?.avatar[0]?.path;
+  if (!foodItemImagePath) {
+    throw new ApiError(400, "Avatar file is required");
+  }
+  const foodImage = await uploadOnCloudinary(foodItemImagePath);
+  const foodItem = await FoodItem.create({
+    foodName,
+    description,
+    price,
+    type,
+    subCategory,
+    foodImage: foodImage?.url || "",
+  });
+  if (!foodItem) {
+    throw new ApiError(500, "foodItem creation failed");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, foodItem, "FoodItem created successfully"));
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  await user.deleteOne();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "User delete successfully"));
+});
+export {
+  adminLogin,
+  updateorderStatusByAdmin,
+  uploadFoodItem,
+  allTheUser,
+  getUserHistory,
+  deleteUser,
+};

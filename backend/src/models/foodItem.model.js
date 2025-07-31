@@ -27,6 +27,10 @@ const foodSchema = new Schema(
       required: true,
       enum: ["starter", "main course", "dessert", "beverage"],
     },
+    foodImage: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
