@@ -94,7 +94,7 @@ const uploadFoodItem = asyncHandler(async (req, res) => {
   if (!existFoodItem) {
     throw new ApiError(409, "FoodItem already exists");
   }
-  const foodItemImagePath = req.files?.avatar[0]?.path;
+  const foodItemImagePath = req.files?.path;
   if (!foodItemImagePath) {
     throw new ApiError(400, "Avatar file is required");
   }
@@ -126,6 +126,41 @@ const deleteUser = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "User delete successfully"));
 });
+const adminLogout = asyncHandler(async (req, res) => {
+  const options = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  };
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(200, {}, "Admin logout successfully"));
+});
+const updateFoodItemDetail = asyncHandler(async (req, res) => {
+  const { orderId } = req.params;
+  const { foodName, description, price, type, subCategory } = req.body;
+
+  const fooditem = await FoodItem.findById(orderId);
+  if (!fooditem) {
+    throw new ApiError(404, "fooditem not found");
+  }
+  if (req?.files.path && fooditem.foodImage) {
+    fs.unlink(fooditem.foodImage, (err) => {
+      throw new ApiError(404, err.message || "image not deleted");
+    });
+  }
+  fooditem.foodName = foodName || fooditem.foodName;
+  fooditem.description = description || fooditem.description;
+  fooditem.price = price || fooditem.price;
+  fooditem.type = type || fooditem.type;
+  fooditem.subCategory = subCategory || fooditem.subCategory;
+  fooditem.foodImage = req.files?.path || fooditem.foodImage;
+  await fooditem.save();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, fooditem, "Fooditem updated successfully"));
+});
 export {
   adminLogin,
   updateorderStatusByAdmin,
@@ -133,4 +168,6 @@ export {
   allTheUser,
   getUserHistory,
   deleteUser,
+  adminLogout,
+  updateFoodItemDetail,
 };
