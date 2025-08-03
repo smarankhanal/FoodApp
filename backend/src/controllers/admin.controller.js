@@ -1,11 +1,11 @@
-import asyncHandler from "../utlis/asyncHandler";
-import ApiError from "../utlis/ApiError";
-import ApiResponse from "../utlis/ApiResponse";
-import uploadOnCloudinary from "../utlis/cloudinary";
+import asyncHandler from "../utlis/asyncHandler.js";
+import ApiError from "../utlis/ApiError.js";
+import ApiResponse from "../utlis/ApiResponse.js";
+import uploadOnCloudinary from "../utlis/cloudinary.js";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.model";
-import { Order } from "../models/orderItem.model";
-import { FoodItem } from "../models/foodItem.model";
+import { User } from "../models/user.model.js";
+import { Order } from "../models/orderItem.model.js";
+import { FoodItem } from "../models/foodItem.model.js";
 
 const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

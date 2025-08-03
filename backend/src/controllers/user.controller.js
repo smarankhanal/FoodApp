@@ -8,17 +8,18 @@ import { FoodItem } from "../models/foodItem.model.js";
 const generateAccessAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
-    const refreshToken = user.generateRefreshToken();
-    const accessToken = user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
+
     return { refreshToken, accessToken };
   } catch (error) {
     throw new ApiError(500, "User generation failed");
   }
 };
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, fullname, password, email, address, phoneNumber } =
+  const { username, fullname, email, password, address, phoneNumber } =
     req.body;
   if (
     [username, fullname, password, email, address, phoneNumber].some(
@@ -51,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 const login = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-  if (!(username && email)) {
+  if (!(username || email)) {
     throw new ApiError(400, "email or username is missing");
   }
   const user = await User.findOne({ $or: [{ username }, { email }] });
@@ -62,7 +63,14 @@ const login = asyncHandler(async (req, res) => {
   if (!isPasswordValid) {
     throw new ApiError(401, "Unauthorized access");
   }
-  const { accessToken, refreshToken } = generateAccessAndRefreshToken(user._id);
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+    user.id
+  );
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  console.log("1.accessToken :", accessToken);
+  console.log("2.re:", refreshToken);
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -82,7 +90,6 @@ const login = asyncHandler(async (req, res) => {
         200,
         {
           user: loggedInUser,
-
           accessToken,
           refreshToken,
         },
@@ -92,7 +99,7 @@ const login = asyncHandler(async (req, res) => {
 });
 const logout = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
-    req.user_id,
+    req.user._id,
     {
       $unset: {
         refreshToken: 1,
@@ -105,7 +112,7 @@ const logout = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    //  sameSite: "strict",
   };
   return res
     .status(200)
