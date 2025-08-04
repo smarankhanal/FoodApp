@@ -30,8 +30,13 @@ const adminLogin = asyncHandler(async (req, res) => {
       expiresIn: "1d",
     }
   );
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
   return res
     .status(200)
+    .cookie("accessToken", token, options)
     .json(
       new ApiResponse(
         200,

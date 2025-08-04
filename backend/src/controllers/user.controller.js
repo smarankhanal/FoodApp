@@ -69,8 +69,6 @@ const login = asyncHandler(async (req, res) => {
   user.refreshToken = refreshToken;
   await user.save();
 
-  console.log("1.accessToken :", accessToken);
-  console.log("2.re:", refreshToken);
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -112,7 +110,7 @@ const logout = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    //  sameSite: "strict",
+    sameSite: "strict",
   };
   return res
     .status(200)
@@ -136,21 +134,24 @@ const updateAccoutDetails = asyncHandler(async (req, res) => {
     {
       new: true,
     }
-  ).select("-password");
-  return res.status(200).json(200, user, "User deatils updated successfully");
+  ).select("-password -refreshToken");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "User deatils updated successfully"));
 });
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
+
   const user = await User.findById(req.user?._id);
   const isPasswordValid = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordValid) {
     throw new ApiError(401, "Invalid old password");
   }
   user.password = newPassword;
-  await user.save({ validateBeforeSave: false });
+  await user.save();
   return res
     .status(200)
-    .json(new Response(200, "Password changed successfully"));
+    .json(new Response(200, {}, "Password changed successfully"));
 });
 const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingRefreshToken =
@@ -164,7 +165,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       incomingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
-    const user = await User.findById(decoedToken?._id);
+    const user = await User.findById(decoedToken?.id);
     if (!user) {
       throw new ApiError(401, "Invalid refresh token");
     }
@@ -194,6 +195,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 const getFoodItems = asyncHandler(async (req, res) => {
   const foodItems = await FoodItem.find({});
+  console.log(foodItems);
   return res
     .status(200)
     .json(new ApiResponse(200, foodItems, "foodItems fetched successfully"));
