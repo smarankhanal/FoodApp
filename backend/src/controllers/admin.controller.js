@@ -61,7 +61,9 @@ const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
   await order.save();
   return res
     .status(200)
-    .json(200, order, "Order status successfully changed by admin");
+    .json(
+      new ApiResponse(200, order, "Order status successfully changed by admin")
+    );
 });
 const allTheUser = asyncHandler(async (req, res) => {
   const users = await User.find({}).select("-password");
@@ -95,13 +97,14 @@ const uploadFoodItem = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(400, "Fooditems information is missing");
   }
-  const existFoodItem = await FoodItem.findOne({ $or: [{ foodName }] });
+  const existFoodItem = await FoodItem.find({ foodName });
   if (!existFoodItem) {
     throw new ApiError(409, "FoodItem already exists");
   }
-  const foodItemImagePath = req.files?.path;
+  // console.log(req.files[0].avatar);
+  const foodItemImagePath = req.file?.path;
   if (!foodItemImagePath) {
-    throw new ApiError(400, "Avatar file is required");
+    throw new ApiError(400, "foodImage file is required");
   }
   const foodImage = await uploadOnCloudinary(foodItemImagePath);
   const foodItem = await FoodItem.create({
@@ -143,24 +146,26 @@ const adminLogout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Admin logout successfully"));
 });
 const updateFoodItemDetail = asyncHandler(async (req, res) => {
-  const { orderId } = req.params;
+  const { fooditemId } = req.params;
   const { foodName, description, price, type, subCategory } = req.body;
 
-  const fooditem = await FoodItem.findById(orderId);
+  const fooditem = await FoodItem.findById(fooditemId);
   if (!fooditem) {
     throw new ApiError(404, "fooditem not found");
   }
-  if (req?.files.path && fooditem.foodImage) {
-    fs.unlink(fooditem.foodImage, (err) => {
-      throw new ApiError(404, err.message || "image not deleted");
-    });
+  if (req.file?.path && fooditem.foodImage) {
+    try {
+      await unlinkAsync(fooditem.foodImage);
+    } catch (err) {
+      throw new ApiError(err.message || "Failed to delete old image");
+    }
   }
   fooditem.foodName = foodName || fooditem.foodName;
   fooditem.description = description || fooditem.description;
   fooditem.price = price || fooditem.price;
   fooditem.type = type || fooditem.type;
   fooditem.subCategory = subCategory || fooditem.subCategory;
-  fooditem.foodImage = req.files?.path || fooditem.foodImage;
+  fooditem.foodImage = req.file?.path || fooditem.foodImage;
   await fooditem.save();
   return res
     .status(200)

@@ -26,6 +26,6 @@ router
   .route("/upload-fooditems")
   .post(verifyAdminJWT, upload.single("foodImage"), uploadFoodItem);
 router
-  .route("update-fooditem/:orderId")
+  .route("/update-fooditem/:fooditemId")
   .patch(verifyAdminJWT, upload.single("FoodItem"), updateFoodItemDetail);
 export default router;

@@ -4,6 +4,7 @@ import ApiResponse from "../utlis/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { FoodItem } from "../models/foodItem.model.js";
+import { toCaptalizie } from "../utlis/captalizae.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -19,8 +20,7 @@ const generateAccessAndRefreshToken = async (userId) => {
   }
 };
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, fullname, email, password, address, phoneNumber } =
-    req.body;
+  let { username, fullname, email, password, address, phoneNumber } = req.body;
   if (
     [username, fullname, password, email, address, phoneNumber].some(
       (field) => field?.trim() === ""
@@ -28,6 +28,7 @@ const registerUser = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(400, "All field are reuqired");
   }
+  fullname = toCaptalizie(fullname);
   const existedUser = await User.findOne({ $or: [{ username }, { email }] });
   if (existedUser) {
     throw new ApiError(409, "User or email alreday exists");
