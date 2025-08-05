@@ -51,55 +51,7 @@ This is the backend API for **FoodApp**, a Node.js Express application for manag
 
 ---
 
-food-app-backend/
--├── 📁 config/              # Configuration files (e.g., db, cloudinary)
-│   ├── db.js
-│   └── cloudinary.js
-│
--├── 📁 controllers/         # Route handler functions
-│   ├── auth.controller.js
-│   ├── user.controller.js
-│   ├── food.controller.js
-│   └── order.controller.js
-│
--├── 📁 middlewares/         # Custom middleware functions
-│   ├── auth.middleware.js
-│   ├── adminAuth.middleware.js
-│   ├── validate.middleware.js
-│   └── errorHandler.middleware.js
-│
--├── 📁 models/              # Mongoose models
-│   ├── user.model.js
-│   ├── foodItem.model.js
-│   └── order.model.js
-│
--├── 📁 routes/              # Express route definitions
-│   ├── auth.routes.js
-│   ├── user.routes.js
-│   ├── food.routes.js
-│   └── order.routes.js
-│
--├── 📁 utils/               # Utility/helper functions
-│   ├── asyncHandler.js
-│   ├── ApiError.js
-│   ├── ApiResponse.js
-│   ├── jwtHelper.js
-│   └── toTitleCase.js
-│
--├── 📁 uploads/             # Temporary image storage (for local uploads)
-│
--├── 📁 public/              # Public static files (optional)
-│
--├── 📁 validations/         # express-validator schemas
-│   ├── auth.validation.js
-│   └── user.validation.js
-│
--├── .env                    # Environment variables
--├── .gitignore
--├── package.json
--├── README.md
--├── server.js               # Entry point
--└── app.js                  # Express app setup
+
 
 ## ⚙️ .env Configuration
 
