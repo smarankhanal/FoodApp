@@ -4,19 +4,34 @@ import AnchorTag from "../AnchorTag";
 function Nav() {
   return (
     <div className="flex flex-1/4 gap-8 ">
-      <nav className="flex flex-col">
-        <h2 className="font-bold text-black ml-1">Company</h2>
+      <nav className="flex flex-col text-sm">
+        <h2 className="font-bold w-[100px]  text-black ml-1 text-sm">
+          We're foodapp
+        </h2>
 
         <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
-          Hello
+          About Us
+        </AnchorTag>
+        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
+          Avaiable Food
+        </AnchorTag>
+        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
+          FAQ
         </AnchorTag>
       </nav>
-      <nav className="flex flex-col">
-        <h2 className="font-bold text-black ml-1">Support</h2>
 
-        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
-          Hello
-        </AnchorTag>
+      <nav>
+        <h2 className="font-bold text-black ml-1 text-sm">Call us</h2>
+        <p className="dark:text-gray-600 text-black font-semibold">
+          Our helpline stays the same across Kathmandu, Bhaktapur, Chitwan, and
+          Butwal for seamless support.
+        </p>
+      </nav>
+      <nav>
+        <h2 className="font-bold text-black ml-1 text-sm">Contact us</h2>
+        <p className="dark:text-gray-600 text-black font-semibold ml-1">
+          9812345670,9876543210,056-123456
+        </p>
       </nav>
     </div>
   );

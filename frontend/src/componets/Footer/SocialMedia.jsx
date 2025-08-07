@@ -11,7 +11,7 @@ export default function SocialMedia() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaFacebook className="text-black dark:text-gray-600 hover:text-blue-600 text-xl" />
+          <FaFacebook className="text-black  hover:text-blue-600 text-xl" />
         </a>
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
           <FaXTwitter className=" text-xl" />
@@ -21,14 +21,14 @@ export default function SocialMedia() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaInstagram className="text-black dark:text-gray-600 hover:text-pink-500 text-xl" />
+          <FaInstagram className="text-black hover:text-pink-500 text-xl" />
         </a>
         <a
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaLinkedinIn className="text-black dark:text-gray-600 hover:text-blue-700 text-xl" />
+          <FaLinkedinIn className="text-black  hover:text-blue-700 text-xl" />
         </a>
       </div>
     </div>

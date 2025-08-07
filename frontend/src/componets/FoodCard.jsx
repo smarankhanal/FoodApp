@@ -27,7 +27,7 @@ export default function FoodCard() {
           Price: Rs 250
         </p>
         <div className="flex justify-center">
-          <Button className="px-6 py-2">Order Now</Button>
+          <Button className="px-6 py-2">Add to Cart</Button>
         </div>
       </div>
     </div>

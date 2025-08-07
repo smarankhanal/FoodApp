@@ -6,7 +6,7 @@ function Logo({ className, ...props }) {
       <img
         src="/images/foodapp-logo.png"
         alt="logo"
-        className={` h-15 w-15 ${className}`}
+        className={` ${className} h-15 w-15`}
         {...props}
       />
     </div>
