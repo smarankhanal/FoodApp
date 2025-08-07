@@ -1,13 +1,12 @@
 import React from "react";
 import "./App.css";
-import FoodPage from "./componets/FoodPage";
-import FoodCard from "./componets/FoodCard";
+import { Footer, NavBar } from "./componets";
 
 export default function App() {
   return (
     <div>
-      {/* <FoodPage /> */}
-      <FoodCard />
+      <NavBar />
+      <Footer />
     </div>
   );
 }
