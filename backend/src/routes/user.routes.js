@@ -7,6 +7,8 @@ import {
   refreshAccessToken,
   registerUser,
   updateAccoutDetails,
+  addReview,
+  getReview,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
@@ -31,5 +33,7 @@ router.route("/create-order").post(verifyJWT, createOrder);
 router.route("/single-order/:orderId").get(verifyJWT, getSingleOrder);
 router.route("/order-status/:orderId").patch(verifyJWT, updateOrderStatus);
 router.route("/purchase-history").get(verifyJWT, userPurchaseHistory);
+router.route("/foodItem/add-review/:foodItemId").post(verifyJWT, addReview);
+router.route("/foodItem/get-review/:foodItemId").get(verifyJWT, getReview);
 
 export default router;

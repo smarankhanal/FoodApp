@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import { Order } from "../models/orderItem.model.js";
 import { FoodItem } from "../models/foodItem.model.js";
+import { FoodReview } from "../models/foodreview.model.js";
 
 const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -171,6 +172,36 @@ const updateFoodItemDetail = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, fooditem, "Fooditem updated successfully"));
 });
+const getFoodReview = asyncHandler(async (req, res) => {
+  const foodItemId = req.params.id;
+  const reviews = await FoodReview.find({ foodItem: foodItemId }).populate(
+    "user",
+    "fullname"
+  );
+  if (!reviews || reviews.length === 0) {
+    throw new ApiError(404, "No reviews found for this food item");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, reviews, "Review fetched successfully"));
+});
+const foodItemReviewByUser = async (req, res) => {
+  const userId = req.user?.id;
+
+  const reviews = await FoodReview.find({ user: userId }).populate(
+    "foodItem",
+    "foodName description foodImage"
+  );
+  if (!reviews || reviews.length === 0) {
+    throw new ApiError(404, "No review by the user");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, reviews, "Reviews by user fetched successfully")
+    );
+};
+
 export {
   adminLogin,
   updateorderStatusByAdmin,
@@ -180,4 +211,6 @@ export {
   deleteUser,
   adminLogout,
   updateFoodItemDetail,
+  getFoodReview,
+  foodItemReviewByUser,
 };

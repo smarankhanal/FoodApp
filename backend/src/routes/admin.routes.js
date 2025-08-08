@@ -9,6 +9,8 @@ import {
   updateFoodItemDetail,
   updateorderStatusByAdmin,
   uploadFoodItem,
+  getFoodReview,
+  foodItemReviewByUser,
 } from "../controllers/admin.controller.js";
 import { verifyAdminJWT } from "../middlewares/adminAuth.middleware.js";
 
@@ -28,4 +30,10 @@ router
 router
   .route("/update-fooditem/:fooditemId")
   .patch(verifyAdminJWT, upload.single("FoodItem"), updateFoodItemDetail);
+router
+  .route("/foodItem/get-review/:foodItemId")
+  .get(verifyAdminJWT, getFoodReview);
+router
+  .route("/user/:userId/food-reviews")
+  .get(verifyAdminJWT, foodItemReviewByUser);
 export default router;

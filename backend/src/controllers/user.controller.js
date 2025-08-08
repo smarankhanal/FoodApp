@@ -4,6 +4,7 @@ import ApiResponse from "../utlis/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { FoodItem } from "../models/foodItem.model.js";
+import { FoodReview } from "../models/foodreview.model.js";
 import { toCaptalizie } from "../utlis/captalizae.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
@@ -201,6 +202,38 @@ const getFoodItems = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, foodItems, "foodItems fetched successfully"));
 });
+const addReview = asyncHandler(async (req, res) => {
+  const { review_text, star_rating } = req.body;
+  const foodItemId = req.params.id;
+  const userId = req?.user.id;
+
+  const review = new FoodReview({
+    user: userId,
+    foodItem: foodItemId,
+    review_text,
+    star_rating,
+  });
+  if (!review) {
+    throw new ApiError(404, "food review missing");
+  }
+  await review.save();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, review, "Review added successfully"));
+});
+const getReview = asyncHandler(async (req, res) => {
+  const foodItemId = req.params.id;
+  const reviews = await FoodReview.find({ foodItem: foodItemId }).populate(
+    "user",
+    "fullname"
+  );
+  if (!reviews || reviews.length === 0) {
+    throw new ApiError(404, "No reviews found for this food item");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, reviews, "Review fetched successfully"));
+});
 export {
   registerUser,
   login,
@@ -209,4 +242,6 @@ export {
   changeCurrentPassword,
   refreshAccessToken,
   getFoodItems,
+  addReview,
+  getReview,
 };
