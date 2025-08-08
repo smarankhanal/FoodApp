@@ -4,7 +4,7 @@ import { SingleOrderFood, Button } from "../componets";
 export default function Ordered() {
   return (
     <>
-      <div className="pt-20 pb-10 px-4 grid grid-cols-2 gap-4">
+      <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20 pb-10 px-4 grid grid-cols-2 gap-4">
         <SingleOrderFood />
         <SingleOrderFood />
 
@@ -20,7 +20,7 @@ export default function Ordered() {
         Total Price :- Rs 2000
       </div>
       <div className="flex justify-end mx-10 my-2">
-        <Button className="h-12  hover:bg-red-600 text-[20px]">
+        <Button className="h-12  hover:bg-red-600  text-[20px]">
           Order Now
         </Button>
       </div>

@@ -9,27 +9,27 @@ function Nav() {
           We're foodapp
         </h2>
 
-        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
+        <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1 ">
           About Us
         </AnchorTag>
-        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
+        <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1">
           Avaiable Food
         </AnchorTag>
-        <AnchorTag className="dark:text-gray-600 text-black font-semibold ml-1">
+        <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1">
           FAQ
         </AnchorTag>
       </nav>
 
       <nav>
         <h2 className="font-bold text-black ml-1 text-sm">Call us</h2>
-        <p className="dark:text-gray-600 text-black font-semibold">
+        <p className="dark:text-gray-600 text-black font-sm">
           Our helpline stays the same across Kathmandu, Bhaktapur, Chitwan, and
           Butwal for seamless support.
         </p>
       </nav>
       <nav>
         <h2 className="font-bold text-black ml-1 text-sm">Contact us</h2>
-        <p className="dark:text-gray-600 text-black font-semibold ml-1">
+        <p className="dark:text-gray-600 text-black font-sm ml-1">
           9812345670,9876543210,056-123456
         </p>
       </nav>
