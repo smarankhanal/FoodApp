@@ -1,28 +1,26 @@
 import React, { useState } from "react";
-import Input from "./Input";
-import Button from "./Button";
-import Logo from "./Logo";
+import Input from "../componets/Input";
+import Button from "../componets/Button";
+import Logo from "../componets/Logo";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 
-export default function Register() {
+export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleVisibility = () => setShowPassword((prev) => !prev);
 
   return (
     <>
-      <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-18">
-        <div className="w-full  max-w-110 mx-auto bg-white dark:bg-black dark:text-white   px-2 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg">
+      <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-20">
+        <div className="w-full  max-w-100 mx-auto bg-white dark:bg-black dark:text-white   mb-10 p-2 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg">
           <div className="flex items-center justify-center">
-            <p className="font-bold text-[20px] dark:text-white ">Register</p>
+            <Logo className="w-20 h-20" />
           </div>
           <div>
-            <Input className="h-9" label="Email :" type="email" />
-            <Input className="h-9" label="Username :" type="text" />
+            <Input label="Email/Username :" />
             <div className="relative">
               <Input
-                className="h-9"
                 label="Password : "
                 type={showPassword ? "text" : "password"}
               />
@@ -34,20 +32,16 @@ export default function Register() {
                 {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
-            <Input className="h-9" label="Full Name :" type="email" />
-            <Input className="h-9" label="Phone Number :" type="number" />
-            <Input className="h-9" label="Address :" type="text" />
-
             <div className="flex items-center justify-center">
-              <Button className="m-2">Sign Up</Button>
+              <Button className="m-2">LogIn</Button>
             </div>
             <div className="flex items-center justify-center">
               <p>
-                Already have an account?{" "}
+                Don't have an account?{" "}
                 <span>
                   <a href="/" className="text-blue-400 font-semibold">
                     {" "}
-                    Login
+                    Sign Up
                   </a>
                 </span>
               </p>

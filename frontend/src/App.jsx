@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import { Footer, NavBar, Register } from "./componets";
+import { Footer, NavBar } from "./componets";
+import FoodPage from "./pages/FoodPage";
 
 export default function App() {
   return (
     <div>
       <NavBar />
-      <Register />
-
+      <FoodPage />
       <Footer />
     </div>
   );

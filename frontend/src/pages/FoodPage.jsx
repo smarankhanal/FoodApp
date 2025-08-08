@@ -1,8 +1,9 @@
 import Button from "../componets/Button";
-
+import { Input } from "../componets";
+import ReviewWithStars from "../componets/ReviewWithStars";
 export default function FoodPage() {
   return (
-    <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage">
+    <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage ">
       <div className=" w-full max-w-4xl mx-auto pt-20">
         <div
           className="flex flex-row  bg-[#f6f6f6] dark:bg-[#000000]  rounded-lg shadow-lg
@@ -20,7 +21,8 @@ export default function FoodPage() {
             </p>
             <p className="font-semibold">Type: Main Course</p>
             <p className="font-semibold">Subcategory: Vegetarian</p>
-            <p className="font-bold text-lg mt-2">$12.99</p>
+            <p className="font-bold text-lg mt-1">$12.99</p>
+            <ReviewWithStars />
           </div>
         </div>
 
