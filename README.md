@@ -1,5 +1,34 @@
 # FoodApp
 
+# 🍽️ FoodApp - Frontend
+
+A responsive and modern **Food Ordering App** frontend built with **React + Vite**, styled using **Tailwind CSS**, and powered by **Redux Toolkit** for state management.  
+It includes features such as ordering food, viewing order history, updating user details, switching between light/dark mode, and more.
+
+---
+
+## 🚀 Tech Stack
+
+- **React (Vite)** → Fast and modern frontend build setup
+- **React Hook Form** → For smooth and validated form handling
+- **Redux Toolkit** → State management for global app data
+- **Tailwind CSS** → Utility-first styling with dark mode support
+- **React Icons** → Beautiful, lightweight icons
+
+---
+
+## ✨ Features
+
+- 🍔 **Order Food** – Browse menu items and place orders.
+- 📜 **View Order History** – Check all past orders in a clean history page.
+- 🔑 **Change Password** – Securely update account credentials.
+- 📝 **Update User Details** – Edit name, email, and other profile information.
+- 🌙 **Dark / Light Mode Toggle** – Switch themes with smooth styling.
+- ⚡ **Fast Performance** – Powered by Vite for lightning-fast development and builds.
+- 📱 **Responsive Design** – Optimized for mobile, tablet, and desktop.
+
+---
+
 ## Backend
 
 # 🍔 FoodApp Backend
