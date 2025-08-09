@@ -8,6 +8,9 @@ import StatusBadge from "./StatusBadge";
 import UserProfile from "./User/UserProfile";
 import NoOrder from "./NoOrder";
 import Address from "./Address";
+import ChangePw from "./Settings/ChangePw";
+import PopUp from "./Settings/PopUp";
+import Update from "./Settings/Update";
 export {
   Button,
   FoodCard,
@@ -19,4 +22,7 @@ export {
   UserProfile,
   NoOrder,
   Address,
+  ChangePw,
+  Update,
+  PopUp,
 };

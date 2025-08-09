@@ -8,6 +8,7 @@ import User from "./User";
 import UserHistory from "./UserHistory";
 import SingleOrderHistory from "./SingleOrderHistory";
 import HelpSupport from "./HelpSupport";
+import Settings from "./Settings";
 export {
   FirstPage,
   FoodCardPage,
@@ -19,4 +20,5 @@ export {
   UserHistory,
   SingleOrderHistory,
   HelpSupport,
+  Settings,
 };

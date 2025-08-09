@@ -36,7 +36,7 @@ export default function ReviewWithStars() {
           value={review}
           onChange={(e) => setReview(e.target.value)}
           placeholder="Write your review"
-          className="border border-gray-300 rounded-md px-2 py-1 w-64 hover:border-amber-500 dark:text-white"
+          className="border border-gray-300 rounded-md px-2 py-1 w-64 hover:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:text-white"
         />
       </div>
     </div>
