@@ -7,6 +7,7 @@ import SingleOrderFood from "./SingleOrderFood";
 import StatusBadge from "./StatusBadge";
 import UserProfile from "./User/UserProfile";
 import NoOrder from "./NoOrder";
+import Address from "./Address";
 export {
   Button,
   FoodCard,
@@ -17,4 +18,5 @@ export {
   StatusBadge,
   UserProfile,
   NoOrder,
+  Address,
 };

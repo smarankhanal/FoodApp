@@ -1,19 +1,13 @@
 import React from "react";
 import "./App.css";
-import { FoodCard, Footer, NavBar } from "./componets";
-import {
-  FoodCardPage,
-  Ordered,
-  SingleOrderHistory,
-  UserHistory,
-} from "./pages";
+import { Footer, NavBar } from "./componets";
+import { User } from "./pages";
 
 export default function App() {
   return (
-    <div>
+    <div className="relative">
       <NavBar />
-      <SingleOrderHistory />
-      {/* <Ordered /> */}
+      <User />
       <Footer />
     </div>
   );

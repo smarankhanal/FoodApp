@@ -7,6 +7,7 @@ import Register from "./Register";
 import User from "./User";
 import UserHistory from "./UserHistory";
 import SingleOrderHistory from "./SingleOrderHistory";
+import HelpSupport from "./HelpSupport";
 export {
   FirstPage,
   FoodCardPage,
@@ -17,4 +18,5 @@ export {
   User,
   UserHistory,
   SingleOrderHistory,
+  HelpSupport,
 };
