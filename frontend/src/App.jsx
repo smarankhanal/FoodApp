@@ -1,13 +1,19 @@
 import React from "react";
 import "./App.css";
-import { Footer, NavBar } from "./componets";
-import FoodPage from "./pages/FoodPage";
+import { FoodCard, Footer, NavBar } from "./componets";
+import {
+  FoodCardPage,
+  Ordered,
+  SingleOrderHistory,
+  UserHistory,
+} from "./pages";
 
 export default function App() {
   return (
     <div>
       <NavBar />
-      <FoodPage />
+      <SingleOrderHistory />
+      {/* <Ordered /> */}
       <Footer />
     </div>
   );
