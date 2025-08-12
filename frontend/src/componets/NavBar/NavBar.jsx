@@ -6,7 +6,7 @@ import Logo from "../Logo";
 export default function NavBar() {
   return (
     <div
-      className={` fixed top-0 left-1/2 transform -translate-x-1/2 w-full  max-w-5xl mx-auto  bg-amber-400 p-3 m-3 rounded-lg z-999`}
+      className={` fixed top-0 left-1/2 transform -translate-x-1/2 w-full  max-w-5xl mx-auto  shadow-[1px_1px_1px_black] dark:shadow-[1px_1px_1px_white] bg-amber-400 p-3 m-3 rounded-lg z-999`}
     >
       <div className="flex items-center gap-10 h-[25px]">
         <Logo className={"h-8 w-8 "} />
