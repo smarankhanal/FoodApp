@@ -4,7 +4,7 @@ import Single from "./Single";
 Single;
 export default function Sidebar() {
   return (
-    <div className="pt-3 pl-3">
+    <div className="pt-3 pl-3 min-h-screen">
       <Single text="Home" href="/home">
         <a href="/">Home</a>
         <hr className="h-2  text-white dark:text-black" />

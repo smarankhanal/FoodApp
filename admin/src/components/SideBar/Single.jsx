@@ -5,7 +5,7 @@ export default function Single({ text, href = "/", children }) {
 
   return (
     <>
-      <div className="bg-black dark:bg-white dark:text-black text-white p-2 rounded w-[150px] font-bold dark:drop-shadow-[1px_1px_5px_white] drop-shadow-[1px_1px_5px_black] flex items-center justify-center cursor-pointer my-5">
+      <div className="bg-black dark:bg-white dark:text-black text-white p-2 rounded w-[150px] font-bold shadow-[2px_2px_1px_blue] flex items-center justify-center cursor-pointer my-5">
         <a href={href} className="flex-1 hover:scale-[1.03]">
           {text}
         </a>

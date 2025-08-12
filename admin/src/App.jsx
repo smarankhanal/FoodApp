@@ -1,11 +1,15 @@
 import React from "react";
 import { Navbar, Sidebar } from "./components";
 import "./App.css";
+import Order from "./pages/Order";
 export default function App() {
   return (
-    <div className="dark:bg-black bg-white min-h-screen pt-2">
+    <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage  pt-2">
       <Navbar />
-      <Sidebar />
+      <div className="flex">
+        <Sidebar />
+        <Order />
+      </div>
     </div>
   );
 }
