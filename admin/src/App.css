@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.bgImage {
+  @apply bg-cover  bg-no-repeat min-h-screen dark:opacity-70;
+}
