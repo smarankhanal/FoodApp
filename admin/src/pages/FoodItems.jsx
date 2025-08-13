@@ -17,10 +17,29 @@ export default function FoodItems() {
       </div>
 
       <div className="flex m-4 bg-amber-500 rounded-lg p-2">
-        <p className="flex-1/4 font-bold">IMAGE</p>
-        <p className="flex-1/4 font-bold">NAME</p>
-        <p className="flex-1/4 font-bold">CATEGORY/TYPE </p>
-        <p className="flex-1/4 font-bold mr-18">AMOUNT</p>
+        <p className="flex-1 font-bold">IMAGE</p>
+        <p className="flex-1 font-bold">NAME</p>
+        <p className="flex-1 font-bold">CATEGORY/TYPE </p>
+        <p className="flex-1 font-bold">AMOUNT</p>
+        <div className=" flex-1">
+          <select
+            className="border rounded p-1 outline-none  cursor-pointer"
+            onChange={(e) => handleSortChange(e.target.value)}
+          >
+            <option value="pending" className="dark:bg-black bg-white">
+              Veg
+            </option>
+            <option value="completed" className="dark:bg-black bg-white">
+              Non-Veg
+            </option>
+            <option value="price_asc" className="dark:bg-black bg-white">
+              Amount ↑
+            </option>
+            <option value="price_desc" className="dark:bg-black bg-white">
+              Amount ↓
+            </option>
+          </select>
+        </div>
       </div>
       <SingleFoodItems />
     </div>
