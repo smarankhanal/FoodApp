@@ -1,6 +1,5 @@
 import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
-import { FaClipboardList } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 
 import Status from "./Status";

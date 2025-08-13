@@ -9,7 +9,9 @@ export default function Navbar() {
         <Logo />
       </div>
       <div className="p-2">
-        <Button>LogOut</Button>
+        <Button className=" dark:bg-black  bg-white text-black dark:text-white">
+          LogOut
+        </Button>
       </div>
     </div>
   );
