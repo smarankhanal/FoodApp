@@ -23,21 +23,13 @@ export default function FoodItems() {
         <p className="flex-1 font-bold">AMOUNT</p>
         <div className=" flex-1">
           <select
-            className="border rounded p-1 outline-none  cursor-pointer"
+            className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white"
             onChange={(e) => handleSortChange(e.target.value)}
           >
-            <option value="pending" className="dark:bg-black bg-white">
-              Veg
-            </option>
-            <option value="completed" className="dark:bg-black bg-white">
-              Non-Veg
-            </option>
-            <option value="price_asc" className="dark:bg-black bg-white">
-              Amount ↑
-            </option>
-            <option value="price_desc" className="dark:bg-black bg-white">
-              Amount ↓
-            </option>
+            <option value="pending">Veg</option>
+            <option value="completed">Non-Veg</option>
+            <option value="price_asc">Amount ↑</option>
+            <option value="price_desc">Amount ↓</option>
           </select>
         </div>
       </div>

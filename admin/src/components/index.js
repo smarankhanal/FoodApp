@@ -9,6 +9,7 @@ import FoodItem from "./FoodItem";
 import FoodItemDetails from "./FoodItemDetails";
 import FoodManager from "./FoodManager";
 import Input from "./Input";
+import Select from "./Select";
 export {
   Sidebar,
   Logo,
@@ -20,4 +21,6 @@ export {
   FoodItem,
   FoodItemDetails,
   FoodManager,
+  Input,
+  Select,
 };

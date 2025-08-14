@@ -1,6 +1,7 @@
 import React from "react";
 import { FoodManager, Navbar, Sidebar } from "./components";
 import "./App.css";
+import FoodItems from "./pages/FoodItems";
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       <div className="flex">
         <Sidebar />
         <FoodManager />
+        {/* <FoodItems /> */}
       </div>
     </div>
   );

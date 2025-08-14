@@ -18,21 +18,13 @@ export default function User() {
         <p className="flex-1 font-bold">DATE </p>
         <div className=" flex-1">
           <select
-            className="border rounded p-1 outline-none  cursor-pointer"
+            className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white"
             onChange={(e) => handleSortChange(e.target.value)}
           >
-            <option value="name_as" className="dark:bg-black bg-white">
-              Active
-            </option>
-            <option value="name_desc" className="dark:bg-black bg-white">
-              No Active
-            </option>
-            <option value="price_asc" className="dark:bg-black bg-white">
-              Date ↑
-            </option>
-            <option value="price_desc" className="dark:bg-black bg-white">
-              Date ↓
-            </option>
+            <option value="name_as">Active</option>
+            <option value="name_desc">No Active</option>
+            <option value="price_asc">Date ↑</option>
+            <option value="price_desc">Date ↓</option>
           </select>
         </div>
       </div>
