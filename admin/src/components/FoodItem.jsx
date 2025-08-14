@@ -3,7 +3,7 @@ import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Status from "./Status";
 
-export default function SingleFoodItems() {
+export default function FoodItem() {
   return (
     <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex items-center">
       <div className="flex-1">

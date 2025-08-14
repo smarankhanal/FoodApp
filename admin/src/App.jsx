@@ -1,15 +1,14 @@
 import React from "react";
-import { Navbar, Sidebar } from "./components";
+import { FoodManager, Navbar, Sidebar } from "./components";
 import "./App.css";
-import Order from "./pages/Order";
-import FoodItems from "./pages/FoodItems";
-import User from "./pages/User";
+
 export default function App() {
   return (
-    <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage  pt-2">
+    <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-2 min-h-screen">
       <Navbar />
       <div className="flex">
         <Sidebar />
+        <FoodManager />
       </div>
     </div>
   );

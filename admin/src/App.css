@@ -3,5 +3,5 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .bgImage {
-  @apply bg-cover  bg-no-repeat min-h-screen;
+  @apply bg-cover  bg-no-repeat bg-center bg-fixed;
 }

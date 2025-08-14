@@ -1,6 +1,8 @@
 import React from "react";
 import { TiUserDelete } from "react-icons/ti";
 import { FaClipboardList } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa6";
+
 import Status from "./Status";
 
 export default function SingleUser() {
@@ -28,6 +30,12 @@ export default function SingleUser() {
             title="Delete User"
           >
             <TiUserDelete className="text-red-600 text-[18px]" />
+          </div>
+          <div
+            className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03] ml-3"
+            title="View user details"
+          >
+            <FaRegEye className="text-blue-600 text-[18px]" />
           </div>
         </div>
       </div>

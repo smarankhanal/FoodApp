@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, SingleFoodItems } from "../components";
+import { Search, FoodItem } from "../components";
 import { MdOutlineAdd } from "react-icons/md";
 
 import Button from "../components/Button";
@@ -41,7 +41,7 @@ export default function FoodItems() {
           </select>
         </div>
       </div>
-      <SingleFoodItems />
+      <FoodItem />
     </div>
   );
 }

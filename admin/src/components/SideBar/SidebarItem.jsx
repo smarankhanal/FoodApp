@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaArrowDown, FaArrowRight } from "react-icons/fa";
-export default function Single({ text, href = "/", children }) {
+export default function SidebarItem({ text, href = "/", children }) {
   const [show, setShow] = useState(false);
 
   return (

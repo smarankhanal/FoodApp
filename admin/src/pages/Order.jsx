@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, SingleOrder } from "../components";
+import { Search, OrderItem } from "../components";
 
 export default function Order() {
   return (
@@ -51,7 +51,7 @@ export default function Order() {
         </div>
       </div>
 
-      <SingleOrder />
+      <OrderItem />
     </div>
   );
 }
