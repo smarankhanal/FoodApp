@@ -1,9 +1,9 @@
 import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import Status from "./Status";
+import Status from "../Status";
 
-export default function SingleOrder() {
+export default function OrderItemSummary() {
   return (
     <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex items-center">
       <p className="flex-1">Order Id :</p>

@@ -3,7 +3,7 @@ import { TiUserDelete } from "react-icons/ti";
 import { FaClipboardList } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
 
-import Status from "./Status";
+import Status from "../Status";
 
 export default function SingleUser() {
   return (

@@ -9,7 +9,7 @@ export default function Select({ className = "", children, label, ...props }) {
         </label>
       )}
       <select
-        className={`px-3 py-3  w-full outline-none rounded-lg border border-blue-400 text-black shadow-sm hover:shadow-[2px_2px_1px_blue] transition-shadow duration-300 ${className}`}
+        className={`px-3 py-3  w-full outline-none rounded-lg border border-blue-400 text-black shadow-sm hover:shadow-[2px_2px_1px_blue] transition-shadow duration-300  cursor-pointer ${className}`}
         {...props}
       >
         {children}

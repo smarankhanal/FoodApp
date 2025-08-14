@@ -1,8 +1,8 @@
 import React from "react";
-import Input from "./Input";
-import Button from "./Button";
+import Input from "../Input";
+import Button from "../Button";
 import { MdOutlineAdd } from "react-icons/md";
-import Select from "./Select";
+import Select from "../Select";
 export default function FoodManager() {
   return (
     <div className=" w-full max-w-2xl mx-auto font-serif p-4 rounded-lg">
