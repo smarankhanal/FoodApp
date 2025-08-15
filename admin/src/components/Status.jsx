@@ -5,7 +5,6 @@ export default function Status({ className = "", children }) {
     <div className="flex-1">
       <div
         className={`h-fit w-fit px-2  font-bold rounded-lg bg-white dark:bg-black  ${className}`}
-        title="Active"
       >
         {children}
       </div>
