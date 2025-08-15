@@ -1,20 +1,20 @@
-import FirstPage from "./FirstPage";
-import FoodCardPage from "./FoodCardPage";
-import FoodPage from "./FoodPage";
-import Login from "./LogIn";
-import Ordered from "./Ordered";
-import Register from "./Register";
-import User from "./User";
-import UserHistory from "./UserHistory";
-import SingleOrderHistory from "./SingleOrderHistory";
+import LoginPage from "./LoginNRegister/LoginPage";
+import Login from "./LoginNRegister/LogIn";
+import Register from "./LoginNRegister/Register";
+import FoodItems from "./FoodItem/FoodItems";
+import FoodPage from "./FoodItem/FoodPage";
+import OrderItems from "./Order/OrderItems";
+import User from "./User/User";
+import UserHistory from "./User/UserHistory";
+import SingleOrderHistory from "./Order/SingleOrderHistory";
 import HelpSupport from "./HelpSupport";
 import Settings from "./Settings";
 export {
-  FirstPage,
-  FoodCardPage,
+  LoginPage,
+  FoodItems,
   FoodPage,
   Login,
-  Ordered,
+  OrderItems,
   Register,
   User,
   UserHistory,

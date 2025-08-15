@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import Input from "../componets/Input";
-import Button from "../componets/Button";
-import Logo from "../componets/Logo";
+
+import { Input, Button, Logo } from "../../components";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-
 export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
 

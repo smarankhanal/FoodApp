@@ -1,5 +1,5 @@
 import React from "react";
-import { SingleOrderFood } from "../componets";
+import { SingleOrderItem } from "../../components";
 
 export default function SingleOrderHistory() {
   return (
@@ -19,8 +19,8 @@ export default function SingleOrderHistory() {
       </div>
 
       <div className="w-full max-w-3xl mx-auto">
-        <SingleOrderFood />
-        <SingleOrderFood />
+        <SingleOrderItem />
+        <SingleOrderItem />
       </div>
     </div>
   );

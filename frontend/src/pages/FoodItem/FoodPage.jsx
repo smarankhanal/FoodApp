@@ -1,5 +1,5 @@
-import Button from "../componets/Button";
-import ReviewWithStars from "../componets/ReviewWithStars";
+import { Button, ReviewWithStars } from "../../components";
+
 export default function FoodPage() {
   return (
     <div className=" bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage ">

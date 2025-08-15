@@ -1,7 +1,8 @@
 import Button from "./Button";
+import Input from "./Input";
+import Logo from "./Logo";
 import FoodCard from "./FoodCard/FoodCard";
 import Footer from "./Footer/Footer";
-import Input from "./Input";
 import NavBar from "./NavBar/NavBar";
 import SingleOrderItem from "./Order/SingleOrderItem";
 import StatusBadge from "./StatusBadge";
@@ -10,7 +11,14 @@ import NoOrder from "./Order/NoOrder";
 import Address from "./Address";
 import ChangePw from "./Settings/ChangePw";
 import UpdateUserDetails from "./Settings/UpdateUserDetails";
+import ReviewWithStars from "./Order/ReviewWithStars";
+import Update from "./Settings/UpdateUserDetails";
+import Status from "./Status";
+import Toast from "./Toast";
 export {
+  Toast,
+  Status,
+  Update,
   Button,
   FoodCard,
   Footer,
@@ -23,4 +31,6 @@ export {
   Address,
   ChangePw,
   UpdateUserDetails,
+  Logo,
+  ReviewWithStars,
 };

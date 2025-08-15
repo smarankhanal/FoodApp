@@ -1,15 +1,26 @@
 import React from "react";
 import "./App.css";
-import { Footer, NavBar } from "./componets";
-import SingleOrderHistory from "./pages/SingleOrderHistory";
-import Ordered from "./pages/Ordered";
+import { Footer, NavBar } from "./components";
+import {
+  FoodItems,
+  FoodPage,
+  OrderItems,
+  Settings,
+  User,
+  UserHistory,
+} from "./pages";
 export default function App() {
   return (
     <div className="relative">
       <NavBar />
       {/* <Ordered /> */}
-      <SingleOrderHistory />
-
+      {/* <SingleOrderHistory /> */}
+      {/* <FoodItems /> */}
+      {/* <OrderItems /> */}
+      {/* <Settings /> */}
+      {/* <FoodPage /> */}
+      {/* <User /> */}
+      <UserHistory />
       <Footer />
     </div>
   );

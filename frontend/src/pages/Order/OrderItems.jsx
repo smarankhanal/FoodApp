@@ -1,7 +1,7 @@
 import React from "react";
-import { SingleOrderFood, Button, StatusBadge } from "../componets";
+import { SingleOrderItem, Button, StatusBadge } from "../../components";
 
-export default function Ordered() {
+export default function OrderItems() {
   return (
     <>
       <div className="relative bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20 pb-10 px-4  ">
@@ -19,15 +19,10 @@ export default function Ordered() {
 
         <hr className="border-0 h-0.5 bg-gray-700 mx-4" />
         <div className="w-full max-w-3xl mx-auto">
-          <SingleOrderFood />
-          <SingleOrderFood />
-
-          <SingleOrderFood />
-          <SingleOrderFood />
-          <SingleOrderFood />
-          <SingleOrderFood />
-          <SingleOrderFood />
-          <SingleOrderFood />
+          <SingleOrderItem />
+          <SingleOrderItem />
+          <SingleOrderItem />
+          <SingleOrderItem />
         </div>
       </div>
     </>

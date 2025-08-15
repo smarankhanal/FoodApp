@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ChangePw, Update } from "../componets";
+import { Button, ChangePw, Update } from "../components";
 
 export default function Settings() {
   return (

@@ -1,8 +1,7 @@
 import React from "react";
-import Button from "../componets/Button";
-import Logo from "../componets/Logo";
+import { Button, Logo } from "../../components";
 
-export default function FirstPage() {
+export default function LoginPage() {
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage">
       <div className="py-20 px-20 dark:text-white text-black font-semibold">

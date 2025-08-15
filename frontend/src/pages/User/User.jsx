@@ -1,5 +1,5 @@
 import React from "react";
-import { UserProfile } from "../componets";
+import { UserProfile } from "../../components";
 
 export default function User() {
   return (
