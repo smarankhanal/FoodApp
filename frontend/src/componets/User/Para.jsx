@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -8,10 +8,7 @@ import { MdOutlinePayment } from "react-icons/md";
 export default function Para() {
   return (
     <>
-      <div
-        className="relative flex flex-row items-center w-[300px] m-2 cursor-pointer"
-        onClick={() => setShowAddress(true)}
-      >
+      <div className="relative flex flex-row items-center w-[300px] m-2 cursor-pointer">
         <FaLocationDot className="mr-3" />
         <p className="flex-1">Address</p>
         <MdOutlineArrowForwardIos />
