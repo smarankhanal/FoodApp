@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Logo from "../components/Logo";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
+import { Toast } from "../components";
 
 export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,10 +12,10 @@ export default function LogIn() {
   const toggleVisibility = () => setShowPassword((prev) => !prev);
   return (
     <>
-      <div className="w-full  max-w-100 mx-auto bg-white dark:bg-black dark:text-white   mb-10 p-2 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg mt-20">
+      <div className="w-full  max-w-100 mx-auto bg-white dark:bg-black text-white   mb-10 p-2 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg mt-20">
         <div className="flex flex-col items-center justify-center">
           <Logo className="w-20 h-20" />
-          <p className="font-bold">Admin</p>
+          <p className="font-bold text-black dark:text-white">Admin</p>
         </div>
         <div>
           <Input label="Email:" />
@@ -25,7 +26,7 @@ export default function LogIn() {
             />
             <button
               type="button"
-              className="absolute top-10 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-13 right-3 text-gray-500 hover:text-gray-700"
               onClick={toggleVisibility}
             >
               {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
@@ -36,6 +37,7 @@ export default function LogIn() {
           </div>
         </div>
       </div>
+      {/* <Toast /> */}
     </>
   );
 }
