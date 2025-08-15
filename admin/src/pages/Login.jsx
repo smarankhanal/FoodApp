@@ -37,7 +37,6 @@ export default function LogIn() {
           </div>
         </div>
       </div>
-      {/* <Toast /> */}
     </>
   );
 }
