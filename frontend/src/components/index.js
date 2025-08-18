@@ -15,9 +15,12 @@ import ReviewWithStars from "./Order/ReviewWithStars";
 import Update from "./Settings/UpdateUserDetails";
 import Status from "./Status";
 import Toast from "./Toast";
-import PublicRoute from "./PublicRoute";
-import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./Route/PublicRoute";
+import ProtectedRoute from "./Route/ProtectedRoute";
+import ChangeMode from "./mode/ChangeMode";
+import DarkModeInitializer from "./mode/DarkModeInitializer";
 export {
+  DarkModeInitializer,
   PublicRoute,
   ProtectedRoute,
   Toast,
@@ -37,4 +40,5 @@ export {
   UpdateUserDetails,
   Logo,
   ReviewWithStars,
+  ChangeMode,
 };

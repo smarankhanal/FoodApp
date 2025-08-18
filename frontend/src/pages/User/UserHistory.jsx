@@ -63,7 +63,7 @@ export default function UserHistory() {
                   {order.totalPrice}
                 </p>
                 <div className="flex-1">
-                  <Status className="text-amber-500 drop-shadow-[2px_2px_orange]">
+                  <Status className="text-amber-500 drop-shadow-[1px_1px_orange]">
                     Pending
                   </Status>
                 </div>

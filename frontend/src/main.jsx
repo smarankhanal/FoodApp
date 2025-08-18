@@ -5,18 +5,21 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PublicRoute } from "./components/index";
+import { Address, PublicRoute } from "./components/index";
 
 import { ProtectedRoute } from "./components/index";
 
 import {
   FoodItems,
+  HelpSupport,
   Login,
   LoginHome,
   LoginPage,
   OrderItems,
   Register,
   Settings,
+  User,
+  UserHistory,
 } from "./pages/index.js";
 
 const router = createBrowserRouter([
@@ -77,6 +80,38 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <OrderItems />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user",
+        element: (
+          <ProtectedRoute>
+            <User />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/address",
+        element: (
+          <ProtectedRoute>
+            <Address />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/help&support",
+        element: (
+          <ProtectedRoute>
+            <HelpSupport />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user-history",
+        element: (
+          <ProtectedRoute>
+            <UserHistory />
           </ProtectedRoute>
         ),
       },

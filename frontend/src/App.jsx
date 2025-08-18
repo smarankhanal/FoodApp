@@ -1,6 +1,6 @@
 import React, { use, useEffect } from "react";
 import "./App.css";
-import { Footer, NavBar } from "./components";
+import { DarkModeInitializer, Footer, NavBar } from "./components";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./store/authSlice";
@@ -11,6 +11,7 @@ export default function App() {
   }, []);
   return (
     <div className="relative">
+      <DarkModeInitializer />
       <NavBar />
       <Outlet />
       <Footer />

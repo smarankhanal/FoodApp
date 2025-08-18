@@ -34,7 +34,7 @@ export default function FoodCard() {
         <Quantity />
 
         <div className="flex flex-col justify-center items-center">
-          <Button className="px-6 py-2">Add to Cart</Button>
+          <Button className="px-6 py-2 hover:bg-green-500">Add to Cart</Button>
         </div>
       </div>
     </div>

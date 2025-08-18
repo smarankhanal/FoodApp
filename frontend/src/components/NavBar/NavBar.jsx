@@ -5,6 +5,7 @@ import Logo from "../Logo";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
+import ChangeMode from "../mode/ChangeMode";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -38,12 +39,11 @@ export default function NavBar() {
             >
               Order
             </AnchorTag>
-            <AnchorTag
-              href={"/settings"}
-              className="font-bold dark:text-gray-700"
-            >
-              Settings
+
+            <AnchorTag href={"/user"} className="font-bold dark:text-gray-700">
+              User
             </AnchorTag>
+            <ChangeMode />
           </>
         )}
 
