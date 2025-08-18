@@ -15,7 +15,11 @@ import ReviewWithStars from "./Order/ReviewWithStars";
 import Update from "./Settings/UpdateUserDetails";
 import Status from "./Status";
 import Toast from "./Toast";
+import PublicRoute from "./PublicRoute";
+import ProtectedRoute from "./ProtectedRoute";
 export {
+  PublicRoute,
+  ProtectedRoute,
   Toast,
   Status,
   Update,

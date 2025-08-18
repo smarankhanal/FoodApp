@@ -3,10 +3,12 @@ import { Button, Input } from "../../components";
 
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-
+import { Link } from "react-router-dom";
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const toggleVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   return (
     <>
       <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-18">
@@ -32,7 +34,13 @@ export default function Register() {
               </button>
             </div>
             <Input className="h-9" label="Full Name :" type="email" />
-            <Input className="h-9" label="Phone Number :" type="number" />
+            <Input
+              className="h-9 
+             [&::-webkit-inner-spin-button]:appearance-none 
+             [&::-webkit-outer-spin-button]:appearance-none"
+              label="Phone Number :"
+              type="number"
+            />
             <Input className="h-9" label="Address :" type="text" />
 
             <div className="flex items-center justify-center">
@@ -42,10 +50,10 @@ export default function Register() {
               <p>
                 Already have an account?{" "}
                 <span>
-                  <a href="/" className="text-blue-400 font-semibold">
+                  <Link to="/login" className="text-blue-400 font-semibold">
                     {" "}
                     Login
-                  </a>
+                  </Link>
                 </span>
               </p>
             </div>

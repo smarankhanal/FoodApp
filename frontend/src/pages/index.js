@@ -9,6 +9,7 @@ import UserHistory from "./User/UserHistory";
 import SingleOrderHistory from "./Order/SingleOrderHistory";
 import HelpSupport from "./HelpSupport";
 import Settings from "./Settings";
+import LoginHome from "./LoginHome";
 export {
   LoginPage,
   FoodItems,
@@ -21,4 +22,5 @@ export {
   SingleOrderHistory,
   HelpSupport,
   Settings,
+  LoginHome,
 };

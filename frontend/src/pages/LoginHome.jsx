@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Logo } from "../../components";
+import { Button, Logo } from "../components";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginPage() {
+export default function LoginHome() {
   const navigate = useNavigate();
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage">
@@ -23,8 +23,8 @@ export default function LoginPage() {
           FoodEase today!
         </p>
         <div className="flex align-center justify-center">
-          <Button className="w-20" onClick={() => navigate("/login")}>
-            Login
+          <Button className="w-20" onClick={() => navigate("/fooditems")}>
+            Order
           </Button>
         </div>
       </div>

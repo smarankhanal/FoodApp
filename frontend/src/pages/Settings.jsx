@@ -1,7 +1,17 @@
 import React from "react";
 import { Button, ChangePw, Update } from "../components";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../store/authSlice";
 
 export default function Settings() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-20 font-serif  text-black dark:text-white">
       <p className="font-bold text-3xl text-center">Settings</p>
@@ -15,7 +25,10 @@ export default function Settings() {
           </Button>
         </div>
         <div className="flex items-center justify-center mt-10">
-          <Button className="bg-red-600 hover:bg-red-600 hover:opacity-50">
+          <Button
+            onClick={() => handleLogout()}
+            className="bg-red-600 hover:bg-red-600 hover:opacity-50"
+          >
             Log out
           </Button>
         </div>

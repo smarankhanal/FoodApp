@@ -2,7 +2,7 @@ import React from "react";
 import { MdDeleteSweep } from "react-icons/md";
 
 export default function SingleOrderItem() {
-  const type = "veg";
+  const type = "Veg";
   return (
     <div className=" relative flex flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] ">
       <MdDeleteSweep className=" absolute top-2 right-2 h-7 w-7 text-red-500 hover:scale-[1.2] cursor-pointer" />
@@ -17,7 +17,9 @@ export default function SingleOrderItem() {
         <p className={`font-bold `}>
           Type :-
           <span
-            className={` ${type === "veg" ? "text-green-500" : "text-red-500"}`}
+            className={` ${
+              type.toLowerCase() === "veg" ? "text-green-500" : "text-red-500"
+            }`}
           >
             {type}
           </span>

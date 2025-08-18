@@ -1,5 +1,5 @@
-import React, { Children } from "react";
-
+import React from "react";
+import { Link } from "react-router-dom";
 export default function AnchorTag({
   href = "/",
   children,
@@ -7,12 +7,12 @@ export default function AnchorTag({
   ...props
 }) {
   return (
-    <a
-      href={href}
-      className={`  hover:underline   hover:decoration-2 hover:underline-offset-4  active:opacity-70 transition-opacity duration-150  ${className}`}
+    <Link
+      to={href}
+      className={` hover:underline   hover:decoration-2 hover:underline-offset-4  focus:opacity-70 transition-opacity duration-150  ${className}`}
       {...props}
     >
       {children}
-    </a>
+    </Link>
   );
 }
