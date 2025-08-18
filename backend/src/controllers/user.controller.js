@@ -53,13 +53,15 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User registered successfully"));
 });
 const login = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!(username || email)) {
-    throw new ApiError(400, "email or username is missing");
+  const { identifier, password } = req.body;
+  if (!identifier) {
+    throw new ApiError(400, "Email or Username is missing");
   }
-  const user = await User.findOne({ $or: [{ username }, { email }] });
+  const user = await User.findOne({
+    $or: [{ username: identifier }, { email: identifier }],
+  });
   if (!user) {
-    throw new ApiError(404, "user doesnot exist");
+    throw new ApiError(404, "User doesnot exist");
   }
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) {
@@ -119,6 +121,13 @@ const logout = asyncHandler(async (req, res) => {
     .clearCookie("refreshToken", options)
     .clearCookie("accessToken", options)
     .json(new ApiResponse(200, {}, "User Logout successfully"));
+});
+const getMe = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user).select("-password");
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
 });
 const updateAccoutDetails = asyncHandler(async (req, res) => {
   const { fullname, email } = req.body;
@@ -244,4 +253,5 @@ export {
   getFoodItems,
   addReview,
   getReview,
+  getMe,
 };

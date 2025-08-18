@@ -9,6 +9,7 @@ import {
   updateAccoutDetails,
   addReview,
   getReview,
+  getMe,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
@@ -20,7 +21,7 @@ import {
 import { validate } from "../middlewares/validate.middleware.js";
 import { registerValidator } from "../validators/auth.validators.js";
 const router = Router();
-
+router.route("/me").get(verifyJWT, getMe);
 router.route("/register-user").post(registerValidator, validate, registerUser);
 
 router.route("/login").post(login);
