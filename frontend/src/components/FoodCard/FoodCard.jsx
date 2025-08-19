@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../Button";
 import Quantity from "./Quantity";
 
-export default function FoodCard() {
+export default function FoodCard({ item }) {
   return (
     <div
       className="w-[300px] mt-4 ml-4 rounded-lg  bg-[#f6f6f6] dark:bg-[#000000]  dark:drop-shadow-[2px_2px_5px_white] drop-shadow-[2px_2px_5px_black] 
@@ -23,13 +23,13 @@ export default function FoodCard() {
       </div>
       <div className="p-4">
         <h3 className="font-bold text-lg dark:text-white text-black mb-1">
-          Food Item
+          {item.foodName}
         </h3>
         <p className="text-sm dark:text-gray-300 text-gray-700 mb-2">
-          Description of the food item goes here. Something tasty!
+          {item.description}
         </p>
         <p className="font-semibold dark:text-white text-black mb-4">
-          Price: Rs 250
+          Price :- {item.price}
         </p>
         <Quantity />
 
