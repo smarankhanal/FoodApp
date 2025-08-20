@@ -3,13 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeMode } from "../../store/modeSlice";
 import Button from "../Button";
 export default function ChangeMode({ className = "" }) {
-  const mode = useSelector((state) => state.mode.mode);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const html = document.documentElement;
-    html.classList.remove("light", "dark");
-    html.classList.add(mode);
-  }, [mode]);
+
   return (
     <>
       <Button

@@ -14,7 +14,7 @@ export default function FoodItems() {
     <div className=" bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage pt-20">
       <div className="grid grid-cols-3 m-2">
         {items.map((item) => (
-          <FoodCard key={item.id} item={item} />
+          <FoodCard key={item._id} item={item} />
         ))}
       </div>
     </div>
