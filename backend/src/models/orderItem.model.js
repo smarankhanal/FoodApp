@@ -9,9 +9,16 @@ const orderSchema = new Schema(
     },
     foodItems: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "foodItem",
-        required: true,
+        foodItem: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "foodItem",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          min: 1,
+        },
       },
     ],
     totalPrice: {
