@@ -24,15 +24,15 @@ const registerUser = asyncHandler(async (req, res) => {
   let { username, fullname, email, password, address, phoneNumber } = req.body;
   if (
     [username, fullname, password, email, address, phoneNumber].some(
-      (field) => field?.trim() === ""
+      (field) => String(field)?.trim() === ""
     )
   ) {
-    throw new ApiError(400, "All field are reuqired");
+    throw new ApiError(400, "All fields are reuqired");
   }
   fullname = toCaptalizie(fullname);
   const existedUser = await User.findOne({ $or: [{ username }, { email }] });
   if (existedUser) {
-    throw new ApiError(409, "User or email alreday exists");
+    throw new ApiError(409, "Username or email already exists");
   }
   const user = await User.create({
     username: username.toLowerCase(),
@@ -49,8 +49,8 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "User creation failed");
   }
   return res
-    .status(200)
-    .json(new ApiResponse(200, createdUser, "User registered successfully"));
+    .status(201)
+    .json(new ApiResponse(201, createdUser, "User registered successfully"));
 });
 const login = asyncHandler(async (req, res) => {
   const { identifier, password } = req.body;
@@ -206,10 +206,19 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 const getFoodItems = asyncHandler(async (req, res) => {
   const foodItems = await FoodItem.find({});
-  console.log(foodItems);
   return res
     .status(200)
     .json(new ApiResponse(200, foodItems, "foodItems fetched successfully"));
+});
+const getSingleFoodItem = asyncHandler(async (req, res) => {
+  const foodItemId = req.params.foodItemId;
+  const foodItem = await FoodItem.findById(foodItemId);
+  if (!foodItem) {
+    throw new ApiError(404, "FoodItem not found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, foodItem, "FoodItem fetched successfully"));
 });
 const addReview = asyncHandler(async (req, res) => {
   const { review_text, star_rating } = req.body;
@@ -251,6 +260,7 @@ export {
   changeCurrentPassword,
   refreshAccessToken,
   getFoodItems,
+  getSingleFoodItem,
   addReview,
   getReview,
   getMe,

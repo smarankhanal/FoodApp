@@ -19,7 +19,9 @@ export const registerValidator = [
     .notEmpty()
     .withMessage("Username is required")
     .isAlphanumeric()
-    .withMessage("Username must be alphanumeric"),
+    .withMessage("Username must be alphanumeric")
+    .isLength({ min: 6 })
+    .withMessage("Username must be at least 6 characters"),
   body("password")
     .notEmpty()
     .withMessage("Password is required")
