@@ -11,6 +11,7 @@ import { ProtectedRoute } from "./components/index";
 
 import {
   FoodItems,
+  FoodPage,
   HelpSupport,
   Login,
   LoginHome,
@@ -112,6 +113,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <UserHistory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/foodItem/:id",
+        element: (
+          <ProtectedRoute>
+            <FoodPage />
           </ProtectedRoute>
         ),
       },

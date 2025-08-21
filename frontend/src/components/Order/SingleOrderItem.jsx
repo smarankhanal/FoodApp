@@ -1,12 +1,17 @@
 import React from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { useCapitalize } from "../../hooks/useCapitalize";
+import { useDispatch } from "react-redux";
+import { removeCart } from "../../store/cartSlice";
 export default function SingleOrderItem({ orderItem }) {
   const capitalize = useCapitalize();
-
+  const dispatch = useDispatch();
   return (
     <div className=" relative flex flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] ">
-      <MdDeleteSweep className=" absolute top-2 right-2 h-7 w-7 text-red-500 hover:scale-[1.2] cursor-pointer" />
+      <MdDeleteSweep
+        className=" absolute top-2 right-2 h-7 w-7 text-red-500 hover:scale-[1.2] cursor-pointer"
+        onClick={() => dispatch(removeCart(orderItem._id))}
+      />
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_FtLkRWNB8PmyvwOqk3FIfwv9VUE77E5sHw&s"
         alt="fooditem "
@@ -19,7 +24,7 @@ export default function SingleOrderItem({ orderItem }) {
         <p className="font-semibold">
           Subcategory :- {capitalize(orderItem.subCategory)}
         </p>
-        <p className={`font-bold `}>
+        <p className={`font-bold`}>
           Type :-
           <span
             className={`${
