@@ -15,7 +15,7 @@ import {
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   createOrder,
-  getSingleOrder,
+  SingleOrder,
   updateOrderStatus,
   userPurchaseHistory,
 } from "../controllers/order.controller.js";
@@ -32,7 +32,7 @@ router.route("/refresh-accessToken").post(refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 router.route("/food-items").get(verifyJWT, getFoodItems);
 router.route("/create-order").post(verifyJWT, createOrder);
-router.route("/single-order/:orderId").get(verifyJWT, getSingleOrder);
+router.route("/single-order/:orderId").get(verifyJWT, SingleOrder);
 router.route("/order-status/:orderId").patch(verifyJWT, updateOrderStatus);
 router.route("/purchase-history").get(verifyJWT, userPurchaseHistory);
 router.route("/foodItem/:foodItemId").get(verifyJWT, getSingleFoodItem);

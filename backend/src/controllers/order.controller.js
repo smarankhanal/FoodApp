@@ -4,38 +4,58 @@ import ApiResponse from "../utlis/ApiResponse.js";
 import { FoodItem } from "../models/foodItem.model.js";
 import { User } from "../models/user.model.js";
 import { Order } from "../models/orderItem.model.js";
-
 const createOrder = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { foodItems } = req.body;
-  if (!foodItems || !Array.isArray(foodItems) || foodItems.length === 0) {
-    throw new ApiError(400, "Fooditems are request to place a order");
+
+  if (
+    !foodItems ||
+    !Array.isArray(foodItems) ||
+    foodItems.length === 0 ||
+    !foodItems.every((item) => item.foodItem && item.quantity > 0)
+  ) {
+    throw new ApiError(
+      400,
+      "Fooditems are required and each must have a valid foodItem ID and quantity"
+    );
   }
-  const validFoodItem = await FoodItem.find({ _id: { $in: foodItems } });
-  if (!(validFoodItem.length === foodItems.length)) {
-    throw new ApiError(404, "fooditems invalid");
+
+  const foodItemIds = foodItems.map((item) => item.foodItem);
+  const validFoodItems = await FoodItem.find({ _id: { $in: foodItemIds } });
+
+  if (validFoodItems.length !== foodItems.length) {
+    throw new ApiError(404, "Some food items are invalid");
   }
-  const totalPrice = validFoodItem.reduce((sum, item) => sum + item.price, 0);
+
+  const totalPrice = foodItems.reduce((sum, item) => {
+    const food = validFoodItems.find((f) => f._id.toString() === item.foodItem);
+    return sum + food.price * item.quantity;
+  }, 0);
+
   const newOrder = await Order.create({
     user: userId,
     foodItems,
     totalPrice,
   });
+
   const user = await User.findById(userId);
   user.order = newOrder._id;
   user.purchaseHistory.push(newOrder._id);
   await user.save();
+
   return res
     .status(200)
     .json(new ApiResponse(200, newOrder, "User order successfully"));
 });
-const getSingleOrder = asyncHandler(async (req, res) => {
+
+const SingleOrder = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const orderId = req.params.orderId;
 
   const order = await Order.findOne({ _id: orderId, user: userId }).populate(
     "foodItems"
   );
+  console.log(order);
   if (!order) {
     throw new ApiError(404, "Order not found");
   }
@@ -48,7 +68,7 @@ const userPurchaseHistory = asyncHandler(async (req, res) => {
   const user = await User.findById(userId).populate({
     path: "purchaseHistory",
     populate: {
-      path: "foodItems",
+      path: "foodItems.foodItem",
       model: "foodItem",
     },
   });
@@ -88,4 +108,4 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
       new ApiResponse(200, updateOrder, "Order status updated successfully")
     );
 });
-export { createOrder, getSingleOrder, userPurchaseHistory, updateOrderStatus };
+export { createOrder, SingleOrder, userPurchaseHistory, updateOrderStatus };
