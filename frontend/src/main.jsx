@@ -19,6 +19,7 @@ import {
   OrderItems,
   Register,
   Settings,
+  SingleOrderHistory,
   User,
   UserHistory,
 } from "./pages/index.js";
@@ -121,6 +122,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FoodPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/singleOrderHistory/:orderId",
+        element: (
+          <ProtectedRoute>
+            <SingleOrderHistory />
           </ProtectedRoute>
         ),
       },

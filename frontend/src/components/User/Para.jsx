@@ -6,8 +6,15 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
 import { MdOutlinePayment } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchHistory } from "../../store/historySlice";
 export default function Para() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getHistory = () => {
+    dispatch(fetchHistory());
+    navigate("/user-history");
+  };
   return (
     <>
       <div
@@ -23,7 +30,7 @@ export default function Para() {
 
       <div
         className="flex flex-row items-center w-[300px] m-2 cursor-pointer"
-        onClick={() => navigate("/user-history")}
+        onClick={() => getHistory()}
       >
         <FaUserCircle className="mr-3" />
         <p className="flex-1">User History</p>

@@ -1,26 +1,17 @@
 import React from "react";
 import { Button, NoOrder, Status } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchSingleHistory } from "../../store/historySlice";
 
 export default function UserHistory() {
-  const orders = [
-    {
-      orderId: "A123",
-      foodItems: [
-        { foodName: "Margherita" },
-        { foodName: "Pizza" },
-        { foodName: "Margherita" },
-        { foodName: "Pizza" },
-        { foodName: "Margherita" },
-        { foodName: "Pizza" },
-      ],
-      totalPrice: 12.99,
-    },
-    {
-      orderId: "A123",
-      foodItems: [{ foodName: "Margherita" }, { foodName: "Pizza" }],
-      totalPrice: 12.99,
-    },
-  ];
+  const { history: orders } = useSelector((state) => state.history);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onView = (orderId) => {
+    dispatch(fetchSingleHistory(orderId));
+    navigate(`/singleOrderHistory/${orderId}`);
+  };
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage pt-20 ">
       {orders.length === 0 ? (
@@ -52,11 +43,16 @@ export default function UserHistory() {
               </div>
             </div>
             {orders.map((order) => (
-              <div className="w-full dark:text-white rounded-lg p-2 mt-6 flex  flex-row  align-center justify-center dark:bg-black bg-white dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black]">
-                <p className=" text-[18px] flex-1">{order.orderId}</p>
-                <p className=" text-[18px] flex-1">
+              <div
+                className="w-full dark:text-white rounded-lg p-2 mt-6 flex  flex-row  align-center justify-center dark:bg-black bg-white dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black]"
+                key={order._id}
+              >
+                <p className=" text-[14px] flex-1 mr-2 text-amber-400">
+                  {order._id}
+                </p>
+                <p className=" text-[14px] flex-1 mr-2">
                   {order.foodItems
-                    .map((fooditem) => fooditem.foodName)
+                    .map((fooditem) => fooditem.foodItem.foodName)
                     .join(", ")}
                 </p>
                 <p className="text-green-600 font-bold text-[18px] flex-1  ">
@@ -68,8 +64,20 @@ export default function UserHistory() {
                   </Status>
                 </div>
                 <div className="flex-1 flex">
-                  <p>2080/01/01</p>
-                  <Button className="ml-6 h-10">View</Button>
+                  <p>
+                    {new Date(order.updatedAt).toLocaleString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                  <Button
+                    className="ml-6 h-10"
+                    onClick={() => onView(order._id)}
+                  >
+                    View
+                  </Button>
                 </div>
               </div>
             ))}

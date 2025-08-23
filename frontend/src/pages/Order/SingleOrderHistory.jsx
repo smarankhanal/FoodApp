@@ -1,7 +1,15 @@
-import React from "react";
-import { SingleOrderItem } from "../../components";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useCapitalize } from "../../hooks/useCapitalize";
 
 export default function SingleOrderHistory() {
+  const statusColor = {
+    pending: "text-yellow-600",
+    completed: "text-green-600",
+    cancelled: "text-red-600",
+  };
+  const { singleHistory } = useSelector((state) => state.history);
+  const capitalize = useCapitalize();
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20">
       <div className=" w-full max-w-3xl mx-auto dark:text-white mb-10 text-[20px] font-bold">
@@ -10,12 +18,59 @@ export default function SingleOrderHistory() {
           <p className="flex-1">Status</p> <p className="flex-1">Total Price</p>
         </div>
         <div className="flex dark:bg-white bg-black dark:text-black text-white rounded-lg mb-2 p-1">
-          <p className="flex-1">12345</p> <p className="flex-1">2025-08-09</p>
-          <p className="flex-1">Completed</p> <p className="flex-1">$150</p>
+          <p className="flex-1 mr-2 text-sm opacity-70">{singleHistory._id}</p>
+          <p className="flex-1 ">
+            {new Date(singleHistory.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </p>
+          <p className={`flex-1 ${statusColor[singleHistory.status]}`}>
+            {capitalize(singleHistory.status)}
+          </p>
+          <p className="flex-1 text-green-600">Rs {singleHistory.totalPrice}</p>
         </div>
       </div>
-      <div className="w-full max-w-3xl mx-auto">
-        <SingleOrderItem /> <SingleOrderItem />
+      <div className="flex gap-4">
+        {singleHistory.foodItems.map((item) => (
+          <div
+            className=" relative flex flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] "
+            key={item._id}
+          >
+            <img
+              src={item.foodImage}
+              alt={item.foodName}
+              className="h-30 w-50 rounded-lg animate-fadeIn"
+            />
+            <div className="ml-5 dark:text-white">
+              <p className="text-xl font-bold text-amber-400">
+                {item.foodName}
+              </p>
+              <p className="font-semibold">Subcategory :- {item.subCategory}</p>
+              <p className="font-semibold"> {item.description}</p>
+
+              <p className={`font-bold`}>
+                Type :-
+                <span
+                  className={`${
+                    singleHistory?.type?.toLowerCase() === "veg"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {capitalize(singleHistory.type)}
+                </span>
+              </p>
+              <p className="font-bold opacity-70">
+                Quantity :- {item.quantity}
+              </p>
+              <p className="font-bold text-lg mt-2 text-blue-500">
+                {item.price}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

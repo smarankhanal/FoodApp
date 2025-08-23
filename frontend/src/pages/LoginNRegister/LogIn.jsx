@@ -17,9 +17,9 @@ export default function LogIn() {
   const submit = async (data) => {
     try {
       await dispatch(loginUser(data)).unwrap();
-      navigate("/fooditems");
+      navigate("/home");
     } catch (err) {
-      setErrorMessage(err || "Login failed ,please try again");
+      setErrorMessage(err.message || "Login failed ,please try again");
     }
   };
   return (

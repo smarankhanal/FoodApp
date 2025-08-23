@@ -5,10 +5,25 @@ import {
   StatusBadge,
   NoOrder,
 } from "../../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { postOrder } from "../../store/orderSlice";
 
 export default function OrderItems() {
+  const dispatch = useDispatch();
   const { items: orderItems, totalPrice } = useSelector((state) => state.cart);
+  const foodItems = orderItems.map((item) => ({
+    foodItem: item._id,
+    quantity: item.quantity || 1,
+  }));
+  const onOrder = async (items) => {
+    console.log(items);
+    try {
+      const result = await dispatch(postOrder(items)).unwrap();
+      console.log("Result :", result);
+    } catch (err) {
+      console.log("Error :", err);
+    }
+  };
   if (orderItems.length === 0) {
     return <NoOrder />;
   }
@@ -21,7 +36,7 @@ export default function OrderItems() {
             Total Price :- {totalPrice}
           </div>
           <div className="mx-10 my-2 text-center">
-            <Button>Order Now</Button>
+            <Button onClick={() => onOrder(foodItems)}>Order Now</Button>
           </div>
         </div>
       </div>

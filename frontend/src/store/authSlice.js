@@ -13,7 +13,12 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem("token", response.data.data.accessToken);
       return response.data.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || "Login failed");
+      const serializedError = {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      };
+      return rejectWithValue(serializedError || "Login failed");
     }
   }
 );
@@ -26,10 +31,13 @@ export const fetchUser = createAsyncThunk(
 
       const response = await axios.get("/api/v1/users/me");
       return response.data.data;
-    } catch (err) {
-      console.log(err);
-
-      return rejectWithValue("Failed to fetch user");
+    } catch (error) {
+      const serializedError = {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      };
+      return rejectWithValue(serializedError || "Login failed");
     }
   }
 );
