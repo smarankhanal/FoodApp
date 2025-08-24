@@ -28,8 +28,7 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 
   const totalPrice = foodItems.reduce((sum, item) => {
-    const food = validFoodItems.find((f) => f._id.toString() === item.foodItem);
-    return sum + food.price * item.quantity;
+    return sum + item.price * item.quantity;
   }, 0);
 
   const newOrder = await Order.create({
@@ -53,15 +52,24 @@ const SingleOrder = asyncHandler(async (req, res) => {
   const orderId = req.params.orderId;
 
   const order = await Order.findOne({ _id: orderId, user: userId }).populate(
-    "foodItems"
+    "foodItems.foodItem"
   );
   console.log(order);
   if (!order) {
     throw new ApiError(404, "Order not found");
   }
+  const cleanedFoodItems = order.foodItems.filter(
+    (item) => item.foodItem !== null
+  );
   return res
     .status(200)
-    .json(new ApiResponse(200, order, "Order fetched successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { ...order.toObject(), foodItems: cleanedFoodItems },
+        "Order fetched successfully"
+      )
+    );
 });
 const userPurchaseHistory = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
