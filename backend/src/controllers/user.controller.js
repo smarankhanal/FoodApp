@@ -222,8 +222,10 @@ const getSingleFoodItem = asyncHandler(async (req, res) => {
 });
 const addReview = asyncHandler(async (req, res) => {
   const { review_text, star_rating } = req.body;
-  const foodItemId = req.params.id;
-  const userId = req?.user.id;
+  const foodItemId = req.params.foodItemId;
+  const userId = req?.user._id;
+  console.log(review_text, star_rating, userId);
+  console.log(foodItemId);
 
   const review = new FoodReview({
     user: userId,
@@ -240,7 +242,7 @@ const addReview = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, review, "Review added successfully"));
 });
 const getReview = asyncHandler(async (req, res) => {
-  const foodItemId = req.params.id;
+  const foodItemId = req.params.foodItemId;
   const reviews = await FoodReview.find({ foodItem: foodItemId }).populate(
     "user",
     "fullname"

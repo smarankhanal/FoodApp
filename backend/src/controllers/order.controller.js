@@ -21,7 +21,9 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 
   const foodItemIds = foodItems.map((item) => item.foodItem);
-  const validFoodItems = await FoodItem.find({ _id: { $in: foodItemIds } });
+  const validFoodItems = await FoodItem.find({
+    _id: { $in: foodItemIds },
+  });
 
   if (validFoodItems.length !== foodItems.length) {
     throw new ApiError(404, "Some food items are invalid");
@@ -75,6 +77,7 @@ const userPurchaseHistory = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
   const user = await User.findById(userId).populate({
     path: "purchaseHistory",
+    options: { sort: { createdAt: -1 } },
     populate: {
       path: "foodItems.foodItem",
       model: "foodItem",
