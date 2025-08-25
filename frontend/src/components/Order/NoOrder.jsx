@@ -1,8 +1,11 @@
 import React from "react";
 import Logo from "../Logo";
 import { FaClipboardList } from "react-icons/fa6";
+import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 
 export default function NoOrder() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20 pb-10 px-4">
       <div className="flex  flex-col items-center justify-center">
@@ -11,6 +14,9 @@ export default function NoOrder() {
           <FaClipboardList className="dark:text-white mr-4 " />
           <p className="font-semibold dark:text-white">No orders yet...</p>
         </div>
+        <Button className="mt-10" onClick={() => navigate("/user-history")}>
+          View History
+        </Button>
       </div>
     </div>
   );

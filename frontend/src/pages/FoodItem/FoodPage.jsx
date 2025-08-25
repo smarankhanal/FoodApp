@@ -1,11 +1,20 @@
-import { useSelector } from "react-redux";
-import { Button, ReviewWithStars } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { ReviewWithStars } from "../../components";
 import { useEffect } from "react";
 import { useCapitalize } from "../../hooks/useCapitalize";
+import { fetchReviews } from "../../store/reviewSlice";
+import { MdOutlineReviews } from "react-icons/md";
 
 export default function FoodPage() {
   const capitalize = useCapitalize();
   const item = useSelector((state) => state.singleFood.item);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchReviews(item._id));
+  }, [dispatch, item._id]);
+  const { reviewsByFood, loading } = useSelector((state) => state.review);
+  console.log(reviewsByFood);
+  const reviews = reviewsByFood[item?._id] || [];
 
   return (
     <div className=" bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage ">
@@ -43,14 +52,39 @@ export default function FoodPage() {
                 {item.price}
               </span>
             </p>
-            <ReviewWithStars />
+            <ReviewWithStars itemId={item._id} />
           </div>
         </div>
-
-        <div className="mt-6 flex justify-end">
-          <Button className="px-6 py-2 text-black dark:text-white font-semibold rounded-lg shadow-md transition duration-300">
-            Add Review
-          </Button>
+      </div>
+      <div className=" w-full max-w-3xl mx-auto m-5">
+        <div className="flex flex-wrap">
+          {loading ? (
+            <p>Loading reviews...</p>
+          ) : reviews?.length === 0 ? (
+            <div className=" w-full text-center text-amber-500 font-bold text-[25px] font-serif">
+              <p className="flex items-center justify-center p-4">
+                <MdOutlineReviews className="text-amber-500" />
+                No review yet
+              </p>
+            </div>
+          ) : (
+            reviews?.map((review) => (
+              <div
+                key={review._id}
+                className="bg-white dark:bg-gray-900 p-3 rounded-lg shadow m-4"
+              >
+                <p className="font-semibold text-amber-500">
+                  ★ {review.star_rating}/5
+                </p>
+                <p className="text-gray-700 dark:text-gray-300">
+                  {review.review_text}
+                </p>
+                <p className="text-sm text-gray-500">
+                  By {review.user?.fullname || "Anonymous"}
+                </p>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

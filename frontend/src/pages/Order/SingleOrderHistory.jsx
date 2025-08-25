@@ -8,9 +8,12 @@ export default function SingleOrderHistory() {
     completed: "text-green-600",
     cancelled: "text-red-600",
   };
-  const { singleHistory } = useSelector((state) => state.history);
+  const { singleHistory, loading } = useSelector((state) => state.history);
 
   const capitalize = useCapitalize();
+  if (loading) {
+    return <p className="text-[40px]">Loading...</p>;
+  }
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20">
       <div className=" w-full max-w-3xl mx-auto dark:text-white mb-10 text-[20px] font-bold">

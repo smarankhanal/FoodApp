@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeCart } from "../../store/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Toast from "../Toast";
+import { fetchSingleFoodItem } from "../../store/singleFoodItemSlice";
 
 export default function FoodCard({ item }) {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function FoodCard({ item }) {
   );
   const quantity = itemInCart?.quantity || 0;
   const singleFoodItem = () => {
+    dispatch(fetchSingleFoodItem(item._id));
     navigate(`/foodItem/${item._id}`);
   };
   const itemAddedToCart = (item) => {
@@ -48,7 +50,7 @@ export default function FoodCard({ item }) {
             className="relative w-full h-48 object-cover rounded-t-lg"
           />
           <span
-            className="absolute top-2 right-2 bg-black  dark:bg-white bg-opacity-50 text-white rounded-full p-1 cursor-pointer select-none hover:scale-[1.3] transition-transform duration-300"
+            className="absolute top-2 right-2 bg-white bg-opacity-50 text-white rounded-full p-1 cursor-pointer select-none hover:scale-[1.3] transition-transform duration-300"
             title="See Full Description"
             onClick={() => singleFoodItem()}
           >

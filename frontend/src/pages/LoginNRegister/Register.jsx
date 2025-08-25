@@ -139,7 +139,9 @@ export default function Register() {
               )}
             </div>
             <div className="flex items-center justify-center">
-              <Button className="m-2">Sign Up</Button>
+              <Button className="m-2" type="submit">
+                Sign Up
+              </Button>
             </div>
 
             <div className="flex items-center justify-center">

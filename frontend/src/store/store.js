@@ -7,6 +7,7 @@ import registerSlice from "./registerSlice";
 import singleFoodItemSlice from "./singleFoodItemSlice";
 import orderSlice from "./orderSlice";
 import historySlice from "./historySlice";
+import reviewSlice from "./reviewSlice";
 const store = configureStore({
   reducer: {
     auth: authSlice,
@@ -17,6 +18,7 @@ const store = configureStore({
     singleFood: singleFoodItemSlice,
     order: orderSlice,
     history: historySlice,
+    review: reviewSlice,
   },
 });
 

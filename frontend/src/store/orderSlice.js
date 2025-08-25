@@ -9,9 +9,10 @@ export const postOrder = createAsyncThunk(
   "order/postOrder",
   async (foodItems, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`/api/v1/users/create-order`, {
-        foodItems,
-      });
+      const response = await axios.post(
+        `/api/v1/users/create-order`,
+        foodItems
+      );
       return response.data;
     } catch (error) {
       console.log(error.response);
