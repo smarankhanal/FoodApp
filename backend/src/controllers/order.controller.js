@@ -56,7 +56,6 @@ const SingleOrder = asyncHandler(async (req, res) => {
   const order = await Order.findOne({ _id: orderId, user: userId }).populate(
     "foodItems.foodItem"
   );
-  console.log(order);
   if (!order) {
     throw new ApiError(404, "Order not found");
   }

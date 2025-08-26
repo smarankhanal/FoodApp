@@ -130,29 +130,34 @@ const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
 });
 const updateAccoutDetails = asyncHandler(async (req, res) => {
-  const { fullname, email } = req.body;
-  if (!(fullname || email)) {
-    throw new ApiError(400, "Full name or email is required");
-  }
+  const { email, username, fullname, phoneNumber, address } =
+    req.body.userDetails;
+  console.log("Req:-", req.body);
+  const updateData = {};
+  if (fullname) updateData.fullname = fullname;
+  if (email) updateData.email = email;
+  if (username) updateData.username = username;
+  if (phoneNumber) updateData.phoneNumber = phoneNumber;
+  if (address) updateData.address = address;
+  console.log(updateData);
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
-      $set: {
-        fullname,
-        email,
-      },
+      $set: updateData,
     },
     {
       new: true,
     }
   ).select("-password -refreshToken");
+  console.log(user);
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User deatils updated successfully"));
 });
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-
+  console.log(req.body);
+  console.log("old :", oldPassword, "new :", newPassword);
   const user = await User.findById(req.user?._id);
   const isPasswordValid = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordValid) {
@@ -162,7 +167,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   await user.save();
   return res
     .status(200)
-    .json(new Response(200, {}, "Password changed successfully"));
+    .json(new Response(200, null, "Password changed successfully"));
 });
 const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingRefreshToken =

@@ -43,10 +43,7 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
     },
-    order: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Order",
-    },
+
     purchaseHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,

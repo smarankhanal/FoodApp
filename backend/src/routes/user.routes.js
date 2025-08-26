@@ -29,7 +29,7 @@ router.route("/login").post(login);
 router.route("/logout").post(verifyJWT, logout);
 router.route("/account").patch(verifyJWT, updateAccoutDetails);
 router.route("/refresh-accessToken").post(refreshAccessToken);
-router.route("/change-password").post(verifyJWT, changeCurrentPassword);
+router.route("/change-password").patch(verifyJWT, changeCurrentPassword);
 router.route("/food-items").get(verifyJWT, getFoodItems);
 router.route("/create-order").post(verifyJWT, createOrder);
 router.route("/single-order/:orderId").get(verifyJWT, SingleOrder);
