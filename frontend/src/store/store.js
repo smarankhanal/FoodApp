@@ -8,6 +8,8 @@ import singleFoodItemSlice from "./singleFoodItemSlice";
 import orderSlice from "./orderSlice";
 import historySlice from "./historySlice";
 import reviewSlice from "./reviewSlice";
+import updateSlice from "./updateSlice";
+import passwordSlice from "./passwordSlice";
 const store = configureStore({
   reducer: {
     auth: authSlice,
@@ -19,6 +21,8 @@ const store = configureStore({
     order: orderSlice,
     history: historySlice,
     review: reviewSlice,
+    update: updateSlice,
+    password: passwordSlice,
   },
 });
 

@@ -33,7 +33,11 @@ const initialState = {
 const registerSlice = createSlice({
   name: "register",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserDetails: (state, action) => {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -51,4 +55,5 @@ const registerSlice = createSlice({
       });
   },
 });
+export const { setUserDetails } = registerSlice.actions;
 export default registerSlice.reducer;
