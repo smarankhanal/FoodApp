@@ -6,7 +6,7 @@ import {
   logout,
   refreshAccessToken,
   registerUser,
-  updateAccoutDetails,
+  updateAccountDetails,
   addReview,
   getReview,
   getMe,
@@ -33,7 +33,7 @@ router.route("/login").post(login);
 router.route("/logout").post(verifyJWT, logout);
 router
   .route("/account")
-  .patch(verifyJWT, updateAccountValidator, validate, updateAccoutDetails);
+  .patch(verifyJWT, updateAccountValidator, validate, updateAccountDetails);
 router.route("/refresh-accessToken").post(refreshAccessToken);
 router
   .route("/change-password")

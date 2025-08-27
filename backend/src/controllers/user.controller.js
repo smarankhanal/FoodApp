@@ -129,9 +129,8 @@ const getMe = asyncHandler(async (req, res) => {
   }
   res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
 });
-const updateAccoutDetails = asyncHandler(async (req, res) => {
-  const { email, username, fullname, phoneNumber, address } =
-    req.body.userDetails;
+const updateAccountDetails = asyncHandler(async (req, res) => {
+  const { email, username, fullname, phoneNumber, address } = req.body;
   const updateData = {};
   if (fullname) updateData.fullname = fullname;
   if (email) updateData.email = email;
@@ -256,7 +255,7 @@ export {
   registerUser,
   login,
   logout,
-  updateAccoutDetails,
+  updateAccountDetails,
   changeCurrentPassword,
   refreshAccessToken,
   getFoodItems,
