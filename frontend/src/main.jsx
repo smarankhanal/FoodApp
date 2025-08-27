@@ -24,6 +24,13 @@ import {
   User,
   UserHistory,
 } from "./pages/index.js";
+import api from "./api/axios.js";
+import axios from "axios";
+
+axios.defaults.baseURL = api.defaults.baseURL;
+axios.defaults.withCredentials = true;
+
+axios.interceptors.request.use(api.interceptors.request.handlers[0].fulfilled);
 
 const router = createBrowserRouter([
   {

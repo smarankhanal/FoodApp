@@ -25,6 +25,7 @@ export default function NavBar() {
         <AnchorTag className="font-bold  dark:text-gray-700" href={"/home"}>
           Home
         </AnchorTag>
+        <ChangeMode />
         {user && (
           <>
             <AnchorTag
@@ -43,7 +44,6 @@ export default function NavBar() {
             <AnchorTag href={"/user"} className="font-bold dark:text-gray-700">
               User
             </AnchorTag>
-            <ChangeMode />
           </>
         )}
 
