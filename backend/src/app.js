@@ -29,7 +29,7 @@ import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 
 app.use("/api/v1/users", userRouter);
-app.use(errorHandler);
 app.use("/api/v1/admin", adminRouter);
+app.use(errorHandler);
 
 export default app;
