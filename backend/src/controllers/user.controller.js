@@ -132,14 +132,12 @@ const getMe = asyncHandler(async (req, res) => {
 const updateAccoutDetails = asyncHandler(async (req, res) => {
   const { email, username, fullname, phoneNumber, address } =
     req.body.userDetails;
-  console.log("Req:-", req.body);
   const updateData = {};
   if (fullname) updateData.fullname = fullname;
   if (email) updateData.email = email;
   if (username) updateData.username = username;
   if (phoneNumber) updateData.phoneNumber = phoneNumber;
   if (address) updateData.address = address;
-  console.log(updateData);
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
@@ -149,15 +147,12 @@ const updateAccoutDetails = asyncHandler(async (req, res) => {
       new: true,
     }
   ).select("-password -refreshToken");
-  console.log(user);
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User deatils updated successfully"));
 });
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  console.log(req.body);
-  console.log("old :", oldPassword, "new :", newPassword);
   const user = await User.findById(req.user?._id);
   const isPasswordValid = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordValid) {
@@ -229,8 +224,6 @@ const addReview = asyncHandler(async (req, res) => {
   const { review_text, star_rating } = req.body;
   const foodItemId = req.params.foodItemId;
   const userId = req?.user._id;
-  console.log(review_text, star_rating, userId);
-  console.log(foodItemId);
 
   const review = new FoodReview({
     user: userId,

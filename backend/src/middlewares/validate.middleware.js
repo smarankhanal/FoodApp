@@ -3,6 +3,7 @@ import ApiError from "../utlis/ApiError.js";
 
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
     const extractedErrors = errors.array().map((err) => ({
       field: err.path,
