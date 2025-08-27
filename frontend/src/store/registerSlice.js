@@ -10,16 +10,24 @@ export const registerUser = createAsyncThunk(
       );
       return response.data?.data || response.data;
     } catch (error) {
+      let serializedErrors = [];
+
       const backendErrors = error.response?.data?.errors;
       if (Array.isArray(backendErrors) && backendErrors.length > 0) {
-        return rejectWithValue(backendErrors);
+        serializedErrors = backendErrors.map((e) => ({
+          field: e.field || "general",
+          message: e.message || "Something went wrong",
+        }));
+      } else {
+        serializedErrors = [
+          {
+            field: "general",
+            message: error.response?.data?.message || "Register failed",
+          },
+        ];
       }
-      return rejectWithValue([
-        {
-          field: "general",
-          message: error.response?.data?.message || "Register failed",
-        },
-      ]);
+
+      return rejectWithValue(serializedErrors);
     }
   }
 );

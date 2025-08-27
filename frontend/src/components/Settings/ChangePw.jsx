@@ -9,21 +9,45 @@ import Button from "../Button";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../store/passwordSlice";
+import Toast from "../Toast";
 export default function ChangePw() {
   const [show, setShow] = useState(false);
   const { handleSubmit, register, reset } = useForm();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const OldToggleVisibility = () => setShowOldPassword((prev) => !prev);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const toggleVisibility = () => setShowNewPassword((prev) => !prev);
-
+  const NewtoggleVisibility = () => setShowNewPassword((prev) => !prev);
+  const [toast, setToast] = useState({ show: false, text: "", className: "" });
   const dispatch = useDispatch();
-  const onChangePassword = (data) => {
-    dispatch(changePassword(data));
-    reset();
+  const onChangePassword = async (data) => {
+    try {
+      await dispatch(changePassword(data)).unwrap(); //
+      setToast({
+        show: true,
+        text: "Password changed successfully",
+        className: "text-green-800 w-[450px]",
+      });
+      reset();
+    } catch (error) {
+      setToast({
+        show: true,
+        text: error?.message || "Failed to change password",
+        className: "text-red-800 w-[450px]",
+      });
+    } finally {
+      setTimeout(() => setToast({ show: false, text: "" }), 3000);
+    }
   };
+
   return (
     <>
+      {toast.show && (
+        <Toast
+          show={toast.show}
+          text={toast.text}
+          className={toast.className}
+        />
+      )}
       <div className="flex justify-center items-center  bg-white dark:bg-black rounded-lg  dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black] p-2 m-2 ">
         <p className="font-bold h-10 flex-1">Change Password</p>
         {show ? (
@@ -47,29 +71,28 @@ export default function ChangePw() {
                 placeholder="Enter the old password..."
                 type={showOldPassword ? "text" : "password"}
                 {...register("oldPassword")}
-                autoComplete="off"
               />
               <button
                 type="button"
                 className="absolute top-5 right-3 text-gray-500 hover:text-gray-700"
-                onClick={toggleVisibility}
+                onClick={OldToggleVisibility}
               >
-                {showNewPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                {showOldPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
             <div className="relative w-full mb-2">
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
                 placeholder="Enter the new password..."
-                type={showPassword ? "text" : "password"}
+                type={showNewPassword ? "text" : "password"}
                 {...register("newPassword")}
               />
               <button
                 type="button"
                 className="absolute top-5 right-3 text-gray-500 hover:text-gray-700"
-                onClick={toggleVisibility}
+                onClick={NewtoggleVisibility}
               >
-                {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                {showNewPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
             <div className="flex items-center justify-center">

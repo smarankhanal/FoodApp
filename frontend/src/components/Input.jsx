@@ -19,6 +19,7 @@ export default function Input({
         className={`px-3 py-3  w-full outline-none rounded-lg border border-blue-400 text-black dark:text-white shadow-sm hover:shadow-lg transition-shadow duration-300 ${className} `}
         {...props}
         id={id}
+        autoComplete="off"
       />
     </div>
   );

@@ -13,21 +13,38 @@ import Toast from "../Toast";
 export default function Update() {
   const [show, setShow] = useState(false);
   const { user } = useSelector((state) => state.auth);
-  const [toast, setToast] = useState(false);
+  const { error } = useSelector((state) => state.update);
+  const [toast, setToast] = useState({ show: false, text: "", className: "" });
   const dispatch = useDispatch();
   const { handleSubmit, register, reset } = useForm({
     defaultValues: user,
   });
 
-  const update = (data) => {
-    dispatch(updateDetails(data));
-    setToast({
-      show: true,
-      text: "Details updated successfully",
-      className: "text-green-800 w-[450px]",
-    });
-    setTimeout(() => setToast({ show: false, text: "" }), 3000);
+  const update = async (data) => {
+    try {
+      await dispatch(updateDetails(data)).unwrap();
+      setToast({
+        show: true,
+        text: "Details updated successfully",
+        className: "text-green-800 w-[450px]",
+      });
+      reset(data);
+    } catch (err) {
+      setToast({
+        show: true,
+        text: err.message || "Failed to update details",
+        className: "text-red-800 w-[450px]",
+      });
+    } finally {
+      setTimeout(() => setToast({ show: false, text: "" }), 3000);
+    }
   };
+  const getError = (field) => {
+    if (!error || error?.length == 0) return null;
+    const errObj = error?.find((e) => e.field === field);
+    return errObj?.message;
+  };
+
   return (
     <>
       {toast.show && (
@@ -55,35 +72,70 @@ export default function Update() {
         <div className="dark:bg-black bg-white opacity-70 dark:text-white text-black p-3 rounded-lg">
           <form onSubmit={handleSubmit(update)}>
             <label>Email :- </label>
-            <Input
-              className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
-              defaultValue={user.email}
-              {...register("email")}
-            />
+            <div>
+              <Input
+                className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
+                {...register("email")}
+              />
+              {getError("email") && (
+                <p className="text-red-500 text-sm text-center">
+                  {getError("email")}
+                </p>
+              )}
+            </div>
+
             <label>Username :-</label>
-            <Input
-              className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
-              defaultValue={user.username}
-              {...register("username")}
-            />
+            <div>
+              <Input
+                className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
+                {...register("username")}
+              />
+              {getError("username") && (
+                <p className="text-red-500 text-sm text-center">
+                  {getError("username")}
+                </p>
+              )}
+            </div>
+
             <label>Fullname :- </label>
-            <Input
-              className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
-              defaultValue={user.fullname}
-              {...register("fullname")}
-            />
+            <div>
+              <Input
+                className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
+                {...register("fullname")}
+              />
+              {getError("email") && (
+                <p className="text-red-500 text-sm text-center">
+                  {getError("fullname")}
+                </p>
+              )}
+            </div>
+
             <label>Phone number :-</label>
-            <Input
-              className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
-              defaultValue={user.phoneNumber}
-              {...register("phoneNumber")}
-            />
+            <div>
+              <Input
+                className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
+                {...register("phoneNumber")}
+              />
+              {getError("phoneNumber") && (
+                <p className="text-red-500 text-sm text-center">
+                  {getError("phoneNumber")}
+                </p>
+              )}
+            </div>
+
             <label>Address :-</label>
-            <Input
-              className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
-              defaultValue={user.address}
-              {...register("address")}
-            />
+            <div>
+              <Input
+                className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
+                {...register("address")}
+              />
+              {getError("email") && (
+                <p className="text-red-500 text-sm text-center">
+                  {getError("address")}
+                </p>
+              )}
+            </div>
+
             <div className="flex items-center justify-center">
               <Button className="bg-gray-950 dark:bg-white dark:text-black hover:bg-gray-950 dark:hover:bg-white  hover:opacity-75">
                 Update

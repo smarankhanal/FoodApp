@@ -117,7 +117,9 @@ export default function Register() {
                 {...register("phoneNumber", { required: true })}
               />
               {getError("phoneNumber") && (
-                <p className="text-red-500 E">{getError("phoneNumber")}</p>
+                <p className="text-red-500 text-center">
+                  {getError("phoneNumber")}
+                </p>
               )}
             </div>
             <div>

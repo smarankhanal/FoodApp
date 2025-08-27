@@ -12,12 +12,23 @@ export const updateDetails = createAsyncThunk(
       dispatch(setUserDetails(updatedUser));
       return updatedUser;
     } catch (error) {
-      const serializedError = {
-        message: error.response?.data?.message || error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-      };
-      return rejectWithValue(serializedError || "Failed to update");
+      let serializedErrors = [];
+
+      const backendErrors = error.response?.data?.errors;
+      if (Array.isArray(backendErrors) && backendErrors.length > 0) {
+        serializedErrors = backendErrors.map((e) => ({
+          field: e.path || "general",
+          message: e.message || "Something went wrong",
+        }));
+      } else {
+        serializedErrors = [
+          {
+            field: "general",
+            message: error.response?.data?.message || "Register failed",
+          },
+        ];
+      }
+      return rejectWithValue(serializedErrors);
     }
   }
 );
@@ -25,7 +36,7 @@ export const updateDetails = createAsyncThunk(
 const initialState = {
   details: null,
   loading: false,
-  error: null,
+  error: [],
 };
 
 const updateSlice = createSlice({
