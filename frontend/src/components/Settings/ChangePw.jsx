@@ -6,7 +6,7 @@ import {
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Input from "../Input";
 import Button from "../Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../store/passwordSlice";
 import Toast from "../Toast";
@@ -19,6 +19,7 @@ export default function ChangePw() {
   const NewtoggleVisibility = () => setShowNewPassword((prev) => !prev);
   const [toast, setToast] = useState({ show: false, text: "", className: "" });
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.password);
   const onChangePassword = async (data) => {
     try {
       await dispatch(changePassword(data)).unwrap(); //
@@ -38,7 +39,11 @@ export default function ChangePw() {
       setTimeout(() => setToast({ show: false, text: "" }), 3000);
     }
   };
-
+  const getError = (field) => {
+    if (!error || error?.length == 0) return null;
+    const errObj = error?.find((e) => e.field === field);
+    return errObj?.message;
+  };
   return (
     <>
       {toast.show && (
@@ -66,12 +71,20 @@ export default function ChangePw() {
         <div className="dark:bg-black bg-white opacity-70 dark:text-white text-black p-3 rounded-lg">
           <form onSubmit={handleSubmit(onChangePassword)}>
             <div className="relative w-full mb-2">
-              <Input
-                className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
-                placeholder="Enter the old password..."
-                type={showOldPassword ? "text" : "password"}
-                {...register("oldPassword")}
-              />
+              <div>
+                <Input
+                  className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
+                  placeholder="Enter the old password..."
+                  type={showOldPassword ? "text" : "password"}
+                  {...register("oldPassword")}
+                />
+                {getError("oldPassword") && (
+                  <p className="text-red-500 text-sm text-center">
+                    {getError("oldPassword")}
+                  </p>
+                )}
+              </div>
+
               <button
                 type="button"
                 className="absolute top-5 right-3 text-gray-500 hover:text-gray-700"
@@ -81,12 +94,24 @@ export default function ChangePw() {
               </button>
             </div>
             <div className="relative w-full mb-2">
-              <Input
-                className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
-                placeholder="Enter the new password..."
-                type={showNewPassword ? "text" : "password"}
-                {...register("newPassword")}
-              />
+              <div>
+                <Input
+                  className="m-2 border border-gray-300  hover:border-amber-400 focus:ring-2  focus:ring-amber-400"
+                  placeholder="Enter the new password..."
+                  type={showNewPassword ? "text" : "password"}
+                  {...register("newPassword")}
+                />
+                {getError("newPassword") && (
+                  <p className="text-red-500 text-sm text-center">
+                    {getError("newPassword")}
+                  </p>
+                )}
+              </div>
+              {getError("general") && (
+                <p className="text-red-500 text-sm text-center font-bold">
+                  {getError("general")}
+                </p>
+              )}
               <button
                 type="button"
                 className="absolute top-5 right-3 text-gray-500 hover:text-gray-700"

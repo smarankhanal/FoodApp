@@ -30,6 +30,7 @@ export default function Update() {
       });
       reset(data);
     } catch (err) {
+      console.log(err);
       setToast({
         show: true,
         text: err.message || "Failed to update details",

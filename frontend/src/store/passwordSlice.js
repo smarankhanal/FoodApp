@@ -11,13 +11,24 @@ export const changePassword = createAsyncThunk(
       console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
-      const serializedError = {
-        message: error.response?.data?.message || error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-      };
-      return rejectWithValue(serializedError || "failed to change password");
+      let serializedErrors = [];
+
+      const backendErrors = error.response?.data?.errors;
+      if (Array.isArray(backendErrors) && backendErrors.length > 0) {
+        serializedErrors = backendErrors.map((e) => ({
+          field: e.field || "general",
+          message: e.message || "Something went wrong",
+        }));
+      } else {
+        serializedErrors = [
+          {
+            field: "general",
+            message: error.response?.data?.message || "Failed to update",
+          },
+        ];
+      }
+      console.log(serializedErrors);
+      return rejectWithValue(serializedErrors);
     }
   }
 );
