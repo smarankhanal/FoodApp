@@ -5,7 +5,7 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "app.js","methods":["GET","POST","DELETE","PATCH","OPTIONS"],"headers":{
-      "Access-Control-Allow-Origin":"*"
+      "Access-Control-Allow-Origin":"https://food-app-sigma-bay.vercel.app"
     } }
   ]
 }
