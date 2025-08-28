@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 const initialState = {
   orders: [],
   error: null,
@@ -9,10 +9,7 @@ export const postOrder = createAsyncThunk(
   "order/postOrder",
   async (foodItems, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `/api/v1/users/create-order`,
-        foodItems
-      );
+      const response = await api.post(`/users/create-order`, foodItems);
       return response.data;
     } catch (error) {
       console.log(error.response);

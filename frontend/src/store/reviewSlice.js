@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 
 export const fetchReviews = createAsyncThunk(
   "review/fetchReviews",
   async (foodItemId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `/api/v1/users/foodItem/get-review/${foodItemId}`
+      const response = await api.get(
+        `/users/foodItem/get-review/${foodItemId}`
       );
       return { foodItemId, reviews: response.data.data };
     } catch (error) {
@@ -23,8 +23,8 @@ export const addReview = createAsyncThunk(
   "review/addReview",
   async ({ reviewData, foodItemId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `/api/v1/users/foodItem/add-review/${foodItemId}`,
+      const response = await api.post(
+        `/users/foodItem/add-review/${foodItemId}`,
         reviewData
       );
       return { foodItemId, review: response.data.data };

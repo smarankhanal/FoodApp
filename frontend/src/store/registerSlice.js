@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 export const registerUser = createAsyncThunk(
   "register/registerUser",
   async ({ userData }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "/api/v1/users/register-user",
-        userData
-      );
+      const response = await api.post("/users/register-user", userData);
       return response.data?.data || response.data;
     } catch (error) {
       let serializedErrors = [];

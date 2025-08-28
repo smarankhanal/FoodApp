@@ -29,7 +29,7 @@ export const fetchUser = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) return null;
 
-      const response = await axios.get("/api/v1/users/me");
+      const response = await api.get("/users/me");
       return response.data.data;
     } catch (error) {
       const serializedError = {

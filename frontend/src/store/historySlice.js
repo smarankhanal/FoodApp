@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 
 export const fetchHistory = createAsyncThunk(
   "history/fetchHistory",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/users/purchase-history");
+      const response = await api.get("/users/purchase-history");
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -22,7 +22,7 @@ export const fetchSingleHistory = createAsyncThunk(
   "history/fetchSingleHistory",
   async (orderId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/v1/users/single-order/${orderId}`);
+      const response = await api.get(`/users/single-order/${orderId}`);
       console.log(response.data.data);
       return response.data.data;
     } catch (error) {

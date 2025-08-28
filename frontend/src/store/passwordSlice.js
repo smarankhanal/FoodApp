@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 export const changePassword = createAsyncThunk(
   "password/changePassword",
   async ({ oldPassword, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await axios.patch("/api/v1/users/change-password", {
+      const response = await api.patch("/users/change-password", {
         oldPassword,
         newPassword,
       });

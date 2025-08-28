@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { setUserDetails } from "./registerSlice";
+import api from "../api/axios";
 export const updateDetails = createAsyncThunk(
   "update/updateDetails",
   async (userDetails, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.patch("/api/v1/users/account", userDetails);
+      const response = await api.patch("/users/account", userDetails);
       const updatedUser = response.data.data;
       console.log(updatedUser);
       dispatch(setUserDetails(updatedUser));
