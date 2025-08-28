@@ -6,6 +6,10 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 const app = express();
 const allowedOrigins = process.env.CORS_ORIGIN.split(",");
 console.log("Allowed Origins:", allowedOrigins);
+app.use((req, res, next) => {
+  console.log("🔍 Origin:", req.headers.origin);
+  next();
+});
 
 app.use(
   cors({
