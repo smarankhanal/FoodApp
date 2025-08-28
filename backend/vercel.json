@@ -4,6 +4,8 @@
     { "src": "app.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "app.js" }
+    { "src": "/(.*)", "dest": "app.js","methods":["GET","POST","DELETE","PATCH","OPTIONS"],"headers":{
+      "Access-Control-Allow-Origin":"*"
+    } }
   ]
 }
