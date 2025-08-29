@@ -9,7 +9,6 @@ const allowedOrigins = process.env.CORS_ORIGIN.split(",");
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log(origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -19,6 +18,10 @@ app.use(
     credentials: true,
   })
 );
+app.use((req, res, next) => {
+  console.log("Incoming Origin:", req.headers.origin);
+  next();
+});
 
 app.options("*", cors());
 app.use(express.json({ limit: "16kb" }));
