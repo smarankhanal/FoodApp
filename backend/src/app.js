@@ -9,7 +9,7 @@ app.use((req, res, next) => {
   next();
 });
 const allowedOrigins = process.env.CORS_ORIGIN.split(",");
-
+console.log(allowedOrigins);
 app.use(
   cors({
     origin: (origin, callback) => {
