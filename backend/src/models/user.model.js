@@ -43,7 +43,10 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
     },
-
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
     purchaseHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,

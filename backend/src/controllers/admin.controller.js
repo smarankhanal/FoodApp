@@ -78,7 +78,7 @@ const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
     );
 });
 const allTheUser = asyncHandler(async (req, res) => {
-  const users = await User.find({}).select("-password");
+  const users = await User.find({}).select("-password").sort({ createdAt: -1 });
   return res
     .status(200)
     .json(
@@ -113,7 +113,7 @@ const uploadFoodItem = asyncHandler(async (req, res) => {
   if (!existFoodItem) {
     throw new ApiError(409, "FoodItem already exists");
   }
-  // console.log(req.files[0].avatar);
+
   const foodItemImagePath = req.file?.path;
   if (!foodItemImagePath) {
     throw new ApiError(400, "foodImage file is required");
@@ -213,7 +213,7 @@ const foodItemReviewByUser = asyncHandler(async (req, res) => {
     );
 });
 const getAllOrder = asyncHandler(async (req, res) => {
-  const allOrder = await Order.find({});
+  const allOrder = await Order.find({}).sort({ createdAt: -1 });
   if (!allOrder) {
     throw new ApiError(404, "No order found");
   }
@@ -223,7 +223,7 @@ const getAllOrder = asyncHandler(async (req, res) => {
 });
 
 const getAllFoodItem = asyncHandler(async (req, res) => {
-  const allFoodItem = await FoodItem.find({});
+  const allFoodItem = await FoodItem.find({}).sort({ createdAt: -1 });
   if (!allFoodItem) {
     throw new ApiError(404, "No order found");
   }
