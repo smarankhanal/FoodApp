@@ -3,7 +3,7 @@ import { FaRegEdit, FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Status from "../Status";
 
-export default function FoodItemSummary() {
+export default function FoodItemSummary({ item }) {
   return (
     <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex items-center">
       <div className="flex-1">
@@ -14,15 +14,21 @@ export default function FoodItemSummary() {
         />
       </div>
 
-      <p className="flex-1">Name</p>
+      <p className="flex-1">{item.foodName}</p>
       <div className="flex-1">
-        <p className="mb-1">Category</p>
+        <p className="mb-1">{item.subCategory}</p>
 
-        <Status className="text-red-500 drop-shadow-[2px_2px_red]">
-          Non-Veg
+        <Status
+          className={
+            item.type.toLowerCase() === "non-veg"
+              ? `text-red-500 drop-shadow-[2px_2px_red]`
+              : `text-green-500 drop-shadow-[2px_2px_green]`
+          }
+        >
+          {item.type}
         </Status>
       </div>
-      <p className="flex-1">20000</p>
+      <p className="flex-1">Rs {item.price}</p>
       <div className="flex flex-1 gap-3">
         <div
           className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"

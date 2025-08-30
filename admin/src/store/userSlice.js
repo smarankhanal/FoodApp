@@ -5,7 +5,7 @@ export const fetchUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/v1/admin/all-user");
-      console.log(response);
+
       return response.data.data;
     } catch (error) {
       const serializedError = {

@@ -4,7 +4,7 @@ export const fetchOrders = createAsyncThunk(
   "user/fetchOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/admin/all-user");
+      const response = await axios.get("/api/v1/admin/all-order");
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -12,7 +12,7 @@ export const fetchOrders = createAsyncThunk(
         status: error.response?.status,
         data: error.response?.data,
       };
-      return rejectWithValue(serializedError || "Login failed");
+      return rejectWithValue(serializedError || "Order failed to fetch");
     }
   }
 );

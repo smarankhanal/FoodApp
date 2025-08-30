@@ -5,17 +5,29 @@ import { FaRegEye } from "react-icons/fa6";
 
 import Status from "../Status";
 
-export default function SingleUser() {
+export default function SingleUser({ user }) {
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <>
       <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black  text-white flex items-center">
-        <p className="flex-1">User Id :</p>
-        <p className="flex-1">Nameassssss ssssssssssssssss </p>
+        <p className="flex-1 text-sm truncate">{user._id}</p>
+        <p className="flex-1 ml-5">{user.username} </p>
+        <div className="flex-1">
+          <Status className="text-green-500 drop-shadow-[2px_2px_green]">
+            Active
+          </Status>
+        </div>
 
-        <Status className="text-green-500 drop-shadow-[2px_2px_green]">
-          Active
-        </Status>
-        <p className="flex-1">Date</p>
+        <p className="flex-1">
+          {new Date(user.createdAt).toLocaleString("en-US", {
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </p>
 
         <div className="flex flex-1">
           <div

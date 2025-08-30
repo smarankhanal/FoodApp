@@ -2,7 +2,7 @@ import { Search, FoodItemSummary } from "../components";
 import { MdOutlineAdd } from "react-icons/md";
 
 import Button from "../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchFoodItem } from "../store/foodItemSlice";
 import { useEffect } from "react";
 export default function FoodItems() {
@@ -10,6 +10,7 @@ export default function FoodItems() {
   useEffect(() => {
     dispatch(fetchFoodItem());
   }, []);
+  const { foodItems } = useSelector((state) => state.foodItem);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
@@ -39,7 +40,9 @@ export default function FoodItems() {
           </select>
         </div>
       </div>
-      <FoodItemSummary />
+      {foodItems.map((item) => (
+        <FoodItemSummary item={item} key={item._id} />
+      ))}
     </div>
   );
 }

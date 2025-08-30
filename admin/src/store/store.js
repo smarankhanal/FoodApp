@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import adminAuthSlice from "./adminAuthSlice";
 import userSlice from "./userSlice";
 import orderSlice from "./orderSlice";
+import foodItemSlice from "./foodItemSlice";
 import {
   persistStore,
   persistReducer,
@@ -18,11 +19,12 @@ const rootReducer = combineReducers({
   auth: adminAuthSlice,
   user: userSlice,
   order: orderSlice,
+  foodItem: foodItemSlice,
 });
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"],
+  whitelist: ["auth", "user", "order", "fooditem"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

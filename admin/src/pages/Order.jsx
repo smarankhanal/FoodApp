@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Search, OrderItemSummary } from "../components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../store/orderSlice";
 
 export default function Order() {
@@ -8,6 +8,7 @@ export default function Order() {
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
+  const { orders } = useSelector((state) => state.order);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
@@ -21,29 +22,31 @@ export default function Order() {
           <p className="font-bold font-serif text-[16px]">Completed :-</p>
         </div>
       </div>
-      <div className="flex m-4 bg-amber-500 rounded-lg p-2">
-        <p className="flex-1 font-bold">ORDER ID</p>
-        <p className="flex-1 font-bold">USER</p>
-        <p className="flex-1 font-bold">STATUS</p>
-        <p className="flex-1 font-bold">AMOUNT</p>
-        <p className="flex-1 font-bold">DATE</p>
-        <div className=" flex-1">
+      <div className="grid grid-cols-6 gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 text-black font-bold items-center">
+        <p>ORDER ID</p>
+        <p>USER</p>
+        <p>STATUS</p>
+        <p>AMOUNT</p>
+        <p>DATE</p>
+        <div className="text-right">
           <select
-            className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white"
+            className="border rounded px-2 py-1 text-sm outline-none cursor-pointer dark:bg-black bg-white"
             onChange={(e) => handleSortChange(e.target.value)}
           >
             <option value="pending">Pending</option>
             <option value="completed">Completed</option>
             <option value="cancelled">Cancelled</option>
-            <option value="price_asc">Date ↑</option>
-            <option value="price_desc">Date ↓</option>
-            <option value="price_asc">Amount ↑</option>
-            <option value="price_desc">Amount ↓</option>
+            <option value="date_asc">Date ↑</option>
+            <option value="date_desc">Date ↓</option>
+            <option value="amount_asc">Amount ↑</option>
+            <option value="amount_desc">Amount ↓</option>
           </select>
         </div>
       </div>
 
-      <OrderItemSummary />
+      {orders.map((order) => (
+        <OrderItemSummary order={order} key={order._id} />
+      ))}
     </div>
   );
 }
