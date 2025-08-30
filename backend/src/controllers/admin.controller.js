@@ -34,6 +34,7 @@ const adminLogin = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "none",
   };
   return res
     .status(200)
@@ -46,6 +47,16 @@ const adminLogin = asyncHandler(async (req, res) => {
       )
     );
 });
+const getAdminProfile = asyncHandler(async (req, res) => {
+  const admin = process.env.ADMIN_EMAIL;
+  if (!admin) {
+    throw new ApiError(404, "Admin is missing");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, admin, "Admin Fetched successfully"));
+});
+
 const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
   const orderStatus = ["pending", "completed", "cancelled"];
   const { status } = req.body;
@@ -185,7 +196,7 @@ const getFoodReview = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, reviews, "Review fetched successfully"));
 });
-const foodItemReviewByUser = async (req, res) => {
+const foodItemReviewByUser = asyncHandler(async (req, res) => {
   const userId = req.user?.id;
 
   const reviews = await FoodReview.find({ user: userId }).populate(
@@ -200,7 +211,26 @@ const foodItemReviewByUser = async (req, res) => {
     .json(
       new ApiResponse(200, reviews, "Reviews by user fetched successfully")
     );
-};
+});
+const getAllOrder = asyncHandler(async (req, res) => {
+  const allOrder = await Order.find({});
+  if (!allOrder) {
+    throw new ApiError(404, "No order found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, allOrder, "All order fetched successfully"));
+});
+
+const getAllFoodItem = asyncHandler(async (req, res) => {
+  const allFoodItem = await FoodItem.find({});
+  if (!allFoodItem) {
+    throw new ApiError(404, "No order found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, allFoodItem, "All order fetched successfully"));
+});
 
 export {
   adminLogin,
@@ -213,4 +243,7 @@ export {
   updateFoodItemDetail,
   getFoodReview,
   foodItemReviewByUser,
+  getAdminProfile,
+  getAllOrder,
+  getAllFoodItem,
 };

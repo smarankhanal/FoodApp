@@ -11,12 +11,15 @@ import {
   uploadFoodItem,
   getFoodReview,
   foodItemReviewByUser,
+  getAdminProfile,
+  getAllOrder,
+  getAllFoodItem,
 } from "../controllers/admin.controller.js";
 import { verifyAdminJWT } from "../middlewares/adminAuth.middleware.js";
 
 const router = Router();
-
 router.route("/login").post(adminLogin);
+router.route("/get-admin").get(verifyAdminJWT, getAdminProfile);
 router.route("/logout").post(verifyAdminJWT, adminLogout);
 router
   .route("/update-order-status/:orderId")
@@ -36,4 +39,7 @@ router
 router
   .route("/user/:userId/food-reviews")
   .get(verifyAdminJWT, foodItemReviewByUser);
+router.route("/all-order").get(verifyAdminJWT, getAllOrder);
+router.route("/all-fooditem").get(verifyAdminJWT, getAllFoodItem);
+
 export default router;
