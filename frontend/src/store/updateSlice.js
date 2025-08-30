@@ -7,7 +7,6 @@ export const updateDetails = createAsyncThunk(
     try {
       const response = await api.patch("/users/account", userDetails);
       const updatedUser = response.data.data;
-      console.log(updatedUser);
       dispatch(setUserDetails(updatedUser));
       return updatedUser;
     } catch (error) {
