@@ -231,7 +231,18 @@ const getAllFoodItem = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, allFoodItem, "All order fetched successfully"));
 });
-
+const getSingleUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  console.log(userId);
+  const user = await User.findById(userId).select("-password -refreshToken");
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  console.log(user);
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "User fetched successfully"));
+});
 export {
   adminLogin,
   updateorderStatusByAdmin,
@@ -246,4 +257,5 @@ export {
   getAdminProfile,
   getAllOrder,
   getAllFoodItem,
+  getSingleUser,
 };

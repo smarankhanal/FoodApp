@@ -14,6 +14,7 @@ import {
   getAdminProfile,
   getAllOrder,
   getAllFoodItem,
+  getSingleUser,
 } from "../controllers/admin.controller.js";
 import { verifyAdminJWT } from "../middlewares/adminAuth.middleware.js";
 
@@ -41,5 +42,5 @@ router
   .get(verifyAdminJWT, foodItemReviewByUser);
 router.route("/all-order").get(verifyAdminJWT, getAllOrder);
 router.route("/all-fooditem").get(verifyAdminJWT, getAllFoodItem);
-
+router.route("/single-user/:userId").get(verifyAdminJWT, getSingleUser);
 export default router;

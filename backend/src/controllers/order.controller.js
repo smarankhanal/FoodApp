@@ -82,6 +82,7 @@ const userPurchaseHistory = asyncHandler(async (req, res) => {
       model: "foodItem",
     },
   });
+
   if (!user) {
     throw new ApiError(404, "User not found");
   }

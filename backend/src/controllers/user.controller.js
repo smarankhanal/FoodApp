@@ -65,7 +65,7 @@ const login = asyncHandler(async (req, res) => {
   }
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) {
-    throw new ApiError(401, "Unauthorized access");
+    throw new ApiError(401, "Unauthoriozed");
   }
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
     user.id
@@ -73,17 +73,25 @@ const login = asyncHandler(async (req, res) => {
   user.refreshToken = refreshToken;
   user.isActive = true;
   await user.save();
-
+  console.log(user.isActive);
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
 
+  // const options = {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: "none",
+  //   maxAge: 7 * 24 * 60 * 60 * 1000,
+  // };
+  const isProd = process.env.NODE_ENV === "production";
   const options = {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   };
+
   return res
     .status(200)
     .cookie("refreshToken", refreshToken, options)
@@ -123,7 +131,7 @@ const logout = asyncHandler(async (req, res) => {
     .status(200)
     .clearCookie("refreshToken", options)
     .clearCookie("accessToken", options)
-    .json(new ApiResponse(200, {}, " Logout successfully"));
+    .json(new ApiResponse(200, {}, "User Logout successfully"));
 });
 const getMe = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user).select("-password");
