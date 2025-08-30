@@ -4,11 +4,23 @@ import Button from "../components/Button";
 import Logo from "../components/Logo";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { Toast } from "../components";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { loginAdmin } from "../store/adminAuthSlice";
 export default function LogIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  const { handleSubmit, register } = useForm();
+  const submit = async (data) => {
+    try {
+      await dispatch(loginAdmin(data)).unwrap();
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const toggleVisibility = () => setShowPassword((prev) => !prev);
   return (
     <>
@@ -17,12 +29,13 @@ export default function LogIn() {
           <Logo className="w-20 h-20" />
           <p className="font-bold text-black dark:text-white">Admin</p>
         </div>
-        <div>
-          <Input label="Email:" />
+        <form onSubmit={handleSubmit(submit)}>
+          <Input label="Email:" {...register("email", { required: true })} />
           <div className="relative">
             <Input
               label="Password : "
               type={showPassword ? "text" : "password"}
+              {...register("password", { required: true })}
             />
             <button
               type="button"
@@ -35,7 +48,7 @@ export default function LogIn() {
           <div className="flex items-center justify-center">
             <Button className="m-2 bg-blue-700">LogIn</Button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

@@ -1,9 +1,15 @@
-import React from "react";
-import { Search, FoodItem } from "../components";
+import { Search, FoodItemSummary } from "../components";
 import { MdOutlineAdd } from "react-icons/md";
 
 import Button from "../components/Button";
+import { useDispatch } from "react-redux";
+import { fetchFoodItem } from "../store/foodItemSlice";
+import { useEffect } from "react";
 export default function FoodItems() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchFoodItem());
+  }, []);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
@@ -33,7 +39,7 @@ export default function FoodItems() {
           </select>
         </div>
       </div>
-      <FoodItem />
+      <FoodItemSummary />
     </div>
   );
 }

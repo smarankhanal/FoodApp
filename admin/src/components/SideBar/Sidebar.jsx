@@ -22,7 +22,7 @@ export default function Sidebar() {
         <a href="/">View order</a>
         <hr className="h-2  text-white dark:text-black" />
       </SidebarItem>
-      <SidebarItem text="FoodItems" href="/fooditems">
+      <SidebarItem text="FoodItems" href="/fooditem">
         <a href="/">
           <p>Add fooditem</p>
         </a>

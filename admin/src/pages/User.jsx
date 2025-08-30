@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Search, SingleUser } from "../components";
+import { useDispatch } from "react-redux";
+import { fetchUsers } from "../store/userSlice";
 
 export default function User() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
