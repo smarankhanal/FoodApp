@@ -9,7 +9,7 @@ export default function FoodItems() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchFoodItem());
-  }, []);
+  }, [dispatch]);
   const { foodItems } = useSelector((state) => state.foodItem);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">

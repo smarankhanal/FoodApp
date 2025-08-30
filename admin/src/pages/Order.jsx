@@ -7,7 +7,7 @@ export default function Order() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrders());
-  }, []);
+  }, [dispatch]);
   const { orders } = useSelector((state) => state.order);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">

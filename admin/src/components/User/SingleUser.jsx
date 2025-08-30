@@ -15,8 +15,14 @@ export default function SingleUser({ user }) {
         <p className="flex-1 text-sm truncate">{user._id}</p>
         <p className="flex-1 ml-5">{user.username} </p>
         <div className="flex-1">
-          <Status className="text-green-500 drop-shadow-[2px_2px_green]">
-            Active
+          <Status
+            className={
+              user.isActive === true
+                ? "text-green-500 drop-shadow-"
+                : "text-orange-500 drop-shadow-[2px_2px_orange]"
+            }
+          >
+            {user.isActive === true ? "Active" : "Not Active"}
           </Status>
         </div>
 

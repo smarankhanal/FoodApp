@@ -10,7 +10,6 @@ export default function User() {
   }, [dispatch]);
 
   const { users } = useSelector((state) => state.user);
-
   return (
     <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
       <Search />
