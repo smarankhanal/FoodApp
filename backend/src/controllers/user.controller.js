@@ -78,17 +78,10 @@ const login = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
-  // const options = {
-  //   httpOnly: true,
-  //   secure: true,
-  //   sameSite: "none",
-  //   maxAge: 7 * 24 * 60 * 60 * 1000,
-  // };
-  const isProd = process.env.NODE_ENV === "production";
   const options = {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   };
 
