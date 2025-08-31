@@ -9,7 +9,8 @@ export default function User() {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const { users } = useSelector((state) => state.user);
+  const { users, loading } = useSelector((state) => state.user);
+  if (loading) return <p>Loading...</p>;
   return (
     <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
       <Search />

@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { FoodItems, Home, LogIn, Order, User } from "./pages/index.js";
 import PublicRoute from "./components/routes/publicRoute.jsx";
 import ProtectedRoute from "./components/routes/protectedRoute.jsx";
+import { UserDetails, UserOrderHistory } from "./components/index.js";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,10 +59,26 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "fooditem",
+        path: "/fooditem",
         element: (
           <ProtectedRoute>
             <FoodItems />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user-details/:userId",
+        element: (
+          <ProtectedRoute>
+            <UserDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user-history/:userId",
+        element: (
+          <ProtectedRoute>
+            <UserOrderHistory />
           </ProtectedRoute>
         ),
       },

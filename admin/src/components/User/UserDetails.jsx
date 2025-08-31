@@ -1,7 +1,13 @@
 import React from "react";
+import { useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export default function UserDetails() {
+  const { user } = useSelector((state) => state.singleUser);
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <div className=" flex-1 flex-col flex items-center justify-center font-serif">
       <div className="flex items-center justify-center w-15 h-15 rounded-full border-4 border-amber-600">

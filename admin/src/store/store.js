@@ -3,6 +3,7 @@ import adminAuthSlice from "./adminAuthSlice";
 import userSlice from "./userSlice";
 import orderSlice from "./orderSlice";
 import foodItemSlice from "./foodItemSlice";
+import singleUserSlice from "./singleUserSlice";
 import {
   persistStore,
   persistReducer,
@@ -20,11 +21,12 @@ const rootReducer = combineReducers({
   user: userSlice,
   order: orderSlice,
   foodItem: foodItemSlice,
+  singleUser: singleUserSlice,
 });
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "user", "order", "fooditem"],
+  whitelist: ["auth", "user", "order", "foodItem", "singleUser"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

@@ -10,6 +10,7 @@ import Toast from "./Toast";
 import OrderDetails from "./Order/OrderDetails";
 import OrderedSingleFoodItem from "./Order/OrderedSingleFoodItem";
 import OrderItemSummary from "./Order/OrderItemSummary";
+import NoOrder from "./Order/NoOrder";
 //
 import UserDetails from "./User/UserDetails";
 import UserOrderHistory from "./User/UserOrderHistory";
@@ -38,4 +39,5 @@ export {
   OrderDetails,
   OrderedSingleFoodItem,
   OrderItemSummary,
+  NoOrder,
 };

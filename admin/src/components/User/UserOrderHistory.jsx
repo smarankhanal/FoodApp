@@ -1,4 +1,11 @@
+import { useSelector } from "react-redux";
+import NoOrder from "../../components";
+
 export default function UserOrderHistory() {
+  const { userHistory } = useSelector((state) => state.singleUser);
+  if (userHistory.length === 0) {
+    return <NoOrder />;
+  }
   return (
     <>
       <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
