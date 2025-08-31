@@ -31,8 +31,9 @@ export default function Register() {
     return errObj?.message || null;
   };
   const submit = async (data) => {
+    console.log(data);
     try {
-      await dispatch(registerUser({ userData: data })).unwrap();
+      await dispatch(registerUser(data)).unwrap();
       navigate("/login");
     } catch (error) {
       console.error("Registration failed:");
