@@ -20,7 +20,7 @@ export default function SingleUser({ user }) {
   const viewUser = async (userId) => {
     try {
       await dispatch(fetchSingleUser(userId)).unwrap();
-      navigate("/user-details");
+      navigate(`/user-details/${userId}`);
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +55,7 @@ export default function SingleUser({ user }) {
   const userHistory = async (userId) => {
     try {
       await dispatch(fetchUserHistory(userId)).unwrap();
-      navigate("/user-history");
+      navigate(`/user-history/${userId}`);
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +76,7 @@ export default function SingleUser({ user }) {
           <Status
             className={
               user.isActive === true
-                ? "text-green-500 drop-shadow-"
+                ? "text-green-500 drop-shadow-[2px_2px_green]"
                 : "text-orange-500 drop-shadow-[2px_2px_orange]"
             }
           >

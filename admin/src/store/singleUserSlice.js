@@ -36,8 +36,9 @@ export const fetchUserHistory = createAsyncThunk(
   "singleUser/fetchUserHistory",
   async (userId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/api/v1/admin/user-history/${userId}`);
-      return userId;
+      const response = await axios.get(`/api/v1/admin/user-history/${userId}`);
+      console.log(response.data);
+      return response.data.data;
     } catch (error) {
       const serializedError = {
         message: error.response?.data?.message || error.message,
@@ -87,12 +88,12 @@ const singleUserSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchUserHistory.fulfilled, (state, action) => {
-        state.history = action.payload;
+        state.userHistory = action.payload;
         state.loading = false;
         state.error = null;
       })
       .addCase(fetchUserHistory.pending, (state) => {
-        state.history = null;
+        state.userHistory = null;
         state.loading = true;
         state.error = null;
       })

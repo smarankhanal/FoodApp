@@ -8,7 +8,7 @@ export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAdminProfile());
-  }, []);
+  }, [dispatch]);
   const { admin } = useSelector((state) => state.auth);
   return (
     <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-2 min-h-screen">
