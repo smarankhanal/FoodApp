@@ -90,7 +90,7 @@ const getUserHistory = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: userId })
     .populate("foodItems")
     .sort({ createdAt: -1 });
-  if (!orders || orders.length === 0) {
+  if (!orders) {
     throw new ApiError(404, "No orders for this user");
   }
   return res
