@@ -231,6 +231,7 @@ const getAllFoodItem = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, allFoodItem, "All order fetched successfully"));
 });
+
 const getSingleUser = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
   console.log(userId);
@@ -241,6 +242,28 @@ const getSingleUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User fetched successfully"));
+});
+const getSingleOrderbyAdmin = asyncHandler(async (req, res) => {
+  const { userId, orderId } = req.params;
+
+  const order = await Order.findOne({ _id: orderId, user: userId }).populate(
+    "foodItems.foodItem"
+  );
+  if (!order) {
+    throw new ApiError(404, "Order not found");
+  }
+  const cleanedFoodItems = order.foodItems.filter(
+    (item) => item.foodItem !== null
+  );
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { ...order.toObject(), foodItems: cleanedFoodItems },
+        "Order fetched successfully"
+      )
+    );
 });
 export {
   adminLogin,
@@ -257,4 +280,5 @@ export {
   getAllOrder,
   getAllFoodItem,
   getSingleUser,
+  getSingleOrderbyAdmin,
 };

@@ -108,7 +108,6 @@ const logout = asyncHandler(async (req, res) => {
       $unset: {
         refreshToken: 1,
       },
-      $set: { isActive: false },
     },
     {
       new: true,
