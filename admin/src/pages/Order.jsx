@@ -7,19 +7,25 @@ export default function Order() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrders());
-  }, [dispatch]);
+  }, []);
   const { orders } = useSelector((state) => state.order);
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
       <div className="flex">
         <p className="font-bold font-serif text-[20px] flex-1">
-          Total Order :-
+          Total Order :-{orders.length}
         </p>
         <div className="flex flex-col">
-          <p className="font-bold font-serif text-[16px]">Pending :-</p>
-          <p className="font-bold font-serif text-[16px]">Cancelled :-</p>
-          <p className="font-bold font-serif text-[16px]">Completed :-</p>
+          <p className="font-bold font-serif text-[16px] text-orange-400">
+            Pending :-{orders.filter((o) => o.status === "pending").length}
+          </p>
+          <p className="font-bold font-serif text-[16px] text-red-600">
+            Cancelled :-{orders.filter((o) => o.status === "cancelled").length}
+          </p>
+          <p className="font-bold font-serif text-[16px] text-green-600">
+            Completed :-{orders.filter((o) => o.status === "completed").length}
+          </p>
         </div>
       </div>
       <div className="grid grid-cols-6 gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 text-black font-bold items-center">

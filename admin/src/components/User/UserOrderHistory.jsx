@@ -2,7 +2,9 @@ import { useSelector } from "react-redux";
 import { NoOrder, Status } from "../../components";
 import Button from "../Button";
 import { useParams } from "react-router-dom";
+import { useCapitalize } from "../../hooks/useCapitalize";
 export default function UserOrderHistory() {
+  const captialize = useCapitalize();
   const { userHistory } = useSelector((state) => state.singleUser);
   const { userId } = useParams();
   const totalPrice = userHistory.reduce(
@@ -62,7 +64,7 @@ export default function UserOrderHistory() {
               </p>
               <div className="flex-1 flex">
                 <Status className="text-orange-400 drop-shadow-[2px_2px_orange]">
-                  {order.status}
+                  {captialize(order.status)}
                 </Status>
                 <Button className="bg-white text-black dark:bg-black dark:text-white">
                   View

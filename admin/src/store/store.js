@@ -15,6 +15,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import singleOrderSlice from "./singleOrderSlice";
 
 const rootReducer = combineReducers({
   auth: adminAuthSlice,
@@ -22,11 +23,12 @@ const rootReducer = combineReducers({
   order: orderSlice,
   foodItem: foodItemSlice,
   singleUser: singleUserSlice,
+  singleOrder: singleOrderSlice,
 });
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "user", "order", "foodItem", "singleUser"],
+  whitelist: ["auth", "user", "order", "foodItem", "singleUser", "singleOrder"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

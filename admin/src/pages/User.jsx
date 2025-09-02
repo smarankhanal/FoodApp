@@ -7,7 +7,7 @@ export default function User() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [dispatch]);
+  }, []);
 
   const { users, loading } = useSelector((state) => state.user);
   if (loading) return <p>Loading...</p>;
@@ -16,8 +16,13 @@ export default function User() {
       <Search />
 
       <div className="flex justify-between items-center mt-6 mb-4">
-        <p className="font-bold text-lg ">Total Users: </p>
-        <p className="font-bold text-lg">Active Users:</p>
+        <p className="font-bold text-lg ">Total Users: {users.length} </p>
+        <p className="font-bold text-lg">
+          Active Users:{" "}
+          <span className="text-green-500">
+            {users.filter((u) => u.isActive).length}
+          </span>
+        </p>
       </div>
 
       <div className="grid grid-cols-5 gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 font-bold text-black items-center shadow">

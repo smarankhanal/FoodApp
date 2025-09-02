@@ -2,8 +2,18 @@ import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import Status from "../Status";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchSingleOrder } from "../../store/singleOrderSlice";
 
 export default function OrderItemSummary({ order }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const viewOrder = async (userId, orderId) => {
+    await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
+    navigate(`/order-details/user=${userId}/order=${orderId}`);
+  };
+
   return (
     <div className="grid grid-cols-6 items-center bg-black dark:bg-white rounded-lg m-4 p-3 dark:text-black text-white text-sm shadow-sm">
       <p className="truncate opacity-60">{order._id}</p>
@@ -30,6 +40,7 @@ export default function OrderItemSummary({ order }) {
         <div
           className="bg-white dark:bg-black h-8 w-8 rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-105 transition"
           title="View Order"
+          onClick={() => viewOrder(order.user, order._id)}
         >
           <AiOutlineEye className="text-[18px] text-amber-500" />
         </div>
