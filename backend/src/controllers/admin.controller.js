@@ -59,18 +59,20 @@ const getAdminProfile = asyncHandler(async (req, res) => {
 
 const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
   const orderStatus = ["pending", "completed", "cancelled"];
+  const { userId, orderId } = req.params;
   const { status } = req.body;
-  const { orderId } = req.params;
-
   if (!orderStatus.includes(status)) {
     throw new ApiError(400, "Invalid order status");
   }
-  const order = await Order.findById(orderId);
+  const order = await Order.findOneAndUpdate(
+    { _id: orderId, user: userId },
+    { status },
+    { new: true }
+  );
+
   if (!order) {
     throw new ApiError(404, "Order not found");
   }
-  order.status = status;
-  await order.save();
   return res
     .status(200)
     .json(

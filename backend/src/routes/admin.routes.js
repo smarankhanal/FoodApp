@@ -23,12 +23,12 @@ const router = Router();
 router.route("/login").post(adminLogin);
 router.route("/get-admin").get(verifyAdminJWT, getAdminProfile);
 router.route("/logout").post(verifyAdminJWT, adminLogout);
-router
-  .route("/update-order-status/:orderId")
-  .patch(verifyAdminJWT, updateorderStatusByAdmin);
+
 router.route("/all-user").get(verifyAdminJWT, allTheUser);
 router.route("/user-history/:userId").get(verifyAdminJWT, getUserHistory);
 router.route("/delete-user/:userId").delete(verifyAdminJWT, deleteUser);
+router.route("/single-user/:userId").get(verifyAdminJWT, getSingleUser);
+
 router
   .route("/upload-fooditems")
   .post(verifyAdminJWT, upload.single("foodImage"), uploadFoodItem);
@@ -41,11 +41,14 @@ router
 router
   .route("/user/:userId/food-reviews")
   .get(verifyAdminJWT, foodItemReviewByUser);
-router.route("/all-order").get(verifyAdminJWT, getAllOrder);
 router.route("/all-fooditem").get(verifyAdminJWT, getAllFoodItem);
-router.route("/single-user/:userId").get(verifyAdminJWT, getSingleUser);
+
+router.route("/all-order").get(verifyAdminJWT, getAllOrder);
 router
   .route("/user=:userId/order=:orderId")
   .get(verifyAdminJWT, getSingleOrderbyAdmin);
+router
+  .route("/user=:userId/order=:orderId/status")
+  .patch(verifyAdminJWT, updateorderStatusByAdmin);
 
 export default router;
