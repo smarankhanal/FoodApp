@@ -15,8 +15,10 @@ import { Toast } from "../../components";
 
 export default function SingleUser({ user }) {
   const [toast, setToast] = useState({ show: false, text: "", className: "" });
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const viewUser = async (userId) => {
     try {
       await dispatch(fetchSingleUser(userId)).unwrap();
@@ -29,7 +31,6 @@ export default function SingleUser({ user }) {
   const deleteTheUser = async (userId) => {
     try {
       await dispatch(deleteUser(userId)).unwrap();
-
       setToast({
         show: true,
         text: "Deleting the user...",
@@ -52,6 +53,7 @@ export default function SingleUser({ user }) {
       }, 2000);
     }
   };
+
   const userHistory = async (userId) => {
     try {
       await dispatch(fetchUserHistory(userId)).unwrap();
@@ -60,6 +62,7 @@ export default function SingleUser({ user }) {
       console.log(error);
     }
   };
+
   return (
     <>
       {toast.show && (
@@ -69,6 +72,34 @@ export default function SingleUser({ user }) {
           className={toast.className}
         />
       )}
+
+      {confirmOpen && (
+        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 cursor-not-allowed">
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
+            <h2 className="text-lg font-semibold mb-4">
+              Are you sure you want to delete this user?
+            </h2>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => {
+                  deleteTheUser(user._id);
+                  setConfirmOpen(false);
+                }}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setConfirmOpen(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black  text-white flex items-center">
         <p className="flex-1 text-sm truncate">{user._id}</p>
         <p className="flex-1 ml-5">{user.username} </p>
@@ -105,10 +136,11 @@ export default function SingleUser({ user }) {
           <div
             className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"
             title="Delete User"
-            onClick={() => deleteTheUser(user._id)}
+            onClick={() => setConfirmOpen(true)}
           >
             <TiUserDelete className="text-red-600 text-[18px]" />
           </div>
+
           <div
             className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03] ml-3"
             title="View user details"

@@ -15,7 +15,9 @@ export default function FoodItems() {
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
       <div className="flex justify-between items-center">
-        <p className="font-bold font-serif text-[20px]">Total FoodItems :-</p>
+        <p className="font-bold font-serif text-[20px]">
+          Total FoodItems :- {foodItems.length}
+        </p>
 
         <Button className=" dark:bg-blue-700  bg-blue-600 text-white  w-[100px] flex items-center justify-center gap-1">
           Add

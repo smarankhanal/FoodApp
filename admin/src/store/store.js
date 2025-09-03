@@ -4,6 +4,7 @@ import userSlice from "./userSlice";
 import orderSlice from "./orderSlice";
 import foodItemSlice from "./foodItemSlice";
 import singleUserSlice from "./singleUserSlice";
+import singleFoodItemSlice from "./singleFoodItemSlice";
 import {
   persistStore,
   persistReducer,
@@ -24,11 +25,20 @@ const rootReducer = combineReducers({
   foodItem: foodItemSlice,
   singleUser: singleUserSlice,
   singleOrder: singleOrderSlice,
+  singleFoodItem: singleFoodItemSlice,
 });
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "user", "order", "foodItem", "singleUser", "singleOrder"],
+  whitelist: [
+    "auth",
+    "user",
+    "order",
+    "foodItem",
+    "singleUser",
+    "singleOrder",
+    "singleFoodItem",
+  ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
