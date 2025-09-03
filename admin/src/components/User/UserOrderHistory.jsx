@@ -1,17 +1,24 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NoOrder, Status } from "../../components";
 import Button from "../Button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCapitalize } from "../../hooks/useCapitalize";
+import { fetchSingleOrder } from "../../store/singleOrderSlice";
+
 export default function UserOrderHistory() {
   const captialize = useCapitalize();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userHistory } = useSelector((state) => state.singleUser);
   const { userId } = useParams();
   const totalPrice = userHistory.reduce(
     (sum, order) => sum + Number(order.totalPrice || 0),
     0
   );
-
+  const viewOrder = async (userId, orderId) => {
+    await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
+    navigate(`/order-details/user=${userId}/order=${orderId}`);
+  };
   return (
     <>
       {userHistory.length === 0 ? (
@@ -66,7 +73,10 @@ export default function UserOrderHistory() {
                 <Status className="text-orange-400 drop-shadow-[2px_2px_orange]">
                   {captialize(order.status)}
                 </Status>
-                <Button className="bg-white text-black dark:bg-black dark:text-white">
+                <Button
+                  className="bg-white text-black dark:bg-black dark:text-white"
+                  onClick={() => viewOrder(userId, order._id)}
+                >
                   View
                 </Button>
               </div>

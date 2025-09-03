@@ -23,7 +23,7 @@ export const fetchAdminProfile = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       if (!token) return null;
-      console.log(token);
+
       const response = await axios.get("/api/v1/admin/get-admin", {
         headers: { Authorization: `Bearer ${token}` },
       });

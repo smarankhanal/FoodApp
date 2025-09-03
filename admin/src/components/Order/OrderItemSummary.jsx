@@ -5,8 +5,16 @@ import Status from "../Status";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchSingleOrder } from "../../store/singleOrderSlice";
+import { useCapitalize } from "../../hooks/useCapitalize";
 
 export default function OrderItemSummary({ order }) {
+  const statusStyles = {
+    pending: "text-amber-500  ",
+    completed: "text-green-500 ",
+    cancelled: "text-red-500 ",
+  };
+
+  const capitalize = useCapitalize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const viewOrder = async (userId, orderId) => {
@@ -21,7 +29,11 @@ export default function OrderItemSummary({ order }) {
       <p className=" font-medium truncate">{order.user}</p>
 
       <div>
-        <Status className="text-amber-500 font-semibold">Pending</Status>
+        <Status
+          className={`${statusStyles[order.status.toLowerCase()]}font-semibold`}
+        >
+          {capitalize(order.status)}
+        </Status>
       </div>
 
       <p className="font-semibold">Rs {order.totalPrice}</p>
@@ -47,6 +59,7 @@ export default function OrderItemSummary({ order }) {
         <div
           className="bg-white dark:bg-black h-8 w-8 rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-105 transition"
           title="Edit Order Status"
+          onClick={() => viewOrder(order.user, order._id)}
         >
           <FaRegEdit className="text-[16px] text-blue-500" />
         </div>

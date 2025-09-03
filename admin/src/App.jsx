@@ -4,6 +4,9 @@ import { Navbar, Sidebar } from "./components";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminProfile } from "./store/adminAuthSlice";
+import { fetchUsers } from "./store/userSlice";
+import { fetchUserHistory } from "./store/singleUserSlice";
+import { fetchFoodItem } from "./store/foodItemSlice";
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
