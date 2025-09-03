@@ -47,6 +47,17 @@ const adminLogin = asyncHandler(async (req, res) => {
       )
     );
 });
+const adminLogout = asyncHandler(async (req, res) => {
+  const options = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  };
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(200, {}, "Admin logout successfully"));
+});
 const getAdminProfile = asyncHandler(async (req, res) => {
   const admin = process.env.ADMIN_EMAIL;
   if (!admin) {
@@ -57,28 +68,6 @@ const getAdminProfile = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, admin, "Admin Fetched successfully"));
 });
 
-const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
-  const orderStatus = ["pending", "completed", "cancelled"];
-  const { userId, orderId } = req.params;
-  const { status } = req.body;
-  if (!orderStatus.includes(status)) {
-    throw new ApiError(400, "Invalid order status");
-  }
-  const order = await Order.findOneAndUpdate(
-    { _id: orderId, user: userId },
-    { status },
-    { new: true }
-  );
-
-  if (!order) {
-    throw new ApiError(404, "Order not found");
-  }
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, order, "Order status successfully changed by admin")
-    );
-});
 const allTheUser = asyncHandler(async (req, res) => {
   const users = await User.find({}).select("-password").sort({ createdAt: -1 });
   return res
@@ -86,6 +75,17 @@ const allTheUser = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(200, users, "All the Users are fetched successfullly")
     );
+});
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  await user.deleteOne();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "User delete successfully"));
 });
 const getUserHistory = asyncHandler(async (req, res) => {
   const { userId } = req.params;
@@ -99,6 +99,18 @@ const getUserHistory = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, orders, "User history fetched successfully"));
 });
+const getSingleUser = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  console.log(userId);
+  const user = await User.findById(userId).select("-password -refreshToken");
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "User fetched successfully"));
+});
+
 const uploadFoodItem = asyncHandler(async (req, res) => {
   const { foodName, description, price, type, subCategory } = req.body;
   if (
@@ -136,28 +148,38 @@ const uploadFoodItem = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, foodItem, "FoodItem created successfully"));
 });
-
-const deleteUser = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findById(userId);
-  if (!user) {
-    throw new ApiError(404, "User not found");
+const getAllFoodItem = asyncHandler(async (req, res) => {
+  const allFoodItem = await FoodItem.find({}).sort({ createdAt: -1 });
+  if (!allFoodItem) {
+    throw new ApiError(404, "No order found");
   }
-  await user.deleteOne();
   return res
     .status(200)
-    .json(new ApiResponse(200, {}, "User delete successfully"));
+    .json(new ApiResponse(200, allFoodItem, "All order fetched successfully"));
 });
-const adminLogout = asyncHandler(async (req, res) => {
-  const options = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-  };
+const getSingleFoodItem = asyncHandler(async (req, res) => {
+  const foodItemId = req.params.foodItemId;
+
+  const foodItem = await FoodItem.findById(foodItemId);
+
+  if (!foodItem) {
+    throw new ApiError(404, "Food item not found");
+  }
+
   return res
     .status(200)
-    .clearCookie("accessToken", options)
-    .json(new ApiResponse(200, {}, "Admin logout successfully"));
+    .json(new ApiResponse(200, foodItem, "Food item fetched successfully"));
+});
+const deleteFoodItem = asyncHandler(async (req, res) => {
+  const foodItemId = req.params.foodItemId;
+  const foodItem = await FoodItem.findById(foodItemId);
+  if (!foodItem) {
+    throw new ApiError(404, "FoodItem not found");
+  }
+  await foodItem.deleteOne();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "FoodItem delete successfully"));
 });
 const updateFoodItemDetail = asyncHandler(async (req, res) => {
   const { fooditemId } = req.params;
@@ -185,6 +207,61 @@ const updateFoodItemDetail = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, fooditem, "Fooditem updated successfully"));
 });
+
+const getAllOrder = asyncHandler(async (req, res) => {
+  const allOrder = await Order.find({}).sort({ createdAt: -1 });
+  if (!allOrder) {
+    throw new ApiError(404, "No order found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, allOrder, "All order fetched successfully"));
+});
+const updateorderStatusByAdmin = asyncHandler(async (req, res) => {
+  const orderStatus = ["pending", "completed", "cancelled"];
+  const { userId, orderId } = req.params;
+  const { status } = req.body;
+  if (!orderStatus.includes(status)) {
+    throw new ApiError(400, "Invalid order status");
+  }
+  const order = await Order.findOneAndUpdate(
+    { _id: orderId, user: userId },
+    { status },
+    { new: true }
+  );
+
+  if (!order) {
+    throw new ApiError(404, "Order not found");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, order, "Order status successfully changed by admin")
+    );
+});
+const getSingleOrderbyAdmin = asyncHandler(async (req, res) => {
+  const { userId, orderId } = req.params;
+
+  const order = await Order.findOne({ _id: orderId, user: userId }).populate(
+    "foodItems.foodItem"
+  );
+  if (!order) {
+    throw new ApiError(404, "Order not found");
+  }
+  const cleanedFoodItems = order.foodItems.filter(
+    (item) => item.foodItem !== null
+  );
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { ...order.toObject(), foodItems: cleanedFoodItems },
+        "Order fetched successfully"
+      )
+    );
+});
+
 const getFoodReview = asyncHandler(async (req, res) => {
   const foodItemId = req.params.id;
   const reviews = await FoodReview.find({ foodItem: foodItemId }).populate(
@@ -214,73 +291,23 @@ const foodItemReviewByUser = asyncHandler(async (req, res) => {
       new ApiResponse(200, reviews, "Reviews by user fetched successfully")
     );
 });
-const getAllOrder = asyncHandler(async (req, res) => {
-  const allOrder = await Order.find({}).sort({ createdAt: -1 });
-  if (!allOrder) {
-    throw new ApiError(404, "No order found");
-  }
-  return res
-    .status(200)
-    .json(new ApiResponse(200, allOrder, "All order fetched successfully"));
-});
 
-const getAllFoodItem = asyncHandler(async (req, res) => {
-  const allFoodItem = await FoodItem.find({}).sort({ createdAt: -1 });
-  if (!allFoodItem) {
-    throw new ApiError(404, "No order found");
-  }
-  return res
-    .status(200)
-    .json(new ApiResponse(200, allFoodItem, "All order fetched successfully"));
-});
-
-const getSingleUser = asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
-  console.log(userId);
-  const user = await User.findById(userId).select("-password -refreshToken");
-  if (!user) {
-    throw new ApiError(404, "User not found");
-  }
-  return res
-    .status(200)
-    .json(new ApiResponse(200, user, "User fetched successfully"));
-});
-const getSingleOrderbyAdmin = asyncHandler(async (req, res) => {
-  const { userId, orderId } = req.params;
-
-  const order = await Order.findOne({ _id: orderId, user: userId }).populate(
-    "foodItems.foodItem"
-  );
-  if (!order) {
-    throw new ApiError(404, "Order not found");
-  }
-  const cleanedFoodItems = order.foodItems.filter(
-    (item) => item.foodItem !== null
-  );
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        { ...order.toObject(), foodItems: cleanedFoodItems },
-        "Order fetched successfully"
-      )
-    );
-});
 export {
   adminLogin,
-  updateorderStatusByAdmin,
-  uploadFoodItem,
+  adminLogout,
+  getAdminProfile,
   allTheUser,
   getUserHistory,
   deleteUser,
-  adminLogout,
+  getSingleUser,
+  getAllOrder,
+  getSingleOrderbyAdmin,
+  updateorderStatusByAdmin,
+  getAllFoodItem,
+  getSingleFoodItem,
+  uploadFoodItem,
   updateFoodItemDetail,
+  deleteFoodItem,
   getFoodReview,
   foodItemReviewByUser,
-  getAdminProfile,
-  getAllOrder,
-  getAllFoodItem,
-  getSingleUser,
-  getSingleOrderbyAdmin,
 };

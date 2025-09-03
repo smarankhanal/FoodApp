@@ -16,6 +16,8 @@ import {
   getAllFoodItem,
   getSingleUser,
   getSingleOrderbyAdmin,
+  getSingleFoodItem,
+  deleteFoodItem,
 } from "../controllers/admin.controller.js";
 import { verifyAdminJWT } from "../middlewares/adminAuth.middleware.js";
 
@@ -28,6 +30,9 @@ router.route("/all-user").get(verifyAdminJWT, allTheUser);
 router.route("/user-history/:userId").get(verifyAdminJWT, getUserHistory);
 router.route("/delete-user/:userId").delete(verifyAdminJWT, deleteUser);
 router.route("/single-user/:userId").get(verifyAdminJWT, getSingleUser);
+router
+  .route("/delete-fooditem/:foodItemId")
+  .delete(verifyAdminJWT, deleteFoodItem);
 
 router
   .route("/upload-fooditems")
@@ -42,7 +47,7 @@ router
   .route("/user/:userId/food-reviews")
   .get(verifyAdminJWT, foodItemReviewByUser);
 router.route("/all-fooditem").get(verifyAdminJWT, getAllFoodItem);
-
+router.route("/fooditem/:foodItemId").get(verifyAdminJWT, getSingleFoodItem);
 router.route("/all-order").get(verifyAdminJWT, getAllOrder);
 router
   .route("/user=:userId/order=:orderId")
