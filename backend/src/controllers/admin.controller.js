@@ -113,18 +113,18 @@ const getSingleUser = asyncHandler(async (req, res) => {
 
 const uploadFoodItem = asyncHandler(async (req, res) => {
   const { foodName, description, price, type, subCategory } = req.body;
-  if (
-    [foodName, description, price, type, subCategory].some(
-      (field) => typeof field !== "string" || field.trim() === ""
-    ) ||
-    price === undefined ||
-    price === null ||
-    isNaN(price)
-  ) {
-    throw new ApiError(400, "Fooditems information is missing");
+
+  if (!foodName || !description || !price || !type || !subCategory) {
+    throw new ApiError(400, "Food item information is missing");
   }
-  const existFoodItem = await FoodItem.find({ foodName });
-  if (!existFoodItem) {
+
+  const parsedPrice = Number(price);
+  if (isNaN(parsedPrice)) {
+    throw new ApiError(400, "Price must be a valid number");
+  }
+
+  const existFoodItem = await FoodItem.findOne({ foodName });
+  if (existFoodItem) {
     throw new ApiError(409, "FoodItem already exists");
   }
 
@@ -132,22 +132,30 @@ const uploadFoodItem = asyncHandler(async (req, res) => {
   if (!foodItemImagePath) {
     throw new ApiError(400, "foodImage file is required");
   }
+
   const foodImage = await uploadOnCloudinary(foodItemImagePath);
+  if (!foodImage || !foodImage.url) {
+    throw new ApiError(500, "Image upload failed");
+  }
+
   const foodItem = await FoodItem.create({
     foodName,
     description,
-    price,
+    price: parsedPrice,
     type,
     subCategory,
-    foodImage: foodImage?.url || "",
+    foodImage: foodImage.url,
   });
+
   if (!foodItem) {
-    throw new ApiError(500, "foodItem creation failed");
+    throw new ApiError(500, "Food item creation failed");
   }
+
   return res
-    .status(200)
-    .json(new ApiResponse(200, foodItem, "FoodItem created successfully"));
+    .status(201)
+    .json(new ApiResponse(201, foodItem, "Food item created successfully"));
 });
+
 const getAllFoodItem = asyncHandler(async (req, res) => {
   const allFoodItem = await FoodItem.find({}).sort({ createdAt: -1 });
   if (!allFoodItem) {
@@ -267,9 +275,9 @@ const getFoodReview = asyncHandler(async (req, res) => {
   const reviews = await FoodReview.find({ foodItem: foodItemId })
     .populate("user", "fullname")
     .sort({ createdAt: -1 });
-  if (!reviews || reviews.length === 0) {
-    throw new ApiError(404, "No reviews found for this food item");
-  }
+  // if (!reviews) {
+  //   throw new ApiError(404, "No reviews found for this food item");
+  // }
   return res
     .status(200)
     .json(new ApiResponse(200, reviews, "Review fetched successfully"));
@@ -281,9 +289,10 @@ const foodItemReviewByUser = asyncHandler(async (req, res) => {
     "foodItem",
     "foodName description foodImage"
   );
-  if (!reviews || reviews.length === 0) {
-    throw new ApiError(404, "No review by the user");
-  }
+  console.log(reviews);
+  // if (!reviews) {
+  //   throw new ApiError(404, "No review by the user");
+  // }
   return res
     .status(200)
     .json(
