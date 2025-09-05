@@ -41,7 +41,7 @@ router
   .route("/update-fooditem/:fooditemId")
   .patch(verifyAdminJWT, upload.single("FoodItem"), updateFoodItemDetail);
 router
-  .route("/foodItem/get-review/:foodItemId")
+  .route("/food-item/get-review/:foodItemId")
   .get(verifyAdminJWT, getFoodReview);
 router
   .route("/user/:userId/food-reviews")

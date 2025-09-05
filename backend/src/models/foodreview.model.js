@@ -8,7 +8,7 @@ const foodReviewSchema = new mongoose.Schema(
     },
     foodItem: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "FoodItem",
+      ref: "foodItem",
       required: true,
     },
     review_text: {

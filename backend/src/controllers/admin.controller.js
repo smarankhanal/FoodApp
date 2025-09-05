@@ -263,11 +263,10 @@ const getSingleOrderbyAdmin = asyncHandler(async (req, res) => {
 });
 
 const getFoodReview = asyncHandler(async (req, res) => {
-  const foodItemId = req.params.id;
-  const reviews = await FoodReview.find({ foodItem: foodItemId }).populate(
-    "user",
-    "fullname"
-  );
+  const foodItemId = req.params.foodItemId;
+  const reviews = await FoodReview.find({ foodItem: foodItemId })
+    .populate("user", "fullname")
+    .sort({ createdAt: -1 });
   if (!reviews || reviews.length === 0) {
     throw new ApiError(404, "No reviews found for this food item");
   }
@@ -276,7 +275,7 @@ const getFoodReview = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, reviews, "Review fetched successfully"));
 });
 const foodItemReviewByUser = asyncHandler(async (req, res) => {
-  const userId = req.user?.id;
+  const userId = req.params.userId;
 
   const reviews = await FoodReview.find({ user: userId }).populate(
     "foodItem",
