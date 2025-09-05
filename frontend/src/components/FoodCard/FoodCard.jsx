@@ -6,8 +6,10 @@ import { addToCart, removeCart } from "../../store/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Toast from "../Toast";
 import { fetchSingleFoodItem } from "../../store/singleFoodItemSlice";
+import { useCapitalize } from "../../hooks/useCapitalize";
 
 export default function FoodCard({ item }) {
+  const capitalize = useCapitalize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [toast, setToast] = useState({ show: false, text: "", className: "" });
@@ -59,7 +61,7 @@ export default function FoodCard({ item }) {
         </div>
         <div className="p-4">
           <h3 className="font-bold text-lg dark:text-white text-black mb-1">
-            {item.foodName}
+            {capitalize(item.foodName)}
           </h3>
           <p className="text-sm dark:text-gray-300 text-gray-700 mb-2">
             {item.description}

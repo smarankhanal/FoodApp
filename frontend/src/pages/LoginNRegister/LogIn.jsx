@@ -33,7 +33,7 @@ export default function LogIn() {
 
           <Input
             label="Email/Username :"
-            type="email"
+            type="text"
             className="mb-4"
             {...register("identifier", { required: true })}
           />

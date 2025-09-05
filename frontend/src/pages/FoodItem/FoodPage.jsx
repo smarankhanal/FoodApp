@@ -13,7 +13,7 @@ export default function FoodPage() {
     dispatch(fetchReviews(item._id));
   }, [dispatch, item._id]);
   const { reviewsByFood, loading } = useSelector((state) => state.review);
-  console.log(reviewsByFood);
+
   const reviews = reviewsByFood[item?._id] || [];
 
   return (
@@ -29,7 +29,9 @@ export default function FoodPage() {
             className="w-48 object-cover rounded-l-lg"
           />
           <div className="p-4 flex flex-col justify-center space-y-2 flex-1 text-black dark:text-white">
-            <p className="text-xl font-bold text-amber-400">{item.foodName}</p>
+            <p className="text-xl font-bold text-amber-400">
+              {capitalize(item.foodName)}
+            </p>
             <p className="font-semibold">{item.description} </p>
             <p className="font-bold">
               Type :-
