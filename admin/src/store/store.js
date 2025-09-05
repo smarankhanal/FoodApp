@@ -17,7 +17,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import singleOrderSlice from "./singleOrderSlice";
-
+import reviewSlice from "./foodReviewSlice";
 const rootReducer = combineReducers({
   auth: adminAuthSlice,
   user: userSlice,
@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
   singleUser: singleUserSlice,
   singleOrder: singleOrderSlice,
   singleFoodItem: singleFoodItemSlice,
+  review: reviewSlice,
 });
 const persistConfig = {
   key: "root",

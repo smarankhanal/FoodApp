@@ -96,7 +96,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/food-item",
+        path: "/food-item/:foodItemId",
         element: (
           <ProtectedRoute>
             <FoodItemDetails />

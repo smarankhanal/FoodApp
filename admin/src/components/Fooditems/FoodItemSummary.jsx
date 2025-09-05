@@ -22,7 +22,7 @@ export default function FoodItemSummary({ item }) {
 
   const viewFoodItems = async (foodItemId) => {
     await dispatch(fetchSingleFoodItem(foodItemId)).unwrap();
-    navigate("/food-item");
+    navigate(`/food-item/${foodItemId}`);
   };
 
   const deleteFood = async (foodItemId) => {

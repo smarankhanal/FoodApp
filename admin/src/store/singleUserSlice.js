@@ -37,7 +37,6 @@ export const fetchUserHistory = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const response = await axios.get(`/api/v1/admin/user-history/${userId}`);
-      console.log(response.data);
       return response.data.data;
     } catch (error) {
       const serializedError = {

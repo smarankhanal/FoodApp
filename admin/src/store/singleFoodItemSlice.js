@@ -4,7 +4,6 @@ export const fetchSingleFoodItem = createAsyncThunk(
   "singleFoodItem/fetchSingleFoodItem",
   async (foodItemId, { rejectWithValue }) => {
     try {
-      console.log(foodItemId);
       const response = await axios.get(`/api/v1/admin/fooditem/${foodItemId}`);
       return response.data.data;
     } catch (error) {
