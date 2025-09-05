@@ -9,7 +9,7 @@ export default function UserOrderHistory() {
   const captialize = useCapitalize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userHistory } = useSelector((state) => state.singleUser);
+  const { loading, userHistory } = useSelector((state) => state.singleUser);
   const { userId } = useParams();
   const totalPrice = userHistory.reduce(
     (sum, order) => sum + Number(order.totalPrice || 0),
@@ -19,6 +19,7 @@ export default function UserOrderHistory() {
     await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
     navigate(`/order-details/user=${userId}/order=${orderId}`);
   };
+
   return (
     <>
       {userHistory.length === 0 ? (

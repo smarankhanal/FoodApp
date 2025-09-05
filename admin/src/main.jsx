@@ -11,6 +11,7 @@ import PublicRoute from "./components/routes/publicRoute.jsx";
 import ProtectedRoute from "./components/routes/protectedRoute.jsx";
 import {
   FoodItemDetails,
+  FoodManager,
   OrderDetails,
   UserDetails,
   UserOrderHistory,
@@ -100,6 +101,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FoodItemDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/add-food-item/",
+        element: (
+          <ProtectedRoute>
+            <FoodManager />
           </ProtectedRoute>
         ),
       },

@@ -5,12 +5,56 @@ import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoodItem } from "../store/foodItemSlice";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SkeletonLoader from "../components/SkeletonLoader";
 export default function FoodItems() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchFoodItem());
-  }, [dispatch]);
-  const { foodItems } = useSelector((state) => state.foodItem);
+  }, []);
+  const { loading, foodItems } = useSelector((state) => state.foodItem);
+  const navigate = useNavigate();
+  if (loading)
+    return (
+      <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
+        <div className="flex justify-between">
+          <SkeletonLoader
+            count={1}
+            width={200}
+            height={30}
+            className="mb-4 opacity-50"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+          <SkeletonLoader
+            count={1}
+            width={200}
+            height={30}
+            className="mb-4 opacity-50"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+        </div>
+        <SkeletonLoader
+          count={1}
+          width="100%"
+          height={40}
+          className="mb-2 opacity-50"
+          baseColor="#000"
+          highlightColor="#333"
+        />
+
+        <SkeletonLoader
+          count={5}
+          width="100%"
+          height={50}
+          baseColor="#000"
+          highlightColor="#333"
+          className="opacity-50"
+        />
+      </div>
+    );
+
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />
@@ -19,7 +63,10 @@ export default function FoodItems() {
           Total FoodItems :- {foodItems.length}
         </p>
 
-        <Button className=" dark:bg-blue-700  bg-blue-600 text-white  w-[100px] flex items-center justify-center gap-1">
+        <Button
+          className=" dark:bg-blue-700  bg-blue-600 text-white  w-[100px] flex items-center justify-center gap-1"
+          onClick={() => navigate("/add-food-item")}
+        >
           Add
           <MdOutlineAdd />
         </Button>

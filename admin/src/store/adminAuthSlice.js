@@ -27,7 +27,7 @@ export const fetchAdminProfile = createAsyncThunk(
       const response = await axios.get("/api/v1/admin/get-admin", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      console.log(response);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

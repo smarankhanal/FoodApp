@@ -2,13 +2,53 @@ import React, { useEffect } from "react";
 import { Search, OrderItemSummary } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../store/orderSlice";
-
+import SkeletonLoader from "../components/SkeletonLoader";
 export default function Order() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
-  const { orders } = useSelector((state) => state.order);
+  const { loading, orders } = useSelector((state) => state.order);
+  if (loading)
+    return (
+      <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
+        <div className="flex justify-between">
+          <SkeletonLoader
+            count={1}
+            width={200}
+            height={30}
+            className="mb-4 opacity-50"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+          <SkeletonLoader
+            count={1}
+            width={100}
+            height={100}
+            className="mb-4 opacity-50 rounded-lg"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+        </div>
+        <SkeletonLoader
+          count={1}
+          width="100%"
+          height={40}
+          className="mb-2 opacity-50"
+          baseColor="#000"
+          highlightColor="#333"
+        />
+
+        <SkeletonLoader
+          count={5}
+          width="100%"
+          height={50}
+          baseColor="#000"
+          highlightColor="#333"
+          className="opacity-50"
+        />
+      </div>
+    );
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
       <Search />

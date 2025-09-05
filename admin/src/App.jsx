@@ -4,14 +4,12 @@ import { Navbar, Sidebar } from "./components";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminProfile } from "./store/adminAuthSlice";
-import { fetchUsers } from "./store/userSlice";
-import { fetchUserHistory } from "./store/singleUserSlice";
-import { fetchFoodItem } from "./store/foodItemSlice";
+
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAdminProfile());
-  }, [dispatch]);
+  }, []);
   const { admin } = useSelector((state) => state.auth);
   return (
     <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-2 min-h-screen">
