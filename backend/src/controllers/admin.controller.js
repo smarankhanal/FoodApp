@@ -275,9 +275,7 @@ const getFoodReview = asyncHandler(async (req, res) => {
   const reviews = await FoodReview.find({ foodItem: foodItemId })
     .populate("user", "fullname")
     .sort({ createdAt: -1 });
-  // if (!reviews) {
-  //   throw new ApiError(404, "No reviews found for this food item");
-  // }
+
   return res
     .status(200)
     .json(new ApiResponse(200, reviews, "Review fetched successfully"));
@@ -289,10 +287,7 @@ const foodItemReviewByUser = asyncHandler(async (req, res) => {
     "foodItem",
     "foodName description foodImage"
   );
-  console.log(reviews);
-  // if (!reviews) {
-  //   throw new ApiError(404, "No review by the user");
-  // }
+
   return res
     .status(200)
     .json(
