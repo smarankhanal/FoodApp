@@ -10,9 +10,11 @@ import { FoodItems, Home, LogIn, Order, User } from "./pages/index.js";
 import PublicRoute from "./components/routes/publicRoute.jsx";
 import ProtectedRoute from "./components/routes/protectedRoute.jsx";
 import {
+  ChangeOrderStatus,
   FoodItemDetails,
   FoodManager,
   OrderDetails,
+  OrderItemSummary,
   UserDetails,
   UserOrderHistory,
 } from "./components/index.js";
@@ -93,6 +95,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <OrderDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/order-status/:userId/:orderId",
+        element: (
+          <ProtectedRoute>
+            <ChangeOrderStatus />
           </ProtectedRoute>
         ),
       },

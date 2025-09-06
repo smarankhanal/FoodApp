@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import Status from "../Status";
@@ -13,13 +13,17 @@ export default function OrderItemSummary({ order }) {
     completed: "text-green-500 ",
     cancelled: "text-red-500 ",
   };
-
   const capitalize = useCapitalize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const viewOrder = async (userId, orderId) => {
     await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
     navigate(`/order-details/user=${userId}/order=${orderId}`);
+  };
+  const handleOrderStatus = async (userId, orderId) => {
+    await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
+
+    navigate(`/order-status/user=${userId}/order=${orderId}`);
   };
 
   return (
@@ -59,7 +63,7 @@ export default function OrderItemSummary({ order }) {
         <div
           className="bg-white dark:bg-black h-8 w-8 rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-105 transition"
           title="Edit Order Status"
-          onClick={() => viewOrder(order.user, order._id)}
+          onClick={() => handleOrderStatus(order.user, order._id)}
         >
           <FaRegEdit className="text-[16px] text-blue-500" />
         </div>

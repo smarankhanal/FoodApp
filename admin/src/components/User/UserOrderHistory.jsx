@@ -19,6 +19,11 @@ export default function UserOrderHistory() {
     await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
     navigate(`/order-details/user=${userId}/order=${orderId}`);
   };
+  const statusColors = {
+    pending: "text-orange-500 drop-shadow-[2px_2px_orange]",
+    cancelled: "text-red-500 drop-shadow-[2px_2px_red]",
+    completed: "text-green-500 drop-shadow-[2px_2px_green]",
+  };
 
   return (
     <>
@@ -71,7 +76,7 @@ export default function UserOrderHistory() {
                 })}
               </p>
               <div className="flex-1 flex">
-                <Status className="text-orange-400 drop-shadow-[2px_2px_orange]">
+                <Status className={statusColors[order?.status]}>
                   {captialize(order.status)}
                 </Status>
                 <Button

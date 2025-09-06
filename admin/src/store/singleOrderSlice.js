@@ -23,7 +23,7 @@ export const updateOrderStatus = createAsyncThunk(
   async ({ userId, orderId, status }, { rejectWithValue }) => {
     try {
       const response = await axios.patch(
-        `/api/v1/admin/user=${userId}/order=${orderId}/status`,
+        `/api/v1/admin/${userId}/${orderId}/status`,
         { status }
       );
 

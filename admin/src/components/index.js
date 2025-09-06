@@ -15,6 +15,7 @@ import NoOrder from "./Order/NoOrder";
 import UserDetails from "./User/UserDetails";
 import UserOrderHistory from "./User/UserOrderHistory";
 import SingleUser from "./User/SingleUser";
+import ChangeOrderStatus from "./Order/ChangeOrderStatus";
 
 //
 import FoodItemDetails from "./Fooditems/FoodItemDetails";
@@ -40,4 +41,5 @@ export {
   OrderedSingleFoodItem,
   OrderItemSummary,
   NoOrder,
+  ChangeOrderStatus,
 };
