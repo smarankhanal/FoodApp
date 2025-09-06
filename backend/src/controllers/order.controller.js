@@ -96,27 +96,25 @@ const userPurchaseHistory = asyncHandler(async (req, res) => {
       )
     );
 });
-const updateOrderStatus = asyncHandler(async (req, res) => {
-  const { orderId } = req.params;
-  const { status } = req.body;
+const cancelUserOrder = asyncHandler(async (req, res) => {
+  const orderId = req.params.orderId;
+  const userId = req.user._id;
+  const order = await Order.findOne({ _id: orderId, user: userId }).populate(
+    "foodItems"
+  );
 
-  const validateStatus = ["pending", "cancelled"];
+  if (!order) {
+    throw new ApiError(404, "Order not found for this user");
+  }
+  if (order.status.toLowerCase() !== "pending") {
+    throw new ApiError(400, "Only pending orders can be cancelled");
+  }
 
-  if (!validateStatus.includes(status)) {
-    throw new ApiError(400, "Invalid status");
-  }
-  const updateOrder = await Order.findByIdAndUpdate(orderId, status, {
-    new: true,
-  }).populate("foodItems");
-  if (!updateOrder) {
-    throw new ApiError(404, "fooditem not found");
-  }
-  updateOrder.status = status;
-  await updateOrder.save();
+  order.status = "cancelled";
+  await order.save();
+
   return res
     .status(200)
-    .json(
-      new ApiResponse(200, updateOrder, "Order status updated successfully")
-    );
+    .json(new ApiResponse(200, order, "Order cancelled successfully"));
 });
-export { createOrder, SingleOrder, userPurchaseHistory, updateOrderStatus };
+export { createOrder, SingleOrder, userPurchaseHistory, cancelUserOrder };

@@ -73,7 +73,6 @@ const login = asyncHandler(async (req, res) => {
   user.refreshToken = refreshToken;
   user.isActive = true;
   await user.save();
-  console.log(user.isActive);
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );

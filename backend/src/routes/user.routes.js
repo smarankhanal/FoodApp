@@ -16,7 +16,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   createOrder,
   SingleOrder,
-  updateOrderStatus,
+  cancelUserOrder,
   userPurchaseHistory,
 } from "../controllers/order.controller.js";
 import { validate } from "../middlewares/validate.middleware.js";
@@ -41,7 +41,7 @@ router
 router.route("/food-items").get(verifyJWT, getFoodItems);
 router.route("/create-order").post(verifyJWT, createOrder);
 router.route("/single-order/:orderId").get(verifyJWT, SingleOrder);
-router.route("/order-status/:orderId").patch(verifyJWT, updateOrderStatus);
+router.route("/order-status/:orderId").patch(verifyJWT, cancelUserOrder);
 router.route("/purchase-history").get(verifyJWT, userPurchaseHistory);
 router.route("/foodItem/:foodItemId").get(verifyJWT, getSingleFoodItem);
 router.route("/foodItem/add-review/:foodItemId").post(verifyJWT, addReview);

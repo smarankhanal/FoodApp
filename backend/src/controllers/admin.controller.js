@@ -101,7 +101,6 @@ const getUserHistory = asyncHandler(async (req, res) => {
 });
 const getSingleUser = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  console.log(userId);
   const user = await User.findById(userId).select("-password -refreshToken");
   if (!user) {
     throw new ApiError(404, "User not found");
