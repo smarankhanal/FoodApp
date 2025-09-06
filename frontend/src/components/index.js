@@ -19,6 +19,7 @@ import PublicRoute from "./Route/PublicRoute";
 import ProtectedRoute from "./Route/ProtectedRoute";
 import ChangeMode from "./mode/ChangeMode";
 import DarkModeInitializer from "./mode/DarkModeInitializer";
+import Search from "./Search";
 export {
   DarkModeInitializer,
   PublicRoute,
@@ -41,4 +42,5 @@ export {
   Logo,
   ReviewWithStars,
   ChangeMode,
+  Search,
 };

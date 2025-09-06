@@ -1,23 +1,62 @@
-import React from "react";
-import { Button, NoOrder, Status } from "../../components";
+import React, { useEffect, useState } from "react";
+import { Button, NoOrder, Search, Status } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchSingleHistory } from "../../store/historySlice";
+import { useCapitalize } from "../../hooks/useCapitalize";
 
 export default function UserHistory() {
+  const statusClasses = {
+    pending: "text-amber-500 drop-shadow-[2px_2px_orange]",
+    cancelled: "text-red-500 drop-shadow-[2px_2px_red]",
+    completed: "text-green-500 drop-shadow-[2px_2px_green]",
+  };
   const { history: orders } = useSelector((state) => state.history);
+  const capitalize = useCapitalize();
+  const [sortedOrders, setSortedOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onView = (orderId) => {
     dispatch(fetchSingleHistory(orderId));
     navigate(`/singleOrderHistory/${orderId}`);
   };
+  useEffect(() => {
+    setSortedOrders(orders);
+  }, [orders]);
+  const handleSortChange = (value) => {
+    let sorted = [...orders];
+    if (value === "pending" || value === "completed" || value === "cancelled") {
+      sorted = sorted.filter((order) => order.status.toLowerCase() === value);
+    } else if (value === "price_asc") {
+      sorted.sort((a, b) => a.totalPrice - b.totalPrice);
+    } else if (value === "price_desc") {
+      sorted.sort((a, b) => b.totalPrice - a.totalPrice);
+    } else if (value === "date_asc") {
+      sorted.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+    } else if (value === "date_desc") {
+      sorted.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    }
+    setSortedOrders(sorted);
+  };
+  const filteredOrders = sortedOrders.filter(
+    (order) =>
+      order._id.includes(searchQuery) ||
+      order.foodItems.some((item) =>
+        item.foodItem.foodName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
   return (
     <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')]  bgImage pt-20 ">
       {orders.length === 0 ? (
         <NoOrder />
       ) : (
         <>
+          <Search
+            className="bg-white"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <div className="w-full max-w-4xl mx-auto font-serif">
             <div className="w-full dark:text-white rounded-lg p-2 mt-6 flex  flex-row  align-center justify-center bg-amber-500 text-[18px] font-bold drop-shadow-[1px_1px_1px_red]">
               <p className="flex-1 ">OrderId</p>
@@ -31,6 +70,7 @@ export default function UserHistory() {
                     className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white text-sm"
                     onChange={(e) => handleSortChange(e.target.value)}
                   >
+                    <option value="">Sort/Filter</option>
                     <option value="pending">Pending</option>
                     <option value="completed">Completed</option>
                     <option value="cancelled">Cancelled</option>
@@ -42,7 +82,7 @@ export default function UserHistory() {
                 </div>
               </div>
             </div>
-            {orders.map((order) => (
+            {filteredOrders.map((order) => (
               <div
                 className="w-full dark:text-white rounded-lg p-2 mt-6 flex  flex-row  align-center justify-center dark:bg-black bg-white dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black]"
                 key={order._id}
@@ -52,15 +92,20 @@ export default function UserHistory() {
                 </p>
                 <p className=" text-[14px] flex-1 mr-2">
                   {order.foodItems
-                    .map((fooditem) => fooditem.foodItem.foodName)
+                    .map((fooditem) => capitalize(fooditem.foodItem.foodName))
                     .join(", ")}
                 </p>
                 <p className="text-green-600 font-bold text-[18px] flex-1  ">
                   {order.totalPrice}
                 </p>
                 <div className="flex-1">
-                  <Status className="text-amber-500 drop-shadow-[1px_1px_orange]">
-                    Pending
+                  <Status
+                    className={
+                      statusClasses[order.status.toLowerCase()] ||
+                      statusClasses.completed
+                    }
+                  >
+                    {capitalize(order.status)}
                   </Status>
                 </div>
                 <div className="flex-1 flex">
