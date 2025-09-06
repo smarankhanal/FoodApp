@@ -4,16 +4,40 @@ import { MdOutlineAdd } from "react-icons/md";
 import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoodItem } from "../store/foodItemSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SkeletonLoader from "../components/SkeletonLoader";
 export default function FoodItems() {
   const dispatch = useDispatch();
+  const [sortedFoodItems, setSortedFoodItems] = useState([]);
   useEffect(() => {
     dispatch(fetchFoodItem());
   }, []);
+
   const { loading, foodItems } = useSelector((state) => state.foodItem);
+  useEffect(() => {
+    setSortedFoodItems(foodItems);
+  }, [foodItems]);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSortChange = (value) => {
+    let sorted = [...foodItems];
+    if (value === "veg") {
+      sorted = sorted.filter((f) => f.type.toLowerCase() === "veg");
+    } else if (value === "non-veg") {
+      sorted = sorted.filter((f) => f.type.toLowerCase() === "non-veg");
+    } else if (value === "price_asc") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (value === "price_desc") {
+      sorted.sort((a, b) => b.price - a.price);
+    }
+    setSortedFoodItems(sorted);
+  };
+  const filteredItems = sortedFoodItems.filter(
+    (item) =>
+      item.foodName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.subCategory.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   if (loading)
     return (
       <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
@@ -57,10 +81,13 @@ export default function FoodItems() {
 
   return (
     <div className=" dark:text-white  text-black  mt-10 ml-5 p-4 flex-1 w-full max-w-4xl max-h-fit font-serif ">
-      <Search />
+      <Search
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       <div className="flex justify-between items-center">
         <p className="font-bold font-serif text-[20px]">
-          Total FoodItems :- {foodItems.length}
+          Total FoodItems :- {sortedFoodItems.length}
         </p>
 
         <Button
@@ -79,17 +106,18 @@ export default function FoodItems() {
         <p className="flex-1 font-bold">AMOUNT</p>
         <div className=" flex-1">
           <select
-            className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white"
+            className="border rounded p-1 outline-none  cursor-pointer dark:bg-black bg-white font-bold text-sm"
             onChange={(e) => handleSortChange(e.target.value)}
           >
-            <option value="pending">Veg</option>
-            <option value="completed">Non-Veg</option>
+            <option value="">Sort/Filter</option>
+            <option value="veg">Veg</option>
+            <option value="non-veg">Non-Veg</option>
             <option value="price_asc">Amount ↑</option>
             <option value="price_desc">Amount ↓</option>
           </select>
         </div>
       </div>
-      {foodItems.map((item) => (
+      {filteredItems.map((item) => (
         <FoodItemSummary item={item} key={item._id} />
       ))}
     </div>

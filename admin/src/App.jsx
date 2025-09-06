@@ -4,11 +4,17 @@ import { Navbar, Sidebar } from "./components";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminProfile } from "./store/adminAuthSlice";
+import { fetchFoodItem } from "./store/foodItemSlice";
+import { fetchUsers } from "./store/userSlice";
+import { fetchOrders } from "./store/orderSlice";
 
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAdminProfile());
+    dispatch(fetchFoodItem());
+    dispatch(fetchUsers());
+    dispatch(fetchOrders());
   }, []);
   const { admin } = useSelector((state) => state.auth);
   return (

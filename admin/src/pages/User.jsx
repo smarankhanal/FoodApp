@@ -1,15 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Search, SingleUser } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/userSlice";
 import SkeletonLoader from "../components/SkeletonLoader";
 export default function User() {
   const dispatch = useDispatch();
+  const [sortedUsers, setSortedUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
   const { users, loading } = useSelector((state) => state.user);
+  useEffect(() => {
+    setSortedUsers(users);
+  }, [users]);
+  const handleSortChange = (value) => {
+    let sorted = [...users];
+    if (value === "active") {
+      sorted = sorted.filter((o) => o.isActive === true);
+    } else if (value === "inactive") {
+      sorted = sorted.filter((o) => o.isActive === false);
+    } else if (value === "price_asc") {
+      sorted.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (value === "price_desc") {
+      sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+    setSortedUsers(sorted);
+  };
+  const filteredUser = sortedUsers.filter(
+    (user) =>
+      user.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user._id?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading)
     return (
       <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
@@ -52,14 +76,17 @@ export default function User() {
     );
   return (
     <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
-      <Search />
+      <Search
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
 
       <div className="flex justify-between items-center mt-6 mb-4">
         <p className="font-bold text-lg ">Total Users: {users.length} </p>
         <p className="font-bold text-lg">
-          Active Users:{" "}
+          Active Users:
           <span className="text-green-500">
-            {users.filter((u) => u.isActive).length}
+            {sortedUsers.filter((u) => u.isActive).length}
           </span>
         </p>
       </div>
@@ -74,15 +101,16 @@ export default function User() {
             className="border rounded px-2 py-1 text-sm outline-none cursor-pointer dark:bg-black bg-white"
             onChange={(e) => handleSortChange(e.target.value)}
           >
-            <option value="name_as">Active</option>
-            <option value="name_desc">No Active</option>
+            <option value="">Sort/Filter</option>
+            <option value="active">Active</option>
+            <option value="inactive">In Active</option>
             <option value="price_asc">Date ↑</option>
             <option value="price_desc">Date ↓</option>
           </select>
         </div>
       </div>
 
-      {users?.map((user) => (
+      {filteredUser?.map((user) => (
         <SingleUser key={user._id} user={user} />
       ))}
     </div>

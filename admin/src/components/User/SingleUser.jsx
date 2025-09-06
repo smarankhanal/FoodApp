@@ -111,7 +111,7 @@ export default function SingleUser({ user }) {
                 : "text-orange-500 drop-shadow-[2px_2px_orange]"
             }
           >
-            {user.isActive === true ? "Active" : "Not Active"}
+            {user.isActive === true ? "Active" : "In Active"}
           </Status>
         </div>
 
