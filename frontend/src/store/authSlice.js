@@ -80,9 +80,11 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.user = null;
-        state.error = action.payload;
+        if (action.payload?.status === 401) {
+          state.user = null;
+          state.token = null;
+          localStorage.removeItem("token");
+        }
       });
   },
 });

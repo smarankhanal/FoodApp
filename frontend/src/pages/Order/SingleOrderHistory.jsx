@@ -1,92 +1,167 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useCapitalize } from "../../hooks/useCapitalize";
+import { Button } from "../../components";
+import { cancelUserOrder } from "../../store/updateStatusSlice";
+import { fetchHistory } from "../../store/historySlice";
 
 export default function SingleOrderHistory() {
   const statusColor = {
-    pending: "text-yellow-600",
-    completed: "text-green-600",
-    cancelled: "text-red-600",
+    pending: "text-yellow-500 bg-yellow-100",
+    completed: "text-green-600 bg-green-100",
+    cancelled: "text-red-600 bg-red-100",
   };
+
+  const dispatch = useDispatch();
   const { singleHistory, loading } = useSelector((state) => state.history);
-
   const capitalize = useCapitalize();
+  const [confirmBox, setConfirmBox] = useState(null);
+
+  const handleCancelClick = (orderId) => {
+    setConfirmBox(orderId);
+  };
+
+  const confirmCancellation = async () => {
+    if (confirmBox) {
+      await dispatch(cancelUserOrder(confirmBox)).unwrap();
+
+      setConfirmBox(null);
+    }
+  };
+  const { order } = useSelector((state) => state.cancelOrder);
   if (loading) {
-    return <p className="text-[40px]">Loading...</p>;
-  }
-  return (
-    <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20">
-      <div className=" w-full max-w-3xl mx-auto dark:text-white mb-10 text-[20px] font-bold">
-        <div className="flex bg-amber-500 rounded-lg mb-3 p-1">
-          <p className="flex-1">Order Id</p> <p className="flex-1">Date</p>
-          <p className="flex-1">Status</p> <p className="flex-1">Total Price</p>
-        </div>
-        <div className="flex dark:bg-white bg-black dark:text-black text-white rounded-lg mb-2 p-1">
-          <p className="flex-1 mr-2 text-sm opacity-70">{singleHistory?._id}</p>
-
-          <p className="flex-1 ">
-            {new Date(singleHistory?.createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
-          </p>
-          <p className={`flex-1 ${statusColor[singleHistory?.status]}`}>
-            {capitalize(singleHistory?.status)}
-          </p>
-          <p className="flex-1 text-green-600">
-            Rs {singleHistory?.totalPrice}
-          </p>
-        </div>
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-2xl font-semibold text-gray-600 dark:text-gray-300 animate-pulse">
+          Loading...
+        </p>
       </div>
-      <div className="flex gap-4">
-        {singleHistory.foodItems?.map((item) => (
-          <div
-            className=" relative flex flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] "
-            key={item._id}
-          >
-            <img
-              src={item.foodItem.foodImage}
-              alt={item.foodItem.foodName}
-              className="h-30 w-50 rounded-lg animate-fadeIn"
-            />
-            <div className="ml-5 dark:text-white">
-              <p className="text-xl font-bold text-amber-400">
-                {capitalize(item.foodItem.foodName)}
-              </p>
-              <p className="font-semibold">
-                Sub-category :-
-                <span className="text-amber-600">
-                  {capitalize(item.foodItem.subCategory)}
-                </span>
-              </p>
-              <p className="font-semibold opacity-70">
-                {" "}
-                {item.foodItem.description}
-              </p>
+    );
+  }
 
-              <p className={`font-bold mt-1`}>
-                Type :-
-                <span
-                  className={`${
-                    item.foodItem.type?.toLowerCase() === "veg"
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  {capitalize(item.foodItem.type)}
-                </span>
+  return (
+    <>
+      {confirmBox && (
+        <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 cursor-not-allowed">
+          <div className="bg-gray-100 dark:bg-black max-w-sm w-full text-center rounded-lg p-4">
+            <h2 className="font-bold pb-4 dark:text-white">
+              Do you want to cancel the order?
+            </h2>
+            <div className="flex justify-center gap-5">
+              <Button
+                className="bg-red-500 hover:bg-red-600"
+                onClick={confirmCancellation}
+              >
+                Yes
+              </Button>
+              <Button
+                className="bg-green-500 hover:bg-green-600"
+                onClick={() => setConfirmBox(null)}
+              >
+                No
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bg-cover min-h-screen pt-20 px-4 font-serif">
+        <div className="w-full max-w-4xl mx-auto mb-10">
+          <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden">
+            <div className="grid grid-cols-4 bg-amber-500 text-white font-semibold text-center py-3">
+              <p>Order Id</p>
+              <p>Date</p>
+              <p>Status</p>
+              <p>Total Price</p>
+            </div>
+            <div className="grid grid-cols-4 items-center text-center py-4 px-2 text-sm sm:text-base dark:text-gray-200">
+              <p className="truncate">{singleHistory?._id}</p>
+              <p>
+                {new Date(singleHistory?.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }
+                )}
               </p>
-              <p className="font-bold opacity-70 mt-1">
-                Quantity :- {item.quantity}
+              <p
+                className={`font-semibold rounded-lg px-2 py-1 text-sm inline-block ${
+                  statusColor[order?.status || singleHistory?.status]
+                }`}
+              >
+                {capitalize(order?.status || singleHistory?.status)}
               </p>
-              <p className="font-bold text-lg mt-2 text-blue-500">
-                {item.foodItem.price}
+              <p className="text-green-600 font-bold">
+                Rs {singleHistory?.totalPrice}
               </p>
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className="float-right mr-30">
+          {singleHistory.status.toLowerCase() === "pending" && (
+            <Button
+              className="bg-red-600 hover:bg-red-700"
+              onClick={() => handleCancelClick(singleHistory._id)}
+            >
+              Cancel Order
+            </Button>
+          )}
+        </div>
+
+        <div className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          {singleHistory.foodItems?.map((item) => (
+            <div
+              key={item._id}
+              className="flex gap-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:scale-[1.01] transition-transform duration-200"
+            >
+              <img
+                src={item.foodItem.foodImage}
+                alt={item.foodItem.foodName}
+                className="h-40 w-40 object-cover rounded-l-xl"
+              />
+              <div className="flex flex-col justify-between py-3 pr-4">
+                <div>
+                  <p className="text-lg font-bold text-amber-500">
+                    {capitalize(item.foodItem.foodName)}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    Sub-category:{" "}
+                    <span className="text-amber-600">
+                      {capitalize(item.foodItem.subCategory)}
+                    </span>
+                  </p>
+                  <p className="text-sm opacity-70 mt-1">
+                    {item.foodItem.description}
+                  </p>
+                </div>
+                <div className="mt-2 space-y-1">
+                  <p className="font-semibold">
+                    Type:{" "}
+                    <span
+                      className={
+                        item.foodItem.type?.toLowerCase() === "veg"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }
+                    >
+                      {capitalize(item.foodItem.type)}
+                    </span>
+                  </p>
+                  <p className="text-sm font-semibold opacity-70">
+                    Quantity: {item.quantity}
+                  </p>
+                  <p className="font-bold text-lg text-blue-600">
+                    Rs {item.foodItem.price}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

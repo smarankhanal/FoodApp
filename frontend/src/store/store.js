@@ -22,7 +22,7 @@ import historySlice from "./historySlice";
 import reviewSlice from "./reviewSlice";
 import updateSlice from "./updateSlice";
 import passwordSlice from "./passwordSlice";
-
+import cancelOrderSlice from "./updateStatusSlice";
 const rootReducer = combineReducers({
   auth: authSlice,
   mode: modeSlice,
@@ -35,6 +35,7 @@ const rootReducer = combineReducers({
   review: reviewSlice,
   update: updateSlice,
   password: passwordSlice,
+  cancelOrder: cancelOrderSlice,
 });
 
 const persistConfig = {

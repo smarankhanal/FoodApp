@@ -4,11 +4,12 @@ import {
   Button,
   StatusBadge,
   NoOrder,
+  Toast,
 } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { postOrder } from "../../store/orderSlice";
 import { clearCart } from "../../store/cartSlice";
-import { Toast } from "../../components";
+
 export default function OrderItems() {
   const dispatch = useDispatch();
   const [toast, setToast] = useState({ show: false, text: "", className: "" });
@@ -42,7 +43,7 @@ export default function OrderItems() {
         () => setToast({ show: false, text: "", className: "" }),
         2000
       );
-    } catch (err) {
+    } catch {
       setToast({
         show: true,
         text: "Failed to place order",
@@ -63,21 +64,25 @@ export default function OrderItems() {
       {orderItems.length === 0 ? (
         <NoOrder />
       ) : (
-        <div className="relative bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bgImage pt-20 pb-10 px-4">
-          <div className="flex justify-between">
+        <div className="relative bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bg-cover bg-center pt-20 pb-10 px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-6">
             <StatusBadge status="Pending" />
             <div className="flex flex-col items-center justify-center">
-              <div className="font-bold text-[20px] dark:text-white mx-10 font-serif">
-                Total Price :- {totalPrice}
+              <div className="text-2xl font-bold dark:text-white font-serif mb-2">
+                Total Price: {totalPrice}
               </div>
-              <div className="mx-10 my-2 text-center">
-                <Button onClick={() => onOrder()}>Order Now</Button>
-              </div>
+              <Button
+                onClick={onOrder}
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-md transition duration-300"
+              >
+                Order Now
+              </Button>
             </div>
           </div>
 
-          <hr className="border-0 h-0.5 bg-gray-700 mx-4" />
-          <div className="w-full max-w-3xl mx-auto">
+          <hr className="border-0 h-1 bg-gray-700 mx-4 mb-6 rounded" />
+
+          <div className="w-full max-w-3xl mx-auto grid gap-4 font-serif">
             {orderItems.map((orderItem) => (
               <SingleOrderItem orderItem={orderItem} key={orderItem._id} />
             ))}
