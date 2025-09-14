@@ -23,7 +23,6 @@ export const fetchSingleHistory = createAsyncThunk(
   async (orderId, { rejectWithValue }) => {
     try {
       const response = await api.get(`/users/single-order/${orderId}`);
-
       return response.data.data;
     } catch (error) {
       const serializedError = {

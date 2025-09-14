@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCapitalize } from "../../hooks/useCapitalize";
 import { Button } from "../../components";
 import { cancelUserOrder } from "../../store/updateStatusSlice";
 import { fetchHistory } from "../../store/historySlice";
+import { BsCloudLightning } from "react-icons/bs";
 
 export default function SingleOrderHistory() {
   const statusColor = {
@@ -24,11 +25,13 @@ export default function SingleOrderHistory() {
   const confirmCancellation = async () => {
     if (confirmBox) {
       await dispatch(cancelUserOrder(confirmBox)).unwrap();
-
       setConfirmBox(null);
     }
   };
   const { order } = useSelector((state) => state.cancelOrder);
+  useEffect(() => {
+    console.log(order, singleHistory);
+  }, []);
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">

@@ -22,25 +22,25 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-export const fetchUser = createAsyncThunk(
-  "auth/fetchUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return null;
-
-      const response = await api.get("/users/me");
-      return response.data.data;
-    } catch (error) {
-      const serializedError = {
-        message: error.response?.data?.message || error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-      };
-      return rejectWithValue(serializedError || "Login failed");
-    }
-  }
-);
+// export const fetchUser = createAsyncThunk(
+//   "auth/fetchUser",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (!token) return null;
+//       console.log(token);
+//       const response = await api.get("/users/me");
+//       return response.data.data;
+//     } catch (error) {
+//       const serializedError = {
+//         message: error.response?.data?.message || error.message,
+//         status: error.response?.status,
+//         data: error.response?.data,
+//       };
+//       return rejectWithValue(serializedError || "Login failed");
+//     }
+//   }
+// );
 
 const authSlice = createSlice({
   name: "auth",
@@ -71,21 +71,21 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      })
-      .addCase(fetchUser.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-      })
-      .addCase(fetchUser.rejected, (state, action) => {
-        if (action.payload?.status === 401) {
-          state.user = null;
-          state.token = null;
-          localStorage.removeItem("token");
-        }
       });
+    // .addCase(fetchUser.pending, (state) => {
+    //   state.status = "loading";
+    // })
+    // .addCase(fetchUser.fulfilled, (state, action) => {
+    //   state.status = "succeeded";
+    //   state.user = action.payload;
+    // })
+    // .addCase(fetchUser.rejected, (state, action) => {
+    //   if (action.payload?.status === 401) {
+    //     state.user = null;
+    //     state.token = null;
+    //     localStorage.removeItem("token");
+    //   }
+    // });
   },
 });
 
