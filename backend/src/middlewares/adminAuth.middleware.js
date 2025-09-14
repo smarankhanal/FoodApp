@@ -17,12 +17,23 @@ export const verifyAdminJWT = asyncHandler(async (req, _, next) => {
       process.env.ADMIN_ACCESS_TOKEN_SECRET
     );
 
-    if (decodedToken.email !== process.env.ADMIN_EMAIL) {
+    if (
+      decodedToken.role !== "admin" ||
+      decodedToken.email !== process.env.ADMIN_EMAIL
+    ) {
       throw new ApiError(403, "Access denied. Admins only.");
     }
-    req.admin = { email: decodedToken.email };
+
+    req.admin = {
+      email: decodedToken.email,
+      role: decodedToken.role,
+    };
+
     return next();
   } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      throw new ApiError(401, "Admin token expired. Please log in again.");
+    }
     throw new ApiError(401, error?.message || "Invalid admin access token");
   }
 });

@@ -72,18 +72,18 @@ const login = asyncHandler(async (req, res) => {
   );
   user.refreshToken = refreshToken;
   user.isActive = true;
-  await user.save();
+  await user.save({ validateBeforeSave: false });
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: isProduction,
     sameSite: "none",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
   };
-
   return res
     .status(200)
     .cookie("refreshToken", refreshToken, options)
@@ -126,11 +126,13 @@ const logout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User Logout successfully"));
 });
 const getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user).select("-password");
-  if (!user) {
+  if (!req.user) {
     throw new ApiError(404, "User not found");
   }
-  res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched successfully"));
 });
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { email, username, fullname, phoneNumber, address } = req.body;

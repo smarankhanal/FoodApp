@@ -31,9 +31,11 @@ const adminLogin = asyncHandler(async (req, res) => {
       expiresIn: "1d",
     }
   );
+  const isProduction = process.env.NODE_ENV === "production";
+
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: isProduction,
     sameSite: "none",
   };
   return res
