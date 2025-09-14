@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
+
 export const fetchFoodReview = createAsyncThunk(
   "review/fetchFoodReview",
   async (foodItemId, { rejectWithValue }) => {
     console.log(foodItemId);
     try {
-      const response = await axios.get(
-        `/api/v1/admin/food-item/get-review/${foodItemId}`
+      const response = await api.get(
+        `/admin/food-item/get-review/${foodItemId}`
       );
 
       return response.data.data;

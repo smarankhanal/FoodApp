@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 export const fetchSingleOrder = createAsyncThunk(
   "singleOrder/fetchSingleOrder",
   async ({ userId, orderId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `/api/v1/admin/user=${userId}/order=${orderId}`
-      );
+      const response = await api.get(`/admin/user=${userId}/order=${orderId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -22,10 +20,9 @@ export const updateOrderStatus = createAsyncThunk(
   "singleOrder/updateOrderStatus",
   async ({ userId, orderId, status }, { rejectWithValue }) => {
     try {
-      const response = await axios.patch(
-        `/api/v1/admin/${userId}/${orderId}/status`,
-        { status }
-      );
+      const response = await api.patch(`/admin/${userId}/${orderId}/status`, {
+        status,
+      });
 
       return response.data.data;
     } catch (error) {

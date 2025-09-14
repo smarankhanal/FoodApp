@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import Logo from "../components/Logo";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginAdmin } from "../store/adminAuthSlice";
@@ -13,6 +13,7 @@ export default function LogIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, register } = useForm();
+
   const submit = async (data) => {
     try {
       await dispatch(loginAdmin(data)).unwrap();

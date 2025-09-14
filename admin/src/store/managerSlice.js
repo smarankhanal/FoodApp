@@ -1,19 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 
 export const uploadFoodItem = createAsyncThunk(
   "foodManager/uploadFoodItem",
   async (foodItemData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "/api/v1/admin/upload-fooditems",
-        foodItemData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await api.post("/admin/upload-fooditems", foodItemData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data.data;
     } catch (error) {
       const serializedError = {

@@ -22,7 +22,6 @@ export default function OrderItemSummary({ order }) {
   };
   const handleOrderStatus = async (userId, orderId) => {
     await dispatch(fetchSingleOrder({ userId, orderId })).unwrap();
-
     navigate(`/order-status/user=${userId}/order=${orderId}`);
   };
 

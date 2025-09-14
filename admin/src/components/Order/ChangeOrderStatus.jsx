@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { updateOrderStatus } from "../../store/singleOrderSlice";
 import Status from "../Status";
 import { useCapitalize } from "../../hooks/useCapitalize";
+import { fetchSingleOrder } from "../../store/singleOrderSlice";
 
 export default function ChangeOrderStatus() {
   const { userId, orderId } = useParams();

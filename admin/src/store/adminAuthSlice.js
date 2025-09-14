@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
+
 export const loginAdmin = createAsyncThunk(
-  "auth/adminAuthSlice",
+  "auth/adminAuthSlice/loginAdmin",
   async (adminData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/v1/admin/login", adminData);
-      localStorage.setItem("token", response.data.data.token);
+      const response = await api.post("/admin/login", adminData);
+      console.log(response);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -17,67 +18,64 @@ export const loginAdmin = createAsyncThunk(
     }
   }
 );
+
 export const fetchAdminProfile = createAsyncThunk(
-  "auth/fetchAdminProfile",
+  "auth/adminAuthSlice/fetchAdminProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) return null;
-
-      const response = await axios.get("/api/v1/admin/get-admin", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(response);
+      const response = await api.get("/admin/get-admin");
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
 const initialState = {
   admin: null,
   loading: false,
   error: null,
-  token: localStorage.getItem("token") || null,
 };
+
 const adminAuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     adminLogout: (state) => {
       state.admin = null;
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(loginAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.admin = action.payload;
       })
-      .addCase(loginAdmin.pending, (state, action) => {
-        state.loading = true;
-        state.error = null;
-      })
-
       .addCase(loginAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
       .addCase(fetchAdminProfile.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchAdminProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.admin = action.payload;
       })
-      .addCase(fetchAdminProfile.rejected, (state) => {
+      .addCase(fetchAdminProfile.rejected, (state, action) => {
         state.loading = false;
         state.admin = null;
-        state.token = null;
-        localStorage.removeItem("token");
+        state.error = action.payload;
       });
   },
 });
+
 export const { adminLogout } = adminAuthSlice.actions;
 export default adminAuthSlice.reducer;

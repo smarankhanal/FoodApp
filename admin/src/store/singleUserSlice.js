@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../api/axios";
 export const fetchSingleUser = createAsyncThunk(
   "singleUser/fetchSingleUser",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/v1/admin/single-user/${userId}`);
+      const response = await api.get(`/admin/single-user/${userId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -20,7 +20,7 @@ export const deleteUser = createAsyncThunk(
   "singleUser/deleteUser",
   async (userId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/api/v1/admin/delete-user/${userId}`);
+      await api.delete(`/admin/delete-user/${userId}`);
       return userId;
     } catch (error) {
       const serializedError = {
@@ -36,7 +36,7 @@ export const fetchUserHistory = createAsyncThunk(
   "singleUser/fetchUserHistory",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/v1/admin/user-history/${userId}`);
+      const response = await api.get(`/admin/user-history/${userId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
