@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import store, { persistor } from "./store/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { FoodItems, Home, LogIn, Order, User } from "./pages/index.js";
-import PublicRoute from "./components/routes/publicRoute.jsx";
-import ProtectedRoute from "./components/routes/protectedRoute.jsx";
+import PublicRoute from "./components/routes/PublicRoute.jsx";
+import ProtectedRoute from "./components/routes/ProtectedRoute.jsx";
 import {
   ChangeOrderStatus,
   FoodItemDetails,
