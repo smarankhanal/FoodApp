@@ -3,8 +3,8 @@ import AnchorTag from "../AnchorTag";
 
 function Nav() {
   return (
-    <div className="flex flex-1/4 gap-8 ">
-      <nav className="flex flex-col text-sm">
+    <div className="flex  flex-col   gap-8 ">
+      <nav className="flex flex-col   text-sm">
         <h2 className="font-bold w-[100px]  text-black ml-1 text-sm">
           We're foodapp
         </h2>
@@ -12,10 +12,16 @@ function Nav() {
         <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1 ">
           About Us
         </AnchorTag>
-        <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1">
+        <AnchorTag
+          href={"fooditems"}
+          className="dark:text-gray-600 text-black font-sm ml-1"
+        >
           Avaiable Food
         </AnchorTag>
-        <AnchorTag className="dark:text-gray-600 text-black font-sm ml-1">
+        <AnchorTag
+          href={"help&support"}
+          className="dark:text-gray-600 text-black font-sm ml-1"
+        >
           FAQ
         </AnchorTag>
       </nav>
@@ -29,7 +35,7 @@ function Nav() {
       </nav>
       <nav>
         <h2 className="font-bold text-black ml-1 text-sm">Contact us</h2>
-        <p className="dark:text-gray-600 text-black font-sm ml-1">
+        <p className="dark:text-gray-600 text-black font-sm ml-1 mb-3">
           9812345670,9876543210,056-123456
         </p>
       </nav>

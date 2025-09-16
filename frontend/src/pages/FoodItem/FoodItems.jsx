@@ -21,7 +21,7 @@ export default function FoodItems() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <div className="grid grid-cols-3 gap-4 m-2">
+      <div className="sm:grid sm:grid-cols-3 grid gap-4 m-2">
         {loading
           ? [...Array(6)].map((_, i) => (
               <div

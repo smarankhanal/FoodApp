@@ -23,6 +23,7 @@ import reviewSlice from "./reviewSlice";
 import updateSlice from "./updateSlice";
 import passwordSlice from "./passwordSlice";
 import cancelOrderSlice from "./updateStatusSlice";
+import menuSlice from "./menuSlice";
 const rootReducer = combineReducers({
   auth: authSlice,
   mode: modeSlice,
@@ -36,12 +37,21 @@ const rootReducer = combineReducers({
   update: updateSlice,
   password: passwordSlice,
   cancelOrder: cancelOrderSlice,
+  menu: menuSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart", "mode", "history"],
+  whitelist: [
+    "auth",
+    "cart",
+    "mode",
+    "history",
+    "menu",
+    "review",
+    "singleFood",
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

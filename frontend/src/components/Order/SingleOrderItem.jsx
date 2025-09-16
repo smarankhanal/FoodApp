@@ -20,14 +20,17 @@ export default function SingleOrderItem({ orderItem }) {
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_FtLkRWNB8PmyvwOqk3FIfwv9VUE77E5sHw&s"
           alt="fooditem "
-          className="h-30 w-50 rounded-lg animate-fadeIn"
+          className="sm:h-30 sm:w-50 h-19 w-20 rounded-lg animate-fadeIn"
         />
         <div className="ml-5 dark:text-white">
-          <p className="text-xl font-bold text-amber-400">
+          <p className="sm:text-xl font-bold text-amber-400">
             {capitalize(orderItem.foodName)}
           </p>
           <p className="font-semibold">
-            Subcategory :- {capitalize(orderItem.subCategory)}
+            Subcategory :-
+            <span className="opacity-50">
+              {capitalize(orderItem.subCategory)}
+            </span>
           </p>
           <p className={`font-bold`}>
             Type :-

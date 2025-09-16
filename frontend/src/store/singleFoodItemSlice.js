@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../api/axios";
+
 export const fetchSingleFoodItem = createAsyncThunk(
   "singleFood/fetchSingleFoodItem",
   async (foodItemId, { rejectWithValue }) => {
@@ -7,13 +8,20 @@ export const fetchSingleFoodItem = createAsyncThunk(
       const response = await api.get(`/users/food-item/${foodItemId}`);
       return response.data.data;
     } catch (error) {
+      console.error("Error fetching food item:", error);
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch fooditems"
+        error.response?.data?.message || "Failed to fetch food item"
       );
     }
   }
 );
-const initialState = { item: {}, loading: false, error: null };
+
+const initialState = {
+  item: [],
+  loading: false,
+  error: null,
+};
+
 const singleFoodItemSlice = createSlice({
   name: "singleFood",
   initialState,
@@ -25,8 +33,8 @@ const singleFoodItemSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchSingleFoodItem.fulfilled, (state, action) => {
-        state.loading = false;
         state.item = action.payload;
+        state.loading = false;
       })
       .addCase(fetchSingleFoodItem.rejected, (state, action) => {
         state.loading = false;
@@ -34,4 +42,5 @@ const singleFoodItemSlice = createSlice({
       });
   },
 });
+
 export default singleFoodItemSlice.reducer;

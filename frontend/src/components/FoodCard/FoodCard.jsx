@@ -25,7 +25,7 @@ export default function FoodCard({ item }) {
     dispatch(addToCart(item));
     setToast({
       show: true,
-      text: `${item.foodName} add to cart`,
+      text: `${capitalize(item.foodName)} add to cart`,
       className: "text-green-500",
     });
     setTimeout(() => setToast({ show: false, text: "" }), 3000);
@@ -34,7 +34,7 @@ export default function FoodCard({ item }) {
     dispatch(removeCart(itemId));
     setToast({
       show: true,
-      text: `${item.foodName} removed from cart`,
+      text: `${capitalize(item.foodName)} removed from cart`,
       className: "text-red-500",
     });
     setTimeout(() => setToast({ show: false, text: "" }), 3000);

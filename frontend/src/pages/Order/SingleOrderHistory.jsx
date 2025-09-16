@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCapitalize } from "../../hooks/useCapitalize";
 import { Button } from "../../components";
 import { cancelUserOrder } from "../../store/updateStatusSlice";
-import { fetchHistory } from "../../store/historySlice";
-import { BsCloudLightning } from "react-icons/bs";
 
 export default function SingleOrderHistory() {
   const statusColor = {
@@ -71,7 +69,7 @@ export default function SingleOrderHistory() {
       <div className="bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bg-cover min-h-screen pt-20 px-4 font-serif">
         <div className="w-full max-w-4xl mx-auto mb-10">
           <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden">
-            <div className="grid grid-cols-4 bg-amber-500 text-white font-semibold text-center py-3">
+            <div className="grid grid-cols-4 bg-amber-500 text-white font-semibold text-center py-3 text-[15px]">
               <p>Order Id</p>
               <p>Date</p>
               <p>Status</p>
@@ -103,7 +101,7 @@ export default function SingleOrderHistory() {
           </div>
         </div>
 
-        <div className="float-right mr-30">
+        <div className="float-right mr-30 mb-4">
           {singleHistory.status.toLowerCase() === "pending" && (
             <Button
               className="bg-red-600 hover:bg-red-700"
@@ -118,7 +116,7 @@ export default function SingleOrderHistory() {
           {singleHistory.foodItems?.map((item) => (
             <div
               key={item._id}
-              className="flex gap-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:scale-[1.01] transition-transform duration-200"
+              className="flex gap-4 dark:bg-white bg-gray-900 text-white dark:text-black rounded-xl shadow-lg overflow-hidden hover:scale-[1.01] transition-transform duration-200"
             >
               <img
                 src={item.foodItem.foodImage}

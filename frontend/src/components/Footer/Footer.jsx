@@ -13,9 +13,9 @@ export default function Footer() {
       </div>
 
       <SocialMedia />
-      <p className="font-bold dark:text-gray-700">
-        SERVICE HOUR{" "}
-        <span className="font-semibold text-sm">7:00AM to 9:00PM</span>
+      <p className="font-bold dark:text-gray-700 ">
+        SERVICE HOUR :-
+        <span className="font-semibold text-sm"> 7:00AM to 9:00PM</span>
       </p>
       <hr className="border-0 h-0.5 bg-gray-700 my-4 mx-auto" />
 

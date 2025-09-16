@@ -11,7 +11,6 @@ export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const toggleVisibility = () => setShowPassword((prev) => !prev);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const submit = async (data) => {

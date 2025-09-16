@@ -9,7 +9,7 @@ import UserHistory from "./User/UserHistory";
 import SingleOrderHistory from "./Order/SingleOrderHistory";
 import HelpSupport from "./HelpSupport";
 import Settings from "./Settings";
-import LoginHome from "./LoginHome";
+import LoginHome from "./LoginNRegister/LoginHome";
 export {
   LoginPage,
   FoodItems,
