@@ -5,9 +5,7 @@ export const fetchReviews = createAsyncThunk(
   "review/fetchReviews",
   async (foodItemId, { rejectWithValue }) => {
     try {
-      const response = await api.get(
-        `/users/foodItem/get-review/${foodItemId}`
-      );
+      const response = await api.get(`/users/food-item/${foodItemId}/reviews`);
       return { foodItemId, reviews: response.data.data };
     } catch (error) {
       return rejectWithValue({
@@ -24,7 +22,7 @@ export const addReview = createAsyncThunk(
   async ({ reviewData, foodItemId }, { rejectWithValue }) => {
     try {
       const response = await api.post(
-        `/users/foodItem/add-review/${foodItemId}`,
+        `/users/food-item/${foodItemId}/reviews`,
         reviewData
       );
       return { foodItemId, review: response.data.data };

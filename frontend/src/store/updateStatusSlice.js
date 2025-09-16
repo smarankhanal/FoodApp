@@ -5,7 +5,7 @@ export const cancelUserOrder = createAsyncThunk(
   "cancelOrder/cancelUserOrder",
   async (orderId, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/users/order-status/${orderId}`);
+      const response = await api.patch(`/users/orders/${orderId}/status`);
 
       return response.data.data;
     } catch (error) {

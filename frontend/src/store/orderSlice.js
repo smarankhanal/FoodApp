@@ -9,7 +9,7 @@ export const postOrder = createAsyncThunk(
   "order/postOrder",
   async (foodItems, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/users/create-order`, foodItems);
+      const response = await api.post(`/users/orders`, foodItems);
       return response.data;
     } catch (error) {
       console.log(error.response);
