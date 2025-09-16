@@ -4,7 +4,7 @@ export const fetchSingleUser = createAsyncThunk(
   "singleUser/fetchSingleUser",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/admin/single-user/${userId}`);
+      const response = await api.get(`/admin/user/${userId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -20,7 +20,7 @@ export const deleteUser = createAsyncThunk(
   "singleUser/deleteUser",
   async (userId, { rejectWithValue }) => {
     try {
-      await api.delete(`/admin/delete-user/${userId}`);
+      await api.delete(`/admin/user/${userId}`);
       return userId;
     } catch (error) {
       const serializedError = {
@@ -36,7 +36,7 @@ export const fetchUserHistory = createAsyncThunk(
   "singleUser/fetchUserHistory",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/admin/user-history/${userId}`);
+      const response = await api.get(`/admin/user/${userId}/history`);
       return response.data.data;
     } catch (error) {
       const serializedError = {

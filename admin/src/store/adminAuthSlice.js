@@ -6,8 +6,9 @@ export const loginAdmin = createAsyncThunk(
   async (adminData, { rejectWithValue }) => {
     try {
       const response = await api.post("/admin/login", adminData);
-      console.log(response);
-      return response.data.data;
+      const { admin, token } = response.data.data;
+      localStorage.setItem("token", token);
+      return { admin, token };
     } catch (error) {
       const serializedError = {
         message: error.response?.data?.message || error.message,
@@ -26,13 +27,18 @@ export const fetchAdminProfile = createAsyncThunk(
       const response = await api.get("/admin/get-admin");
       return response.data.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      const serializedError = {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      };
+      return rejectWithValue(serializedError || "Profile fetch failed");
     }
   }
 );
 
 const initialState = {
-  admin: null,
+  token: localStorage.getItem("token") || null,
   loading: false,
   error: null,
 };
@@ -42,8 +48,9 @@ const adminAuthSlice = createSlice({
   initialState,
   reducers: {
     adminLogout: (state) => {
-      state.admin = null;
+      state.token = null;
       state.error = null;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -55,7 +62,7 @@ const adminAuthSlice = createSlice({
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.admin = action.payload;
+        state.token = action.payload.token;
       })
       .addCase(loginAdmin.rejected, (state, action) => {
         state.loading = false;
@@ -67,11 +74,9 @@ const adminAuthSlice = createSlice({
       })
       .addCase(fetchAdminProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.admin = action.payload;
       })
       .addCase(fetchAdminProfile.rejected, (state, action) => {
         state.loading = false;
-        state.admin = null;
         state.error = action.payload;
       });
   },

@@ -4,7 +4,7 @@ export const fetchSingleOrder = createAsyncThunk(
   "singleOrder/fetchSingleOrder",
   async ({ userId, orderId }, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/admin/user=${userId}/order=${orderId}`);
+      const response = await api.get(`/admin/user/${userId}/order/${orderId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -20,9 +20,12 @@ export const updateOrderStatus = createAsyncThunk(
   "singleOrder/updateOrderStatus",
   async ({ userId, orderId, status }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/admin/${userId}/${orderId}/status`, {
-        status,
-      });
+      const response = await api.patch(
+        `/admin/user/${userId}/order/${orderId}/status`,
+        {
+          status,
+        }
+      );
 
       return response.data.data;
     } catch (error) {

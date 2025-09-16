@@ -4,7 +4,7 @@ export const fetchOrders = createAsyncThunk(
   "user/fetchOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get("/admin/all-order");
+      const response = await api.get("/admin/orders");
       return response.data.data;
     } catch (error) {
       const serializedError = {

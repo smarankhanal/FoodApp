@@ -5,11 +5,15 @@ export const uploadFoodItem = createAsyncThunk(
   "foodManager/uploadFoodItem",
   async (foodItemData, { rejectWithValue }) => {
     try {
-      const response = await api.post("/admin/upload-fooditems", foodItemData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await api.post(
+        "/admin/food-items/upload",
+        foodItemData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return response.data.data;
     } catch (error) {
       const serializedError = {

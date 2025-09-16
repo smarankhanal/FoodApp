@@ -4,7 +4,7 @@ export const fetchSingleFoodItem = createAsyncThunk(
   "singleFoodItem/fetchSingleFoodItem",
   async (foodItemId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/admin/fooditem/${foodItemId}`);
+      const response = await api.get(`/admin/food-item/${foodItemId}`);
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -20,7 +20,7 @@ export const deleteFoodItem = createAsyncThunk(
   "singleFoodItems/deleteFoodItem",
   async (foodItemId, { rejectWithValue }) => {
     try {
-      await api.delete(`/admin/delete-fooditem/${foodItemId}`);
+      await api.delete(`/admin/food-item/${foodItemId}/delete`);
     } catch (error) {
       const serializedError = {
         message: error.response?.data?.message || error.message,

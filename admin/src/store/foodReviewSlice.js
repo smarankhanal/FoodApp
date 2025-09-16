@@ -6,9 +6,7 @@ export const fetchFoodReview = createAsyncThunk(
   async (foodItemId, { rejectWithValue }) => {
     console.log(foodItemId);
     try {
-      const response = await api.get(
-        `/admin/food-item/get-review/${foodItemId}`
-      );
+      const response = await api.get(`/admin/food-item/${foodItemId}/reviews`);
 
       return response.data.data;
     } catch (error) {
@@ -25,9 +23,7 @@ export const fetchFoodReviewOfUser = createAsyncThunk(
   "review/fetchFoodReviewOfUser",
   async ({ userId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `/api/v1/admin/user/${userId}/food-reviews`
-      );
+      const response = await axios.get(`/admin/user/${userId}/food-reviews`);
 
       return response.data.data;
     } catch (error) {
