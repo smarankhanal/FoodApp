@@ -2,7 +2,6 @@ import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import {
   adminLogin,
-  adminLogout,
   allTheUser,
   deleteUser,
   getUserHistory,
@@ -26,7 +25,6 @@ const router = Router();
 // --- Authentication ---
 router.route("/login").post(adminLogin);
 router.route("/get-admin").get(verifyAdminJWT, getAdminProfile);
-router.route("/logout").post(verifyAdminJWT, adminLogout);
 
 // --- User Management ---
 router.route("/all-users").get(verifyAdminJWT, allTheUser);

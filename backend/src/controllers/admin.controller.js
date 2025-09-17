@@ -49,19 +49,10 @@ const adminLogin = asyncHandler(async (req, res) => {
       )
     );
 });
-const adminLogout = asyncHandler(async (req, res) => {
-  const options = {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-  };
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .json(new ApiResponse(200, {}, "Admin logout successfully"));
-});
+
 const getAdminProfile = asyncHandler(async (req, res) => {
   const admin = process.env.ADMIN_EMAIL;
+  console.log("admin", admin);
   if (!admin) {
     throw new ApiError(404, "Admin is missing");
   }
@@ -298,7 +289,6 @@ const foodItemReviewByUser = asyncHandler(async (req, res) => {
 
 export {
   adminLogin,
-  adminLogout,
   getAdminProfile,
   allTheUser,
   getUserHistory,
