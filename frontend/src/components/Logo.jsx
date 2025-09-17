@@ -2,7 +2,7 @@ import React from "react";
 
 function Logo({ className, ...props }) {
   return (
-    <div className="m-1">
+    <div>
       <img
         src="/images/foodapp-logo.png"
         alt="logo"

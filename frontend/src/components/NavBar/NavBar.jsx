@@ -21,7 +21,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-12 bg-amber-400 shadow-md dark:shadow-white/20 px-4 z-[999]">
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-full h-12 bg-amber-400 shadow-md dark:shadow-white/20 z-[999]  rounded-lg p-3">
       <div className="flex items-center justify-between h-full">
         {/* Logo */}
         <div className="h-full flex items-center">
@@ -67,7 +67,6 @@ export default function NavBar() {
           )}
         </div>
 
-        {/* Mobile Hamburger */}
         <button
           className="sm:hidden text-black dark:text-white text-2xl"
           onClick={() => dispatch(toggleMenu())}
