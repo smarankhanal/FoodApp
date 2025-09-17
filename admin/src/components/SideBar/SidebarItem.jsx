@@ -9,7 +9,7 @@ export default function SidebarItem({ text, href = "/", children }) {
       <div className="bg-black dark:bg-white dark:text-black text-white p-2 rounded w-[100px] sm:w-[150px] font-bold shadow-[2px_2px_1px_blue] flex items-center justify-center cursor-pointer my-5">
         <Link
           to={href}
-          className="text-[12px] sm:text-[18px] flex-1 hover:scale-[1.03] focus:opacity-45"
+          className="text-[12px] sm:text-[16px] flex-1 hover:scale-[1.03] focus:opacity-45"
         >
           {text}
         </Link>
