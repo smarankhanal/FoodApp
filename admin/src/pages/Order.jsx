@@ -45,7 +45,41 @@ export default function Order() {
   if (loading)
     return (
       <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
-        <SkeletonLoader count={5} width="100%" height={50} />
+        <div className="flex justify-between">
+          <SkeletonLoader
+            count={1}
+            width="100%"
+            height={30}
+            className="mb-4 opacity-50"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+          <SkeletonLoader
+            count={1}
+            width="100%"
+            height={30}
+            className="mb-4 opacity-50 rounded-lg"
+            baseColor="#000"
+            highlightColor="#333"
+          />
+        </div>
+        <SkeletonLoader
+          count={1}
+          width="100%"
+          height={40}
+          className="mb-2 opacity-50"
+          baseColor="#000"
+          highlightColor="#333"
+        />
+
+        <SkeletonLoader
+          count={5}
+          width="100%"
+          height={50}
+          baseColor="#000"
+          highlightColor="#333"
+          className="opacity-50"
+        />
       </div>
     );
 
@@ -55,7 +89,7 @@ export default function Order() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         <p className="font-bold font-serif text-[20px] flex-1">
           Total Order :- {sortedOrders.length}
         </p>
@@ -71,7 +105,7 @@ export default function Order() {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-6 gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 text-black font-bold items-center">
+      <div className="sm:grid sm:grid-cols-6 flex flex-col gap-1 sm:gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 text-black font-bold sm:items-center">
         <p>ORDER ID</p>
         <p>USER</p>
         <p>STATUS</p>
@@ -93,6 +127,7 @@ export default function Order() {
           </select>
         </div>
       </div>
+
       {filteredOrder.map((order) => (
         <OrderItemSummary order={order} key={order._id} />
       ))}

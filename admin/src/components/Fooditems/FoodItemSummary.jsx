@@ -62,8 +62,8 @@ export default function FoodItemSummary({ item }) {
       )}
 
       {confirmOpen && (
-        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 cursor-not-allowed">
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
+        <div className="fixed inset-0 backdrop-blur-sm flex  items-center justify-center z-50 cursor-not-allowed">
+          <div className="flex flex-col bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
             <h2 className="text-lg font-semibold mb-4">
               Are you sure you want to delete this food item?
             </h2>
@@ -88,7 +88,7 @@ export default function FoodItemSummary({ item }) {
         </div>
       )}
 
-      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex items-center">
+      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex flex-col sm:flex-row sm:items-center gap-2">
         <div className="flex-1">
           <img
             src={item.foodImage}
@@ -98,7 +98,7 @@ export default function FoodItemSummary({ item }) {
         </div>
 
         <p className="flex-1">{captialize(item.foodName)}</p>
-        <div className="flex-1">
+        <div className="flex flex-row sm:flex-col gap-2 flex-1">
           <p className="mb-1">{captialize(item.subCategory)}</p>
 
           <Status

@@ -5,8 +5,7 @@ export const fetchFoodItem = createAsyncThunk(
   "foodItem/fetchFoodItem",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get("/admin/fooditems");
-
+      const response = await api.get("/admin/food-items");
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -35,7 +34,6 @@ const foodItemSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFoodItem.pending, (state) => {
-        state.foodItems = [];
         state.loading = true;
         state.error = null;
       })

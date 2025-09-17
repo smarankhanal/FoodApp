@@ -4,32 +4,31 @@ export default function Sidebar() {
   return (
     <div className="pt-3 pl-3">
       <SidebarItem text="Home" href="/home">
-        <a href="/">Home</a>
+        <p>Home</p>
         <hr className="h-2  text-white dark:text-black" />
       </SidebarItem>
       <SidebarItem text="User" href="/user">
-        <a href="/">All User</a>
+        <p>All User</p>
         <hr className="h-2  text-white dark:text-black" />
-        <a href="/">User History</a>
+        <p>User History</p>
         <hr className="h-2  text-white dark:text-black" />
 
-        <a href="/">Delete User</a>
+        <p>Delete User</p>
         <hr className="h-2  text-white dark:text-black" />
       </SidebarItem>
       <SidebarItem text="Order" href="/order">
-        <a href="/">Change Status</a>
+        <p>Change Status</p>
         <hr className="h-2  text-white dark:text-black" />
-        <a href="/">View order</a>
+        <p>View order</p>
         <hr className="h-2  text-white dark:text-black" />
       </SidebarItem>
       <SidebarItem text="FoodItems" href="/fooditem">
-        <a href="/">
-          <p>Add fooditem</p>
-        </a>
+        <p>Add fooditem</p>
+
         <hr className="h-2  text-white dark:text-black" />
-        <a href="/">Delete fooditem</a>
+        <p>Delete fooditem</p>
         <hr className="h-2  text-white dark:text-black" />
-        <a href="/">Update fooditem</a>
+        <p>Update fooditem</p>
         <hr className="h-2  text-white dark:text-black" />
       </SidebarItem>
     </div>

@@ -26,20 +26,20 @@ export default function OrderItemSummary({ order }) {
   };
 
   return (
-    <div className="grid grid-cols-6 items-center bg-black dark:bg-white rounded-lg m-4 p-3 dark:text-black text-white text-sm shadow-sm">
+    <div className="sm:grid sm:grid-cols-6 sm:items-center gap-2 sfont-serif flex flex-col bg-black dark:bg-white rounded-lg m-4 p-3 dark:text-black text-white text-sm shadow-sm">
       <p className="truncate opacity-60">{order._id}</p>
 
       <p className=" font-medium truncate">{order.user}</p>
 
       <div>
         <Status
-          className={`${statusStyles[order.status.toLowerCase()]}font-semibold`}
+          className={`${statusStyles[order.status.toLowerCase()]}font-bold`}
         >
           {capitalize(order.status)}
         </Status>
       </div>
 
-      <p className="font-semibold">Rs {order.totalPrice}</p>
+      <p className="font-bold text-blue-400">Rs {order.totalPrice}</p>
 
       <p>
         {new Date(order.createdAt).toLocaleString("en-US", {

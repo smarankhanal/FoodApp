@@ -36,11 +36,11 @@ export default function User() {
 
   if (loading)
     return (
-      <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
+      <div className="dark:text-white text-black mt-10 ml-5 p-6  w-full max-w-5xl ">
         <div className="flex justify-between">
           <SkeletonLoader
             count={1}
-            width={200}
+            width="100%"
             height={30}
             className="mb-4 opacity-50"
             baseColor="#000"
@@ -48,7 +48,7 @@ export default function User() {
           />
           <SkeletonLoader
             count={1}
-            width={200}
+            width="100%"
             height={30}
             className="mb-4 opacity-50 rounded-lg"
             baseColor="#000"
@@ -81,17 +81,17 @@ export default function User() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <div className="flex justify-between items-center mt-6 mb-4">
+      <div className="flex  sm:flex-row flex-col sm:justify-between sm:items-center mt-6 mb-4">
         <p className="font-bold text-lg ">Total Users: {users.length} </p>
         <p className="font-bold text-lg">
           Active Users:
-          <span className="text-green-500">
+          <span className="ml-3 text-green-500">
             {sortedUsers.filter((u) => u.isActive).length}
           </span>
         </p>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 font-bold text-black items-center shadow">
+      <div className="flex flex-col gap-2 sm:grid sm:grid-cols-5 sm:gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 font-bold text-black sm:items-center shadow">
         <p>USER ID</p>
         <p>USER-NAME</p>
         <p>STATUS</p>

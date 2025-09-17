@@ -100,9 +100,9 @@ export default function SingleUser({ user }) {
         </div>
       )}
 
-      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black  text-white flex items-center">
-        <p className="flex-1 text-sm truncate">{user._id}</p>
-        <p className="flex-1 ml-5">{user.username} </p>
+      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 gap-2 dark:text-black  text-white flex sm:flex-row  flex-col sm:items-center opacity-85 font-serif">
+        <p className="flex-1 text-sm sm:truncate ">{user._id}</p>
+        <p className="flex-1 sm:ml-5">{user.username} </p>
         <div className="flex-1">
           <Status
             className={

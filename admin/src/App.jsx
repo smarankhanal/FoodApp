@@ -2,20 +2,16 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Navbar, Sidebar } from "./components";
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAdminProfile } from "./store/adminAuthSlice";
+import { useSelector } from "react-redux";
 
 export default function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchAdminProfile());
-  }, []);
-  const { admin } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+
   return (
     <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-2 min-h-screen">
       <Navbar />
       <div className="flex">
-        {admin && <Sidebar />}
+        {token && <Sidebar />}
         <Outlet />
       </div>
     </div>
