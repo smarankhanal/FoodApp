@@ -13,7 +13,7 @@ export default function LogIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, register } = useForm();
-  const { token, error, loading } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   const submit = async (data) => {
     try {
@@ -62,7 +62,8 @@ export default function LogIn() {
 
         <div className="flex items-center justify-center">
           <Button className="m-2 bg-blue-700" disabled={loading}>
-            {loading ? "Logging in..." : "LogIn"}
+            {/* {loading ? "Logging in..." : "LogIn"} */}
+            LogIn
           </Button>
         </div>
       </form>
