@@ -71,5 +71,7 @@ ADMIN_EMAIL=your_admin_email
 ADMIN_PASSWORD=your_admin_password
 ADMIN_ACCESS_TOKEN_SECRET=access_token_secret
 
-> **Note:** The **Admin** and **Frontend** are deployed on **Vercel**, while the **Backend** is deployed on **Render**.
+
 ```
+
+> **Note:** The **Admin** and **Frontend** are deployed on **Vercel**, while the **Backend** is deployed on **Render**.
