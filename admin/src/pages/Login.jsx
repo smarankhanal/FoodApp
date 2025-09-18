@@ -18,7 +18,7 @@ export default function LogIn() {
   const submit = async (data) => {
     try {
       await dispatch(loginAdmin(data)).unwrap();
-      navigate("/home"); // ✅ redirect to admin dashboard
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
@@ -26,7 +26,6 @@ export default function LogIn() {
 
   const toggleVisibility = () => setShowPassword((prev) => !prev);
 
-  // ✅ Auto redirect if already logged in
   useEffect(() => {
     if (token) {
       navigate("/home");
