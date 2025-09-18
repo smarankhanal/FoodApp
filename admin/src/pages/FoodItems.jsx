@@ -92,7 +92,7 @@ export default function FoodItems() {
         </p>
         <Button
           className="dark:bg-blue-700 bg-blue-600 text-white w-[100px] flex items-center justify-center gap-1"
-          onClick={() => navigate("/add-food-item")}
+          onClick={() => navigate("/food-item/add")}
         >
           Add
           <MdOutlineAdd />

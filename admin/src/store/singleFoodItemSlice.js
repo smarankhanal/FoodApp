@@ -17,7 +17,7 @@ export const fetchSingleFoodItem = createAsyncThunk(
   }
 );
 export const deleteFoodItem = createAsyncThunk(
-  "singleFoodItems/deleteFoodItem",
+  "singleFoodItem/deleteFoodItem",
   async (foodItemId, { rejectWithValue }) => {
     try {
       await api.delete(`/admin/food-item/${foodItemId}/delete`);
@@ -31,6 +31,7 @@ export const deleteFoodItem = createAsyncThunk(
     }
   }
 );
+
 const initialState = {
   foodItem: null,
   loading: false,

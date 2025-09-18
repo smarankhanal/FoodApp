@@ -25,7 +25,25 @@ export const uploadFoodItem = createAsyncThunk(
     }
   }
 );
-
+export const editFoodItem = createAsyncThunk(
+  "singleFoodItem/editFoodItem",
+  async ({ foodItemId, updateData }, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(
+        `/food-item/${foodItemId}/update`,
+        updateData
+      );
+      return response.data.data;
+    } catch (error) {
+      const serializedError = {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      };
+      return rejectWithValue(serializedError || "Order failed to fetch");
+    }
+  }
+);
 const initialState = {
   foodItem: null,
   loading: false,
@@ -47,6 +65,19 @@ const managerSlice = createSlice({
         state.foodItem = action.payload;
       })
       .addCase(uploadFoodItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(editFoodItem.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editFoodItem.fulfilled, (state, action) => {
+        state.foodItem = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(editFoodItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

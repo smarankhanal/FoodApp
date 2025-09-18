@@ -123,6 +123,7 @@ export default function FoodItemSummary({ item }) {
           <div
             className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"
             title="Edit FoodItems"
+            onClick={() => navigate(`/food-item/edit/${item._id}`)}
           >
             <FaRegEdit className="text-[18px] text-blue-500" />
           </div>

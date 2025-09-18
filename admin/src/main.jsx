@@ -114,8 +114,17 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      //
       {
-        path: "/add-food-item/",
+        path: "/food-item/add",
+        element: (
+          <ProtectedRoute>
+            <FoodManager />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/food-item/edit/:id",
         element: (
           <ProtectedRoute>
             <FoodManager />
