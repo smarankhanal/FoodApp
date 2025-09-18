@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, Button, Logo } from "../../components";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../store/authSlice";
@@ -13,6 +13,8 @@ export default function LogIn() {
   const toggleVisibility = () => setShowPassword((prev) => !prev);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { status } = useSelector((state) => state.auth);
+
   const submit = async (data) => {
     try {
       await dispatch(loginUser(data)).unwrap();
@@ -56,8 +58,12 @@ export default function LogIn() {
           {errorMessage && (
             <p className="text-red-500 mb-5  font-semibold">{errorMessage}</p>
           )}
-          <Button type="submit" className="w-full mb-4">
-            LogIn
+          <Button
+            type="submit"
+            className="w-full mb-4"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Logging in..." : "LogIn"}
           </Button>
 
           <p className="text-center">
