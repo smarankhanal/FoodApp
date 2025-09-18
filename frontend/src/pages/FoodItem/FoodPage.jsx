@@ -39,7 +39,7 @@ export default function FoodPage() {
               {item.description}
             </p>
             <p className="font-bold text-sm sm:text-base">
-              Type:{" "}
+              Type :-{" "}
               <span
                 className={
                   item?.type?.toLowerCase() === "veg"
@@ -51,10 +51,10 @@ export default function FoodPage() {
               </span>
             </p>
             <p className="font-semibold text-sm sm:text-base">
-              Subcategory: {capitalize(item.subCategory)}
+              Subcategory :- {capitalize(item.subCategory)}
             </p>
             <p className="font-bold text-lg sm:text-xl mt-1">
-              Price: <span className="text-blue-500">{item.price}</span>
+              Price :- <span className="text-blue-500">{item.price}</span>
             </p>
             <ReviewWithStars itemId={item._id} />
           </div>
