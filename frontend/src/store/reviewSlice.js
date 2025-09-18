@@ -4,7 +4,6 @@ import api from "../api/axios";
 export const fetchReviews = createAsyncThunk(
   "review/fetchReviews",
   async (foodItemId, { rejectWithValue }) => {
-    console.log(foodItemId);
     try {
       const response = await api.get(`/users/food-item/${foodItemId}/reviews`);
       return { foodItemId, reviews: response.data.data };

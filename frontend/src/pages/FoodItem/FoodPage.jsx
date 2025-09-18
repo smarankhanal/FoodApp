@@ -12,7 +12,6 @@ export default function FoodPage() {
   const dispatch = useDispatch();
   const foodItemId = useParams().id;
   useEffect(() => {
-    console.log(foodItemId);
     dispatch(fetchReviews(foodItemId));
   }, [dispatch, foodItemId]);
   const { reviewsByFood, loading } = useSelector((state) => state.review);

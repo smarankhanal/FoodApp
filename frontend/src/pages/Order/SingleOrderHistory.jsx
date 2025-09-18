@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCapitalize } from "../../hooks/useCapitalize";
 import { Button } from "../../components";
 import { cancelUserOrder } from "../../store/updateStatusSlice";
+import SkeletonLoader from "../../components/SkeletonLoader";
 
 export default function SingleOrderHistory() {
   const statusColor = {
@@ -27,15 +28,18 @@ export default function SingleOrderHistory() {
     }
   };
   const { order } = useSelector((state) => state.cancelOrder);
-  useEffect(() => {
-    console.log(order, singleHistory);
-  }, []);
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-2xl font-semibold text-gray-600 dark:text-gray-300 animate-pulse">
-          Loading...
-        </p>
+      <div className="min-h-screen pt-20 px-4">
+        <SkeletonLoader width="80%" height={40} className="text-center" />
+        <SkeletonLoader width="80%" height={50} className="text-center" />
+        <SkeletonLoader width="20%" height={40} className="text-right" />
+
+        <div className="w-full max-w-5xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SkeletonLoader width="70%" height={200} />
+          <SkeletonLoader width="70%" height={200} />
+        </div>
       </div>
     );
   }
@@ -101,7 +105,7 @@ export default function SingleOrderHistory() {
           </div>
         </div>
 
-        <div className="float-right mr-30 mb-4">
+        <div className="float-right sm:mr-30 mr-4 mb-4">
           {singleHistory.status.toLowerCase() === "pending" && (
             <Button
               className="bg-red-600 hover:bg-red-700"
