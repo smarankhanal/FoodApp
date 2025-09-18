@@ -6,7 +6,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { loginAdmin } from "../store/adminAuthSlice";
+import { clearError, loginAdmin } from "../store/adminAuthSlice";
 
 export default function LogIn() {
   const dispatch = useDispatch();
@@ -27,11 +27,8 @@ export default function LogIn() {
   const toggleVisibility = () => setShowPassword((prev) => !prev);
 
   useEffect(() => {
-    if (token) {
-      navigate("/home");
-    }
-  }, [token, navigate]);
-
+    dispatch(clearError());
+  }, [dispatch]);
   return (
     <div className="w-full max-w-100 mx-auto bg-white dark:bg-black text-white mb-10 p-2 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg mt-20">
       <div className="flex flex-col items-center justify-center">

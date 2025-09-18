@@ -4,9 +4,11 @@ import api from "../api/axios";
 export const loginAdmin = createAsyncThunk(
   "auth/adminAuthSlice/loginAdmin",
   async (adminData, { rejectWithValue }) => {
+    console.log(adminData);
     try {
       const response = await api.post("/admin/login", adminData);
       const { token } = response.data.data;
+      console.log(response);
       localStorage.setItem("token", token);
       return token;
     } catch (error) {
@@ -35,6 +37,9 @@ const adminAuthSlice = createSlice({
       state.error = null;
       localStorage.removeItem("token");
     },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,5 +60,5 @@ const adminAuthSlice = createSlice({
   },
 });
 
-export const { adminLogout } = adminAuthSlice.actions;
+export const { adminLogout, clearError } = adminAuthSlice.actions;
 export default adminAuthSlice.reducer;
