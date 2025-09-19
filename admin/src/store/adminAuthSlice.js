@@ -42,7 +42,6 @@ const adminAuthSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-
       .addCase(loginAdmin.pending, (state) => {
         state.loading = true;
         state.error = null;
