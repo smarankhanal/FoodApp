@@ -173,7 +173,7 @@ import { fetchSingleFoodItem } from "../../store/singleFoodItemSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function FoodManager() {
-  const { register, handleSubmit, reset, setValue } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [newImageSelected, setNewImageSelected] = useState(false);
@@ -289,7 +289,7 @@ export default function FoodManager() {
               {...register("subCategory", { required: true })}
             >
               <option value="starter">Starter</option>
-              <option value="main-course">Main Course</option>
+              <option value="main course">Main Course</option>
               <option value="dessert">Dessert</option>
               <option value="beverage">Beverage</option>
             </Select>

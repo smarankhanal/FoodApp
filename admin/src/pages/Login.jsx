@@ -63,7 +63,6 @@ export default function LogIn() {
         <div className="flex items-center justify-center">
           <Button className="m-2 bg-blue-700">
             {loading ? "Logging in..." : "LogIn"}
-            LogIn
           </Button>
         </div>
       </form>

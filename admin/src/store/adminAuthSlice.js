@@ -4,11 +4,10 @@ import api from "../api/axios";
 export const loginAdmin = createAsyncThunk(
   "auth/adminAuthSlice/loginAdmin",
   async (adminData, { rejectWithValue }) => {
-    console.log(adminData);
     try {
       const response = await api.post("/admin/login", adminData);
       const { token } = response.data.data;
-      console.log(response);
+
       localStorage.setItem("token", token);
       return token;
     } catch (error) {
