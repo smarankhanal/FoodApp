@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../store/updateSlice";
 import { useForm } from "react-hook-form";
 import Toast from "../Toast";
+import { getMe } from "../../store/authSlice";
 
 export default function Update() {
   const [show, setShow] = useState(false);
@@ -23,18 +24,22 @@ export default function Update() {
   const update = async (data) => {
     try {
       await dispatch(updateDetails(data)).unwrap();
+
       setToast({
         show: true,
         text: "Details updated successfully",
-        className: "text-green-800 w-[450px]",
+        className: "text-green-600 sm:w-[450px] font-bold",
       });
+
       reset(data);
+      setShow(false);
+      dispatch(getMe());
     } catch (err) {
       console.log(err);
       setToast({
         show: true,
         text: err.message || "Failed to update details",
-        className: "text-red-800 w-[450px]",
+        className: "text-red-600 sm:w-[450px] font-bold",
       });
     } finally {
       setTimeout(() => setToast({ show: false, text: "" }), 3000);
@@ -55,7 +60,7 @@ export default function Update() {
           className={toast.className}
         />
       )}
-      <div className="flex justify-center items-center  bg-white dark:bg-black rounded-lg  dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black] p-2 m-2 ">
+      <div className="flex justify-center items-center  bg-white dark:bg-black rounded-lg  dark:drop-shadow-[1px_1px_1px_white]  drop-shadow-[2px_2px_1px_black] p-2 m-2">
         <p className="font-bold h-10 flex-1">Update your details</p>
         {show ? (
           <IoIosArrowDropdownCircle
@@ -70,9 +75,9 @@ export default function Update() {
         )}
       </div>
       {show ? (
-        <div className="dark:bg-black bg-white opacity-70 dark:text-white text-black p-3 rounded-lg">
+        <div className="dark:bg-black bg-white dark:text-white text-black p-3 rounded-lg">
           <form onSubmit={handleSubmit(update)}>
-            <label>Email :- </label>
+            <label className="opacity-70">Email :- </label>
             <div>
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
@@ -85,7 +90,7 @@ export default function Update() {
               )}
             </div>
 
-            <label>Username :-</label>
+            <label className="opacity-70">Username :-</label>
             <div>
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
@@ -98,7 +103,7 @@ export default function Update() {
               )}
             </div>
 
-            <label>Fullname :- </label>
+            <label className="opacity-70">Fullname :- </label>
             <div>
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
@@ -111,7 +116,7 @@ export default function Update() {
               )}
             </div>
 
-            <label>Phone number :-</label>
+            <label className="opacity-70">Phone number :-</label>
             <div>
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"
@@ -124,7 +129,7 @@ export default function Update() {
               )}
             </div>
 
-            <label>Address :-</label>
+            <label className="opacity-70">Address :-</label>
             <div>
               <Input
                 className="m-2 border border-gray-300  hover:border-amber-400  focus:ring-2 focus:ring-amber-400"

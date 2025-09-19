@@ -47,7 +47,7 @@ export default function OrderItems() {
       setToast({
         show: true,
         text: "Failed to place order",
-        className: "text-red-500 sm:mb-0 mb-50",
+        className: "text-red-500 ",
       });
     }
   };

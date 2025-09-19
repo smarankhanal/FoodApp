@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../store/passwordSlice";
 import Toast from "../Toast";
+import { logout } from "../../store/authSlice";
 export default function ChangePw() {
   const [show, setShow] = useState(false);
   const { handleSubmit, register, reset } = useForm();
@@ -26,14 +27,17 @@ export default function ChangePw() {
       setToast({
         show: true,
         text: "Password changed successfully",
-        className: "text-green-800 w-[450px]",
+        className: "text-green-800 sm:w-[450px]",
       });
       reset();
+      setTimeout(() => {
+        dispatch(logout());
+      }, 3000);
     } catch (error) {
       setToast({
         show: true,
         text: error?.message || "Failed to change password",
-        className: "text-red-800 w-[450px]",
+        className: "text-red-800 sm:w-[450px]",
       });
     } finally {
       setTimeout(() => setToast({ show: false, text: "" }), 3000);

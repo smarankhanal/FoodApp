@@ -13,8 +13,8 @@ export default function Settings() {
     navigate("/");
   };
   return (
-    <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-20 font-serif  text-black dark:text-white">
-      <p className="font-bold text-3xl text-center">Settings</p>
+    <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-20 font-serif  text-black dark:text-white px-4">
+      <p className="font-bold text-3xl text-center ">Settings</p>
       <div className="w-full max-w-3xl mx-auto">
         <Update />
         <ChangePw />
