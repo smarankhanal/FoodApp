@@ -100,7 +100,32 @@ const login = asyncHandler(async (req, res) => {
       )
     );
 });
-
+const logout = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $unset: {
+        refreshToken: 1,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+  user.isActive = false;
+  await user.save();
+  const isProduction = process.env.NODE_ENV === "production";
+  const options = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "none",
+  };
+  return res
+    .status(200)
+    .clearCookie("refreshToken", options)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(200, {}, "User Logout successfully"));
+});
 const getMe = asyncHandler(async (req, res) => {
   if (!req.user) {
     throw new ApiError(404, "User not found");
@@ -235,6 +260,7 @@ const getReview = asyncHandler(async (req, res) => {
 export {
   registerUser,
   login,
+  logout,
   updateAccountDetails,
   changeCurrentPassword,
   refreshAccessToken,

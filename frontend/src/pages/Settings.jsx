@@ -2,14 +2,14 @@ import React from "react";
 import { Button, ChangeMode, ChangePw, Update } from "../components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../store/authSlice";
+import { logoutUser } from "../store/authSlice";
 
 export default function Settings() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
     navigate("/");
   };
   return (

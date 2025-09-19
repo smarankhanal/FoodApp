@@ -6,7 +6,7 @@ import Button from "../Button";
 import Logo from "../Logo";
 import ChangeMode from "../mode/ChangeMode";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../store/authSlice";
+import { logoutUser } from "../../store/authSlice";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ export default function NavBar() {
   const user = useSelector((state) => state.auth.user);
   const menuOpen = useSelector((state) => state.menu.menuOpen);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    await dispatch(logoutUser()).unwrap();
     dispatch(closeMenu());
     navigate("/");
   };
@@ -53,13 +53,13 @@ export default function NavBar() {
           {user ? (
             <Button
               className="h-8 px-3 text-sm dark:text-white"
-              onClick={handleLogout}
+              onClick={() => handleLogout()}
             >
               LogOut
             </Button>
           ) : (
             <Button
-              className="h-8 px-3 text-sm dark:text-white"
+              className="h-8 px-3 text-sm dark:text-white "
               onClick={() => navigate("/login")}
             >
               LogIn

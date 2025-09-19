@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../store/passwordSlice";
 import Toast from "../Toast";
-import { logout } from "../../store/authSlice";
+import { logoutUser } from "../../store/authSlice";
 export default function ChangePw() {
   const [show, setShow] = useState(false);
   const { handleSubmit, register, reset } = useForm();
@@ -31,7 +31,7 @@ export default function ChangePw() {
       });
       reset();
       setTimeout(() => {
-        dispatch(logout());
+        dispatch(logoutUser());
       }, 3000);
     } catch (error) {
       setToast({

@@ -8,7 +8,6 @@ export const changePassword = createAsyncThunk(
         oldPassword,
         newPassword,
       });
-      console.log(response);
       return response.data;
     } catch (error) {
       let serializedErrors = [];
