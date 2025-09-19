@@ -127,7 +127,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/singleOrderHistory/:orderId",
+        path: "/single-order/:orderId",
         element: (
           <ProtectedRoute>
             <SingleOrderHistory />

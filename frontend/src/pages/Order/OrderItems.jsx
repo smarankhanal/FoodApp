@@ -36,7 +36,7 @@ export default function OrderItems() {
       setToast({
         show: true,
         text: "Order placed successfully",
-        className: "text-green-500",
+        className: "text-green-500 sm:mb-0 mb-20",
       });
       dispatch(clearCart());
       setTimeout(
@@ -47,7 +47,7 @@ export default function OrderItems() {
       setToast({
         show: true,
         text: "Failed to place order",
-        className: "text-red-500",
+        className: "text-red-500 sm:mb-0 mb-50",
       });
     }
   };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, NoOrder, Search, Status } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchSingleHistory } from "../../store/historySlice";
+import { fetchHistory, fetchSingleHistory } from "../../store/historySlice";
 import { useCapitalize } from "../../hooks/useCapitalize";
 
 export default function UserHistory() {
@@ -19,11 +19,14 @@ export default function UserHistory() {
   const dispatch = useDispatch();
   const onView = (orderId) => {
     dispatch(fetchSingleHistory(orderId));
-    navigate(`/singleOrderHistory/${orderId}`);
+    navigate(`/single-order/${orderId}`);
   };
   useEffect(() => {
     setSortedOrders(orders);
   }, [orders]);
+  useEffect(() => {
+    dispatch(fetchHistory());
+  }, []);
   const handleSortChange = (value) => {
     let sorted = [...orders];
     if (value === "pending" || value === "completed" || value === "cancelled") {

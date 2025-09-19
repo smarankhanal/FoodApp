@@ -4,6 +4,7 @@ import { useCapitalize } from "../../hooks/useCapitalize";
 import { Button } from "../../components";
 import { cancelUserOrder } from "../../store/updateStatusSlice";
 import SkeletonLoader from "../../components/SkeletonLoader";
+import { fetchSingleFoodItem } from "../../store/singleFoodItemSlice";
 
 export default function SingleOrderHistory() {
   const statusColor = {
