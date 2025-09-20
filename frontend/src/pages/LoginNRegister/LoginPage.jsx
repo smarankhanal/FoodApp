@@ -1,10 +1,16 @@
 import React from "react";
 import { Button, Logo } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { closeMenu } from "../../store/menuSlice";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const loginUser = () => {
+    navigate("/login");
+    dispatch(closeMenu());
+  };
   return (
     <div className="relative bg-[url('/images/light.jpg')] dark:bg-[url('/images/dark.jpg')] bg-cover bg-center min-h-screen flex items-center justify-center">
       <div className="relative w-full max-w-3xl py-10 px-6 sm:px-10 lg:px-20 dark:text-white text-black font-semibold text-center">
@@ -28,7 +34,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-center mt-6">
           <Button
             className="w-full sm:w-auto px-6 py-2 text-base sm:text-lg"
-            onClick={() => navigate("/login")}
+            onClick={() => loginUser()}
           >
             Login
           </Button>

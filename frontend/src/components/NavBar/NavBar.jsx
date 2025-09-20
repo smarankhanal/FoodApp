@@ -19,7 +19,10 @@ export default function NavBar() {
     dispatch(closeMenu());
     navigate("/");
   };
-
+  const userRegister = () => {
+    navigate("/register");
+    dispatch(closeMenu());
+  };
   return (
     <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-full h-12 bg-amber-400 shadow-md dark:shadow-white/20 z-[999]  rounded-lg p-3">
       <div className="flex items-center justify-between h-full">
@@ -33,7 +36,9 @@ export default function NavBar() {
           <AnchorTag className="font-bold dark:text-gray-700" href="/home">
             Home
           </AnchorTag>
+
           <ChangeMode />
+
           {user && (
             <>
               <AnchorTag
@@ -58,12 +63,20 @@ export default function NavBar() {
               LogOut
             </Button>
           ) : (
-            <Button
-              className="h-8 px-3 text-sm dark:text-white "
-              onClick={() => navigate("/login")}
-            >
-              LogIn
-            </Button>
+            <>
+              <Button
+                className="h-8 px-3 text-sm dark:text-white "
+                onClick={() => navigate("/login")}
+              >
+                LogIn
+              </Button>
+              <Button
+                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300 "
+                onClick={() => userRegister()}
+              >
+                Register
+              </Button>
+            </>
           )}
         </div>
 
@@ -85,6 +98,7 @@ export default function NavBar() {
           >
             Home
           </AnchorTag>
+
           <ChangeMode />
           {user && (
             <>
@@ -114,20 +128,28 @@ export default function NavBar() {
           {user ? (
             <Button
               className="h-8 px-3 text-sm dark:text-white"
-              onClick={handleLogout}
+              onClick={() => handleLogout()}
             >
               LogOut
             </Button>
           ) : (
-            <Button
-              className="h-8 px-3 text-sm dark:text-white"
-              onClick={() => {
-                navigate("/login");
-                dispatch(closeMenu());
-              }}
-            >
-              LogIn
-            </Button>
+            <>
+              <Button
+                className="h-8 px-3 text-sm dark:text-white"
+                onClick={() => {
+                  navigate("/login");
+                  dispatch(closeMenu());
+                }}
+              >
+                LogIn
+              </Button>
+              <Button
+                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300 "
+                onClick={() => userRegister()}
+              >
+                Register
+              </Button>
+            </>
           )}
         </div>
       )}
