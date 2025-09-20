@@ -22,6 +22,7 @@ const generateAccessAndRefreshToken = async (userId) => {
 };
 const registerUser = asyncHandler(async (req, res) => {
   let { username, fullname, email, password, address, phoneNumber } = req.body;
+
   if (
     [username, fullname, password, email, address, phoneNumber].some(
       (field) => String(field)?.trim() === ""
