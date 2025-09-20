@@ -124,7 +124,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/food-item/edit/:id",
+        path: "/food-item/edit/:foodItemId",
         element: (
           <ProtectedRoute>
             <FoodManager />

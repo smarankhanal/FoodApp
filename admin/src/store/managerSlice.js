@@ -29,7 +29,11 @@ export const editFoodItem = createAsyncThunk(
   "singleFoodItem/editFoodItem",
   async ({ foodItemId, data }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/food-item/${foodItemId}/update`, data);
+      console.log(data);
+      const response = await api.patch(
+        `/admin/food-item/${foodItemId}/update`,
+        data
+      );
       return response.data.data;
     } catch (error) {
       const serializedError = {

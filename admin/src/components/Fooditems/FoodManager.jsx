@@ -181,7 +181,7 @@ export default function FoodManager() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [newImageSelected, setNewImageSelected] = useState(false);
-  const { id: foodItemId } = useParams();
+  const { foodItemId } = useParams();
   const { loading } = useSelector((state) => state.foodManager);
   const { foodItem } = useSelector((state) => state.singleFoodItem);
 

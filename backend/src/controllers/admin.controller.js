@@ -105,7 +105,6 @@ const getSingleUser = asyncHandler(async (req, res) => {
 
 const uploadFoodItem = asyncHandler(async (req, res) => {
   const { foodName, description, price, type, subCategory } = req.body;
-
   if (!foodName || !description || !price || !type || !subCategory) {
     throw new ApiError(400, "Food item information is missing");
   }
@@ -182,10 +181,10 @@ const deleteFoodItem = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "FoodItem delete successfully"));
 });
 const updateFoodItemDetail = asyncHandler(async (req, res) => {
-  const { fooditemId } = req.params;
+  const { foodItemId } = req.params;
+  console.log(foodItemId);
   const { foodName, description, price, type, subCategory } = req.body;
-
-  const fooditem = await FoodItem.findById(fooditemId);
+  const fooditem = await FoodItem.findById(foodItemId);
   if (!fooditem) {
     throw new ApiError(404, "fooditem not found");
   }
