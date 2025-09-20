@@ -1,4 +1,4 @@
-export default function StatusBadge({ status }) {
+export default function StatusBadge({ status, className = "" }) {
   const statusStyles = {
     Pending: {
       text: "text-green-500",
@@ -18,7 +18,7 @@ export default function StatusBadge({ status }) {
     <div
       className={`text-[20px]  h-[30px] w-[180px] 
                   dark:bg-black bg-white rounded-lg 
-                  ${statusStyles[status]?.shadow || ""}`}
+                  ${statusStyles[status]?.shadow || ""} ${className}`}
     >
       <p
         className={`text-center font-bold ${statusStyles[status]?.text || ""}`}

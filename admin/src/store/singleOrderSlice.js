@@ -19,6 +19,7 @@ export const fetchSingleOrder = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
   "singleOrder/updateOrderStatus",
   async ({ userId, orderId, status }, { rejectWithValue }) => {
+    console.log(status);
     try {
       const response = await api.patch(
         `/admin/user/${userId}/order/${orderId}/status`,
