@@ -4,9 +4,11 @@ import { useCapitalize } from "../../hooks/useCapitalize";
 import Button from "../Button";
 import { fetchFoodReview } from "../../store/foodReviewSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function FoodItemDetails() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const capitalize = useCapitalize();
   const { foodItem } = useSelector((state) => state.singleFoodItem);
   const [seeReview, setSeeReview] = useState(false);
@@ -32,7 +34,10 @@ export default function FoodItemDetails() {
           className="absolute right-4 top-4 h-9 w-9 bg-gray-700 dark:bg-white rounded-full flex items-center justify-center hover:scale-110 cursor-pointer transition"
           title="Edit"
         >
-          <MdEdit className="text-[22px] text-blue-600" />
+          <MdEdit
+            className="text-[22px] text-blue-600"
+            onClick={() => navigate(`/food-item/edit/${foodItem._id}`)}
+          />
         </div>
 
         <div className="p-4  flex flex-col justify-center gap-2 text-black dark:text-white">
