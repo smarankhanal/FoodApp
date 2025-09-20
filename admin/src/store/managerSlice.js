@@ -27,12 +27,9 @@ export const uploadFoodItem = createAsyncThunk(
 );
 export const editFoodItem = createAsyncThunk(
   "singleFoodItem/editFoodItem",
-  async ({ foodItemId, updateData }, { rejectWithValue }) => {
+  async ({ foodItemId, data }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(
-        `/food-item/${foodItemId}/update`,
-        updateData
-      );
+      const response = await api.patch(`/food-item/${foodItemId}/update`, data);
       return response.data.data;
     } catch (error) {
       const serializedError = {
