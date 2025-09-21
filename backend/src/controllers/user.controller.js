@@ -171,30 +171,38 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .json(new Response(200, null, "Password changed successfully"));
 });
 const refreshAccessToken = asyncHandler(async (req, res) => {
+  // Get refresh token from cookies (preferred) or user object (fallback)
   const incomingRefreshToken =
     req.cookies?.refreshToken || req.user?.refreshToken;
+
   if (!incomingRefreshToken) {
-    throw new ApiError(401, "unauthorized access");
+    throw new ApiError(401, "Unauthorized access - no refresh token");
   }
 
   try {
-    const decoedToken = jwt.verify(
+    const decodedToken = jwt.verify(
       incomingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
-    const user = await User.findById(decoedToken?.id);
+
+    const user = await User.findById(decodedToken?.id);
     if (!user) {
       throw new ApiError(401, "Invalid refresh token");
     }
+
     if (incomingRefreshToken !== user.refreshToken) {
-      throw new ApiError(401, "Invalid refresh token or refresh token expiry");
+      throw new ApiError(401, "Refresh token mismatch or expired");
     }
+
     const { accessToken, newRefreshToken } =
       await generateAccessAndRefreshToken(user._id);
+
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
     };
+
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
@@ -203,13 +211,14 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         new ApiResponse(
           200,
           { accessToken, refreshToken: newRefreshToken },
-          "access token  generated successfully"
+          "Access token refreshed successfully"
         )
       );
   } catch (error) {
-    throw new ApiError(401, error?.messgae || "Invalid refresh token");
+    throw new ApiError(401, error?.message || "Invalid refresh token");
   }
 });
+
 const getFoodItems = asyncHandler(async (req, res) => {
   const foodItems = await FoodItem.find({});
   return res
