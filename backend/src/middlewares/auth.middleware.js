@@ -10,9 +10,9 @@ const verifyJWT = asynchandler(async (req, res, next) => {
     if (!token || token === "undefined") {
       throw new ApiError(401, "Access token missing or invalid");
     }
-
+    console.log(token);
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
+    console.log(decodedToken);
     const user = await User.findById(
       decodedToken?._id || decodedToken?.id
     ).select("-password -refreshToken");
