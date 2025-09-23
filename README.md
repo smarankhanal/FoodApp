@@ -1,7 +1,10 @@
 # 🍽️ FoodApp
 
+> This is **my first project**, developed with dedication and consistent effort over time.  
+> During the process, I also utilized **ChatGPT** as a valuable learning and development aid to enhance the application and improve my skills.
+
 A complete **Food Ordering Application** with a **React + Vite frontend** and a **Node.js + Express backend**.  
-Includes user features like food ordering, order history, profile management, dark/light mode, and an **admin panel** for managing users, food items, and orders.
+It includes user-facing features such as food ordering, order history, profile management, dark/light mode, and an **admin panel** for managing users, food items, and orders.
 
 ---
 
@@ -66,12 +69,16 @@ ACCESS_TOKEN_SECRET=token_secret
 ACCESS_TOKEN_EXPIRY=token_exipry
 REFRESH_TOKEN_SECRET=token_secret
 REFRESH_TOKEN_EXPIRY=token_exipry
+
 # Admin Credentials
 ADMIN_EMAIL=your_admin_email
 ADMIN_PASSWORD=your_admin_password
 ADMIN_ACCESS_TOKEN_SECRET=access_token_secret
-
-
 ```
 
-> **Note:** The **Admin** and **Frontend** are deployed on **Vercel**, while the **Backend** is deployed on **Render**.
+## 🌐 Deployment
+
+- **Frontend:** Vercel
+- **Backend:** Render
+
+> 💡 Open to suggestions for improving or optimizing the deployment setup!
