@@ -127,6 +127,7 @@ const logout = asyncHandler(async (req, res) => {
     .clearCookie("accessToken", options)
     .json(new ApiResponse(200, {}, "User Logout successfully"));
 });
+
 const getMe = asyncHandler(async (req, res) => {
   if (!req.user) {
     throw new ApiError(404, "User not found");

@@ -46,6 +46,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.post("/users/logout");
+
       localStorage.removeItem("token");
       return response.data.data;
     } catch (error) {

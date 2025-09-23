@@ -11,32 +11,34 @@ import { logoutUser } from "../../store/authSlice";
 export default function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
-  const menuOpen = useSelector((state) => state.menu.menuOpen);
+  const { user } = useSelector((state) => state.auth);
+  const { menuOpen } = useSelector((state) => state.menu);
 
   const handleLogout = async () => {
-    await dispatch(logoutUser()).unwrap();
-    dispatch(closeMenu());
-    navigate("/");
+    try {
+      await dispatch(logoutUser()).unwrap();
+      dispatch(closeMenu());
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
-  const userRegister = () => {
+
+  const handleRegister = () => {
     navigate("/register");
     dispatch(closeMenu());
   };
-  return (
-    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-full h-12 bg-amber-400 shadow-md dark:shadow-white/20 z-[999]  rounded-lg p-3">
-      <div className="flex items-center justify-between h-full">
-        {/* Logo */}
-        <div className="h-full flex items-center">
-          <Logo className="h-full w-auto max-h-10" />
-        </div>
 
-        {/* Desktop Nav */}
+  return (
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[350px] sm:w-full h-12 bg-amber-400 shadow-md dark:shadow-white/20 z-[999] rounded-lg p-3">
+      <div className="flex items-center justify-between h-full">
+        <Logo className="h-full w-auto max-h-10" />
+
+        {/* Desktop menu */}
         <div className="hidden sm:flex items-center gap-6">
-          <AnchorTag className="font-bold dark:text-gray-700" href="/home">
+          <AnchorTag href="/home" className="font-bold dark:text-gray-700">
             Home
           </AnchorTag>
-
           <ChangeMode />
 
           {user && (
@@ -55,24 +57,25 @@ export default function NavBar() {
               </AnchorTag>
             </>
           )}
+
           {user ? (
             <Button
               className="h-8 px-3 text-sm dark:text-white"
-              onClick={() => handleLogout()}
+              onClick={handleLogout}
             >
               LogOut
             </Button>
           ) : (
             <>
               <Button
-                className="h-8 px-3 text-sm dark:text-white "
+                className="h-8 px-3 text-sm dark:text-white"
                 onClick={() => navigate("/login")}
               >
                 LogIn
               </Button>
               <Button
-                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300 "
-                onClick={() => userRegister()}
+                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300"
+                onClick={handleRegister}
               >
                 Register
               </Button>
@@ -80,6 +83,7 @@ export default function NavBar() {
           )}
         </div>
 
+        {/* Mobile menu toggle */}
         <button
           className="sm:hidden text-black dark:text-white text-2xl"
           onClick={() => dispatch(toggleMenu())}
@@ -88,7 +92,7 @@ export default function NavBar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu content */}
       {menuOpen && (
         <div className="sm:hidden mt-2 flex flex-col gap-3 bg-amber-300 dark:bg-amber-500 p-3 rounded-lg shadow-md">
           <AnchorTag
@@ -100,6 +104,7 @@ export default function NavBar() {
           </AnchorTag>
 
           <ChangeMode />
+
           {user && (
             <>
               <AnchorTag
@@ -125,10 +130,11 @@ export default function NavBar() {
               </AnchorTag>
             </>
           )}
+
           {user ? (
             <Button
               className="h-8 px-3 text-sm dark:text-white"
-              onClick={() => handleLogout()}
+              onClick={handleLogout}
             >
               LogOut
             </Button>
@@ -144,8 +150,8 @@ export default function NavBar() {
                 LogIn
               </Button>
               <Button
-                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300 "
-                onClick={() => userRegister()}
+                className="h-8 px-3 text-sm dark:text-white bg-red-500 hover:bg-red-300"
+                onClick={handleRegister}
               >
                 Register
               </Button>

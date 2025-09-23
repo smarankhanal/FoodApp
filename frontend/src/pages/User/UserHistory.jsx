@@ -96,7 +96,9 @@ export default function UserHistory() {
                   </p>
                   <p className=" text-[14px] flex-1 mr-2">
                     {order.foodItems
-                      .map((fooditem) => capitalize(fooditem.foodItem.foodName))
+                      .map((item) => item.foodItem?.foodName)
+                      .filter((name) => name)
+                      .map((name) => capitalize(name))
                       .join(", ")}
                   </p>
                   <p className="text-green-600 font-bold text-[18px] flex-1  ">

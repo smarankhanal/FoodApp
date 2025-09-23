@@ -25,7 +25,7 @@ export default function LogIn() {
   };
   return (
     <div className="bg-[url('/images/lightBg.jpg')] dark:bg-[url('/images/darkBg.jpg')] bgImage pt-20">
-      <div className="w-full max-w-100 mx-auto bg-white dark:bg-black dark:text-white mb-10 p-4 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg">
+      <div className="w-full max-w-100 sm:mx-auto bg-white dark:bg-black dark:text-white mb-10 p-4 drop-shadow-[2px_2px_5px_black] dark:drop-shadow-[2px_2px_5px_#FCFEFF] rounded-lg">
         <form
           onSubmit={handleSubmit(submit)}
           className="flex flex-col items-center"

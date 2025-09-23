@@ -2,6 +2,7 @@ import asynchandler from "../utlis/asyncHandler.js";
 import ApiError from "../utlis/ApiError.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+
 const verifyJWT = asynchandler(async (req, res, next) => {
   try {
     const token =
@@ -10,9 +11,9 @@ const verifyJWT = asynchandler(async (req, res, next) => {
     if (!token || token === "undefined") {
       throw new ApiError(401, "Access token missing or invalid");
     }
-    console.log(token);
+
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    console.log(decodedToken);
+
     const user = await User.findById(
       decodedToken?._id || decodedToken?.id
     ).select("-password -refreshToken");
@@ -20,10 +21,27 @@ const verifyJWT = asynchandler(async (req, res, next) => {
     if (!user) {
       throw new ApiError(401, "Invalid user");
     }
+
     req.user = user;
-    return next();
+    next();
   } catch (error) {
     throw new ApiError(401, error?.message || "Invalid access token");
   }
 });
 export { verifyJWT };
+
+// export const verifyJWT = (req, res, next) => {
+//   const header = req.headers.authorization;
+//   if (!header || !header.startsWith("Bearer ")) {
+//     return next(new ApiError(401, "No token provided"));
+//   }
+
+//   const token = header.split(" ")[1];
+//   try {
+//     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+//     req.user = decoded;
+//     next();
+//   } catch (err) {
+//     next(new ApiError(401, "Invalid or expired token"));
+//   }
+// };
