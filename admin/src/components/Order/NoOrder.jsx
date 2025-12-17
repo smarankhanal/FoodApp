@@ -12,8 +12,6 @@ export default function NoOrder() {
           <FaClipboardList className="dark:text-white mr-4" />
           <p className="font-semibold dark:text-white">No orders yet...</p>
         </div>
-
-        <Button className="mt-6 bg-black text-white">View History</Button>
       </div>
     </div>
   );

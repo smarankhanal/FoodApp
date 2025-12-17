@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../Button";
 import { fetchFoodReviewOfUser } from "../../store/foodReviewSlice";
 import { useParams } from "react-router-dom";
-
+import { MdOutlineReviews } from "react-icons/md";
 export default function UserDetails() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.singleUser);
