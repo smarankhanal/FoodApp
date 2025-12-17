@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
         identifier,
         password,
       });
-      localStorage.setItem("token", response.data.data.accessToken);
+
       return response.data.data;
     } catch (error) {
       const serializedError = {
@@ -25,8 +25,11 @@ export const loginUser = createAsyncThunk(
 export const getMe = createAsyncThunk(
   "auth/getMe",
   async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return rejectWithValue({ message: "No token found" });
+    }
     try {
-      const token = localStorage.getItem("token");
       const response = await api.get("/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -41,25 +44,48 @@ export const getMe = createAsyncThunk(
     }
   }
 );
+
 export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.post("/users/logout");
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      if (!refreshToken) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        return {};
+      }
+
+      const response = await api.post(
+        "/users/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        }
+      );
 
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+
       return response.data.data;
     } catch (error) {
-      console.log(error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+
       const serializedError = {
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
         data: error.response?.data,
       };
-      return rejectWithValue(serializedError || "Logout failed");
+
+      return rejectWithValue(serializedError);
     }
   }
 );
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -71,6 +97,7 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // LOGIN
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
       })
@@ -81,9 +108,11 @@ const authSlice = createSlice({
         localStorage.setItem("token", action.payload.accessToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = "idle";
         state.error = action.payload;
       })
+
+      // GET ME
       .addCase(getMe.pending, (state) => {
         state.status = "loading";
       })
@@ -91,21 +120,27 @@ const authSlice = createSlice({
         state.status = "succeeded";
         state.user = action.payload;
       })
-      .addCase(getMe.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
+      .addCase(getMe.rejected, (state) => {
+        state.status = "idle";
+        state.user = null;
+        state.token = null;
       })
+
+      // LOGOUT
       .addCase(logoutUser.pending, (state) => {
         state.status = "loading";
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.status = "succeeded";
+        state.status = "idle";
         state.user = null;
         state.token = null;
+        state.error = null;
       })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
+      .addCase(logoutUser.rejected, (state) => {
+        state.status = "idle";
+        state.user = null;
+        state.token = null;
+        state.error = null;
       });
   },
 });

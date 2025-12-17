@@ -4,7 +4,7 @@ import {
   getFoodItems,
   login,
   logout,
-  refreshAccessToken,
+  // refreshAccessToken,
   registerUser,
   updateAccountDetails,
   addReview,
@@ -32,9 +32,8 @@ const router = Router();
 router.route("/me").get(getMe);
 router.route("/register-user").post(registerValidator, validate, registerUser);
 router.route("/login").post(login);
-router.route("/logout").post(verifyJWT, logout);
-
-router.route("/refresh-token").post(refreshAccessToken);
+router.route("/logout").post(logout);
+// router.route("/refresh-token").post(refreshAccessToken);
 
 // --- Account Management ---
 router
