@@ -45,47 +45,76 @@ export const getMe = createAsyncThunk(
   }
 );
 
+// export const logoutUser = createAsyncThunk(
+//   "auth/logoutUser",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const refreshToken = localStorage.getItem("refreshToken");
+
+//       if (!refreshToken) {
+//         localStorage.removeItem("token");
+//         localStorage.removeItem("refreshToken");
+//         return {};
+//       }
+
+//       const response = await api.post(
+//         "/users/logout",
+//         {},
+//         {
+//           headers: {
+//             Authorization: `Bearer ${refreshToken}`,
+//           },
+//         }
+//       );
+
+//       localStorage.removeItem("token");
+//       localStorage.removeItem("refreshToken");
+
+//       return response.data.data;
+//     } catch (error) {
+//       localStorage.removeItem("token");
+//       localStorage.removeItem("refreshToken");
+
+//       const serializedError = {
+//         message: error.response?.data?.message || error.message,
+//         status: error.response?.status,
+//         data: error.response?.data,
+//       };
+
+//       return rejectWithValue(serializedError);
+//     }
+//   }
+// );
 export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
-
-      if (!refreshToken) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
-        return {};
+      const accessToken = localStorage.getItem("token");
+      console.log(accessToken);
+      if (accessToken) {
+        await api.post(
+          "/users/logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
       }
-
-      const response = await api.post(
-        "/users/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        }
-      );
 
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
 
-      return response.data.data;
+      return {};
     } catch (error) {
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
 
-      const serializedError = {
-        message: error.response?.data?.message || error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-      };
-
-      return rejectWithValue(serializedError);
+      return rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
 );
-
 const authSlice = createSlice({
   name: "auth",
   initialState: {
