@@ -2,7 +2,7 @@ import asyncHandler from "../utlis/asyncHandler.js";
 import ApiError from "../utlis/ApiError.js";
 import ApiResponse from "../utlis/ApiResponse.js";
 import { User } from "../models/user.model.js";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import { FoodItem } from "../models/foodItem.model.js";
 import { FoodReview } from "../models/foodreview.model.js";
 import { toCaptalizie } from "../utlis/captalizae.js";
@@ -102,9 +102,10 @@ const login = asyncHandler(async (req, res) => {
     );
 });
 const logout = asyncHandler(async (req, res) => {
-  const user = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     req.user._id,
     {
+      $set: { isActive: false },
       $unset: {
         refreshToken: 1,
       },
@@ -113,9 +114,7 @@ const logout = asyncHandler(async (req, res) => {
       new: true,
     }
   );
-  console.log(user);
-  user.isActive = false;
-  await user.save();
+
   const isProduction = process.env.NODE_ENV === "production";
   const options = {
     httpOnly: true,
@@ -128,30 +127,8 @@ const logout = asyncHandler(async (req, res) => {
     .clearCookie("accessToken", options)
     .json(new ApiResponse(200, {}, "User Logout successfully"));
 });
-// const logout = asyncHandler(async (req, res) => {
-//   const authHeader = req.headers.authorization;
-
-//   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-//     return res.status(200).json(new ApiResponse(200, {}, "Already logged out"));
-//   }
-
-//   const refreshToken = authHeader.split(" ")[1];
-
-//   await User.findOneAndUpdate(
-//     { refreshToken },
-//     {
-//       $unset: { refreshToken: 1 },
-//       $set: { isActive: false },
-//     }
-//   );
-
-//   return res
-//     .status(200)
-//     .json(new ApiResponse(200, {}, "User logout successfully"));
-// });
 
 const getMe = asyncHandler(async (req, res) => {
-  console.log(req.user);
   if (!req.user) {
     throw new ApiError(404, "User not found");
   }

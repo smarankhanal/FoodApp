@@ -8,7 +8,6 @@ const verifyJWT = asynchandler(async (req, res, next) => {
     const token =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
-    console.log("Token is", token);
     if (!token || token === "undefined") {
       throw new ApiError(401, "Access token missing or invalid");
     }
@@ -22,7 +21,9 @@ const verifyJWT = asynchandler(async (req, res, next) => {
     if (!user) {
       throw new ApiError(401, "Invalid user");
     }
-
+    if (!user.isActive) {
+      throw new ApiError(401, "User session is inactive. Please log in.");
+    }
     req.user = user;
     next();
   } catch (error) {
