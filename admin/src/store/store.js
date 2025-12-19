@@ -34,8 +34,6 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: [
-    "auth",
-    "user",
     "order",
     "foodItem",
     "singleUser",

@@ -75,7 +75,7 @@ export default function User() {
       </div>
     );
   return (
-    <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
+    <div className="dark:text-white text-black mt-10  ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
       <Search
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -91,7 +91,7 @@ export default function User() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 sm:grid sm:grid-cols-5 sm:gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 font-bold text-black sm:items-center shadow">
+      <div className="sticky top-10 z-20  flex flex-col gap-2 sm:grid sm:grid-cols-5 sm:gap-4 m-4 bg-amber-500 rounded-lg px-4 py-3 font-bold text-black sm:items-center shadow">
         <p>USER ID</p>
         <p>USER-NAME</p>
         <p>STATUS</p>

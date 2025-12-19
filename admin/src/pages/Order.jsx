@@ -44,7 +44,7 @@ export default function Order() {
   );
   if (loading)
     return (
-      <div className="dark:text-white text-black mt-10 ml-5 p-6 flex-1 w-full max-w-5xl font-serif">
+      <div className="dark:text-white text-black mt-6 sm:mt-10 sm:ml-5 p-4 flex-1 w-full max-w-5xl font-serif">
         <div className="flex justify-between">
           <SkeletonLoader
             count={1}

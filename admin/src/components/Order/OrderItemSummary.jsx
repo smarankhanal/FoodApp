@@ -26,7 +26,7 @@ export default function OrderItemSummary({ order }) {
   };
 
   return (
-    <div className="sm:grid sm:grid-cols-6 sm:items-center gap-2 sfont-serif flex flex-col bg-black dark:bg-white rounded-lg m-4 p-3 dark:text-black text-white text-sm shadow-sm">
+    <div className="sm:grid sm:grid-cols-6 sm:items-center gap-2 font-serif flex flex-col bg-black dark:bg-white rounded-lg m-1 sm:m-4 p-1 sm:p-3 dark:text-black text-white text-sm shadow-sm ">
       <p className="truncate opacity-60">{order._id}</p>
 
       <p className=" font-medium truncate">{order.user}</p>
@@ -51,7 +51,7 @@ export default function OrderItemSummary({ order }) {
         })}
       </p>
 
-      <div className="flex gap-3 justify-center">
+      <div className="flex gap-3 justify-end ">
         <div
           className="bg-white dark:bg-black h-8 w-8 rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-105 transition"
           title="View Order"

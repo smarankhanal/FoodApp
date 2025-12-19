@@ -6,15 +6,15 @@ export default function OrderedSingleFoodItem({ foodItem }) {
   const capitalize = useCapitalize();
   return (
     <>
-      <div className=" relative flex flex-col sm:flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] ">
+      <div className=" relative flex flex-col sm:flex-row m-2  dark:bg-black bg-white opacity-90 rounded-lg p-2 drop-shadow-[1px_1px_5px_black] dark:drop-shadow-[1px_1px_5px_white] text-center">
         <img
           src={singleFood.foodImage}
           alt={singleFood.foodName}
-          className="w-full sm:w-32 h-24 sm:h-28 rounded-lg animate-fadeIn"
+          className="w-auto sm:w-32 h-auto sm:h-28 rounded-lg animate-fadeIn "
         />
         <div className="ml-5 dark:text-white text-[14px]">
           <p className="text-xl font-bold text-amber-400">
-            {singleFood.foodName}
+            {capitalize(singleFood.foodName)}
           </p>
           <p className="font-semibold">
             Subcategory :- {capitalize(singleFood.subCategory)}

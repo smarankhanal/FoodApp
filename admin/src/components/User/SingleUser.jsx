@@ -100,7 +100,7 @@ export default function SingleUser({ user }) {
         </div>
       )}
 
-      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 gap-2 dark:text-black  text-white flex sm:flex-row  flex-col sm:items-center opacity-85 font-serif">
+      <div className="flex-1 bg-black dark:bg-white rounded-lg m-1 sm:m-4 sm:p-3 p-1 gap-2 dark:text-black  text-white flex sm:flex-row  flex-col sm:items-center opacity-85 font-serif">
         <p className="flex-1 text-sm sm:truncate ">{user._id}</p>
         <p className="flex-1 sm:ml-5">{user.username} </p>
         <div className="flex-1">
@@ -124,7 +124,7 @@ export default function SingleUser({ user }) {
           })}
         </p>
 
-        <div className="flex flex-1">
+        <div className="flex flex-1 justify-end">
           <div
             className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03] mr-3"
             title="User History"

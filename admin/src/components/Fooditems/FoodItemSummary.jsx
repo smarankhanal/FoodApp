@@ -13,10 +13,14 @@ import { fetchFoodItem } from "../../store/foodItemSlice";
 import { Toast } from "../../components";
 
 export default function FoodItemSummary({ item }) {
-  const [toast, setToast] = useState({ show: false, text: "", className: "" });
+  const [toast, setToast] = useState({
+    show: false,
+    text: "",
+    className: "",
+  });
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const captialize = useCapitalize();
+  const capitalize = useCapitalize();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,7 +34,7 @@ export default function FoodItemSummary({ item }) {
       await dispatch(deleteFoodItem(foodItemId)).unwrap();
       setToast({
         show: true,
-        text: "Deleting the foodItem...",
+        text: "Deleting the food item...",
         className: "text-green-500",
       });
 
@@ -41,7 +45,7 @@ export default function FoodItemSummary({ item }) {
     } catch (error) {
       setToast({
         show: true,
-        text: error.message || "Failed to delete fooditem",
+        text: error.message || "Failed to delete food item",
         className: "text-red-500",
       });
 
@@ -53,6 +57,7 @@ export default function FoodItemSummary({ item }) {
 
   return (
     <>
+      {/* Toast */}
       {toast.show && (
         <Toast
           show={toast.show}
@@ -61,25 +66,28 @@ export default function FoodItemSummary({ item }) {
         />
       )}
 
+      {/* Confirm Delete Modal */}
       {confirmOpen && (
-        <div className="fixed inset-0 backdrop-blur-sm flex  items-center justify-center z-50 cursor-not-allowed">
-          <div className="flex flex-col bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
             <h2 className="text-lg font-semibold mb-4">
               Are you sure you want to delete this food item?
             </h2>
+
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => {
                   deleteFood(item._id);
                   setConfirmOpen(false);
                 }}
-                className=" cursor-pointer px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
               >
                 Yes, Delete
               </button>
+
               <button
                 onClick={() => setConfirmOpen(false)}
-                className="cursor-pointer px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
               >
                 Cancel
               </button>
@@ -88,52 +96,75 @@ export default function FoodItemSummary({ item }) {
         </div>
       )}
 
-      <div className="flex-1 bg-black dark:bg-white rounded-lg m-4 p-2 dark:text-black text-white flex flex-col sm:flex-row sm:items-center gap-2">
-        <div className="flex-1">
-          <img
-            src={item.foodImage}
-            alt={item.foodName}
-            className="rounded-lg h-12 w-20 object-cover"
-          />
-        </div>
+      {/* ================= FOOD ITEM CARD ================= */}
+      <div
+        className="bg-black dark:bg-white dark:text-black text-white
+                   rounded-lg shadow m-3 p-4
+                   flex flex-col gap-3
+                   sm:flex-row sm:items-center sm:gap-4"
+      >
+        {/* Image */}
+        <img
+          src={item.foodImage}
+          alt={item.foodName}
+          className="rounded-lg h-24 w-full object-cover
+                     sm:h-12 sm:w-20"
+        />
 
-        <p className="flex-1">{captialize(item.foodName)}</p>
-        <div className="flex flex-row sm:flex-col gap-2 flex-1">
-          <p className="mb-1">{captialize(item.subCategory)}</p>
+        {/* Name */}
+        <p className="font-semibold text-lg sm:text-base sm:flex-1">
+          {capitalize(item.foodName)}
+        </p>
+
+        {/* Category + Type */}
+        <div className="flex flex-col gap-1 sm:flex-1">
+          <p className="text-sm sm:text-base">{capitalize(item.subCategory)}</p>
 
           <Status
             className={
               item.type.toLowerCase() === "non-veg"
-                ? `text-red-500 drop-shadow-[2px_2px_red]`
-                : `text-green-500 drop-shadow-[2px_2px_green]`
+                ? "text-red-500 drop-shadow-[2px_2px_red]"
+                : "text-green-500 drop-shadow-[2px_2px_green]"
             }
           >
-            {captialize(item.type)}
+            {capitalize(item.type)}
           </Status>
         </div>
-        <p className="flex-1">Rs {item.price}</p>
-        <div className="flex flex-1 gap-3">
-          <div
-            className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"
-            title="Delete FoodItem"
+
+        {/* Price */}
+        <p className="font-bold sm:flex-1">Rs {item.price}</p>
+
+        {/* Actions */}
+        <div className="flex gap-4 justify-end sm:flex-1">
+          <button
+            title="Delete"
             onClick={() => setConfirmOpen(true)}
+            className="bg-white dark:bg-black h-8 w-8 rounded-full
+                       flex items-center justify-center
+                       hover:scale-105 transition"
           >
-            <MdDelete className="text-[20px] text-red-500" />
-          </div>
-          <div
-            className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"
-            title="Edit FoodItems"
+            <MdDelete className="text-xl text-red-500" />
+          </button>
+
+          <button
+            title="Edit"
             onClick={() => navigate(`/food-item/edit/${item._id}`)}
+            className="bg-white dark:bg-black h-8 w-8 rounded-full
+                       flex items-center justify-center
+                       hover:scale-105 transition"
           >
-            <FaRegEdit className="text-[18px] text-blue-500" />
-          </div>
-          <div
-            className="bg-white dark:bg-black h-[23px] w-[23px] rounded-full flex items-center justify-center hover:cursor-pointer hover:scale-[1.03]"
-            title="View FoodItems"
+            <FaRegEdit className="text-lg text-blue-500" />
+          </button>
+
+          <button
+            title="View"
             onClick={() => viewFoodItems(item._id)}
+            className="bg-white dark:bg-black h-8 w-8 rounded-full
+                       flex items-center justify-center
+                       hover:scale-105 transition"
           >
-            <FaRegEye className="text-[18px] text-amber-500" />
-          </div>
+            <FaRegEye className="text-lg text-amber-500" />
+          </button>
         </div>
       </div>
     </>
