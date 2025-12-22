@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeMode } from "../../store/modeSlice";
 import Button from "../Button";
 import { closeMenu } from "../../store/menuSlice";
